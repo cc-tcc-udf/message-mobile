@@ -1,3 +1,4 @@
+import 'package:campus_connect/core/design/themes/colors.dart';
 import 'package:campus_connect/core/design/themes/custom_themes/appbar_theme.dart';
 import 'package:campus_connect/core/design/themes/custom_themes/bottom_sheet_theme.dart';
 import 'package:campus_connect/core/design/themes/custom_themes/checkbox_theme.dart';
@@ -12,34 +13,31 @@ class TAppTheme {
   TAppTheme._();
 
   static ThemeData lightTheme = ThemeData(
-    useMaterial3: true,
-    fontFamily: 'Inter',
-    brightness: Brightness.light,
-    primaryColor: Colors.blue,
-    textTheme: TTextTheme.lightTextTheme,
-    chipTheme: TChipTheme.lightChipTheme,
-    scaffoldBackgroundColor: Colors.white,
-    appBarTheme: TAppBarTheme.lightAppBarTheme,
-    checkboxTheme: TCheckBoxTheme.lightCheckboxTheme,
-    bottomSheetTheme: TBottomSheetTheme.lightBottomSheetTheme,
-    elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
-    outlinedButtonTheme: TOutlinedButtonTheme.lightOutlinedButtonTheme,
-    inputDecorationTheme: TTextFormFieldTheme.lightInputDecorationTheme
-  );
+      useMaterial3: true,
+      fontFamily: 'Inter',
+      brightness: Brightness.light,
+      primaryColor: Colors.blue,
+      textTheme: TTextTheme.lightTextTheme,
+      chipTheme: TChipTheme.lightChipTheme,
+      scaffoldBackgroundColor: Colors.white,
+      appBarTheme: TAppBarTheme.lightAppBarTheme,
+      checkboxTheme: TCheckBoxTheme.lightCheckboxTheme,
+      bottomSheetTheme: TBottomSheetTheme.lightBottomSheetTheme,
+      elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
+      outlinedButtonTheme: TOutlinedButtonTheme.lightOutlinedButtonTheme,
+      inputDecorationTheme: TTextFormFieldTheme.lightInputDecorationTheme);
   static ThemeData darkTheme = ThemeData(
-    useMaterial3: true,
-    fontFamily: 'Inter',
-    brightness: Brightness.dark,
-    primaryColor: Colors.blue,
-    textTheme: TTextTheme.darkTextTheme,
-    chipTheme: TChipTheme.darkChipTheme,
-    scaffoldBackgroundColor: Colors.black,
-    appBarTheme: TAppBarTheme.darkAppBarTheme,
-    checkboxTheme: TCheckBoxTheme.darkCheckboxTheme,
-    bottomSheetTheme: TBottomSheetTheme.darkBottomSheetTheme,
-    elevatedButtonTheme: TElevatedButtonTheme.darkElevatedButtonTheme,
-    outlinedButtonTheme: TOutlinedButtonTheme.darkOutlinedButtonTheme,
-    inputDecorationTheme: TTextFormFieldTheme.darkInputDecorationTheme
-  );
-
+      useMaterial3: true,
+      fontFamily: 'Inter',
+      brightness: Brightness.dark,
+      primaryColor: Colors.blue,
+      textTheme: TTextTheme.darkTextTheme,
+      chipTheme: TChipTheme.darkChipTheme,
+      scaffoldBackgroundColor: TColors.darkBackground,
+      appBarTheme: TAppBarTheme.darkAppBarTheme,
+      checkboxTheme: TCheckBoxTheme.darkCheckboxTheme,
+      bottomSheetTheme: TBottomSheetTheme.darkBottomSheetTheme,
+      elevatedButtonTheme: TElevatedButtonTheme.darkElevatedButtonTheme,
+      outlinedButtonTheme: TOutlinedButtonTheme.darkOutlinedButtonTheme,
+      inputDecorationTheme: TTextFormFieldTheme.darkInputDecorationTheme);
 }
