@@ -1,15 +1,14 @@
 import 'package:campus_connect/core/design/themes/colors.dart';
+import 'package:campus_connect/core/design/themes/theme.dart';
 import 'package:campus_connect/core/utils/image_strings.dart';
 import 'package:campus_connect/core/utils/sizes.dart';
 import 'package:campus_connect/core/utils/spacing_styles.dart';
 import 'package:campus_connect/features/home/presentation/pages/home_page.dart';
-import 'package:campus_connect/features/login/presentation/pages/cadastro_page.dart';
-import 'package:campus_connect/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class CadastroPage extends StatelessWidget {
+  const CadastroPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +37,65 @@ class LoginPage extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            const Divider(height:2),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0), // Ajuste o espaçamento conforme necessário
+                              child: Container(
+                                color: isDarkTheme? TColors.darkBackground : Colors.white,
+                                child: const Text('Cadastre-se com email e senha'),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: TSizes.sm,
+                        ),
                         const Text(
-                          'Digite seu email',
+                          'Nome completo',
+                          style: TextStyle(fontSize: TSizes.fontSizeSm),
+                        ),
+                        const SizedBox(
+                          height: TSizes.sm,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            color: Colors.white,
+                          ),
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: TSizes.spaceBtwItens,
+                        ),
+                        const Text(
+                          'RGM',
+                          style: TextStyle(fontSize: TSizes.fontSizeSm),
+                        ),
+                        const SizedBox(
+                          height: TSizes.sm,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            color: Colors.white,
+                          ),
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            style: TextStyle(color: Colors.black),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: TSizes.spaceBtwItens,
+                        ),
+                        const Text(
+                          'Email universitário',
                           style: TextStyle(fontSize: TSizes.fontSizeSm),
                         ),
                         const SizedBox(
@@ -60,7 +116,7 @@ class LoginPage extends StatelessWidget {
                           height: TSizes.spaceBtwItens,
                         ),
                         const Text(
-                          'Digite sua senha',
+                          'Senha',
                           style: TextStyle(fontSize: TSizes.fontSizeSm),
                         ),
                         const SizedBox(
@@ -77,16 +133,26 @@ class LoginPage extends StatelessWidget {
                             obscureText: true,
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Esqueci minha senha',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    decoration: TextDecoration.underline),
-                              )),
+                        const SizedBox(
+                          height: TSizes.spaceBtwItens,
+                        ),
+                        const Text(
+                          'Confirmar senha',
+                          style: TextStyle(fontSize: TSizes.fontSizeSm),
+                        ),
+                        const SizedBox(
+                          height: TSizes.sm,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            color: Colors.white,
+                          ),
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            style: TextStyle(color: Colors.black),
+                            obscureText: true,
+                          ),
                         ),
                         const SizedBox(
                           height: TSizes.spaceBtwItens,
@@ -101,20 +167,20 @@ class LoginPage extends StatelessWidget {
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                         TColors.buttonBackground)),
-                                child: const Text('Acessar', style: TextStyle(color: Colors.white)))),
+                                child: const Text('Cadastrar', style: TextStyle(color: Colors.white),))),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('Não possui cadastro?',
+                            const Text('Já possui cadastro?',
                                 style: TextStyle(
                                   fontSize: 12,
                                 )),
                             TextButton(
                                 onPressed: () {
-                                  Get.to(const CadastroPage());
+                                  Navigator.pop(context);
                                 },
                                 child: const Text(
-                                  'Se inscreva aqui',
+                                  'Faça o login',
                                   style: TextStyle(
                                       fontSize: 12,
                                       decoration: TextDecoration.underline),

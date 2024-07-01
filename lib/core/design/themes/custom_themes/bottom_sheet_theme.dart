@@ -4,7 +4,6 @@ class TBottomSheetTheme {
   TBottomSheetTheme._();
 
   static BottomSheetThemeData lightBottomSheetTheme = BottomSheetThemeData(
-    showDragHandle: true,
     backgroundColor: Colors.white,
     modalBackgroundColor: Colors.white,
     constraints: const BoxConstraints(minWidth: double.infinity),
@@ -12,7 +11,6 @@ class TBottomSheetTheme {
   );
 
   static BottomSheetThemeData darkBottomSheetTheme = BottomSheetThemeData(
-    showDragHandle: true,
     backgroundColor: Colors.black,
     modalBackgroundColor: Colors.black,
     constraints: const BoxConstraints(minWidth: double.infinity),

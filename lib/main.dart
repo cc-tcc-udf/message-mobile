@@ -1,9 +1,11 @@
 import 'package:campus_connect/core/design/themes/theme.dart';
 import 'package:campus_connect/features/login/presentation/pages/onboarding.dart';
 import 'package:campus_connect/firebase_options.dart';
+// import 'package:campus_connect/notification_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -20,8 +20,8 @@ class OnBoardingNextButton extends StatelessWidget {
           onPressed: () => OnboardingController.instance.nextPage(),
           style: ElevatedButton.styleFrom(
               shape: const CircleBorder(),
-              backgroundColor:
-                  isDarkTheme ? Colors.white : TColors.darkBackground),
+              backgroundColor: isDarkTheme ? Colors.white : TColors.darkBackground,
+             ),
           child: Icon(
             Icons.arrow_forward_ios,
             color: isDarkTheme ? TColors.darkBackground : Colors.white,
