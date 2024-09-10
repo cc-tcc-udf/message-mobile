@@ -1,11 +1,14 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:campus_connect/core/design/themes/colors.dart';
-import 'package:campus_connect/core/design/themes/theme.dart';
 import 'package:campus_connect/core/utils/image_strings.dart';
 import 'package:campus_connect/core/utils/sizes.dart';
 import 'package:campus_connect/core/utils/spacing_styles.dart';
-import 'package:campus_connect/features/home/presentation/pages/home_page.dart';
+import 'package:campus_connect/features/login/data/models/cadastro_usuario_model.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
+
+import '../controllers/login_controller.dart';
 
 class CadastroPage extends StatelessWidget {
   const CadastroPage({super.key});
@@ -13,6 +16,7 @@ class CadastroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    final LoginController controller = GetIt.I.get<LoginController>();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -66,15 +70,16 @@ class CadastroPage extends StatelessWidget {
                             color: Colors.white,
                           ),
                           child: TextFormField(
+                            controller: controller.nome,
                             cursorColor: Colors.black,
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
                         ),
                         const SizedBox(
                           height: TSizes.spaceBtwItens,
                         ),
                         const Text(
-                          'RGM',
+                          'Telefone',
                           style: TextStyle(fontSize: TSizes.fontSizeSm),
                         ),
                         const SizedBox(
@@ -86,9 +91,14 @@ class CadastroPage extends StatelessWidget {
                             color: Colors.white,
                           ),
                           child: TextFormField(
+                            controller: controller.telefone,
                             cursorColor: Colors.black,
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                             keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              TelefoneInputFormatter(),
+                            ],
                           ),
                         ),
                         const SizedBox(
@@ -107,8 +117,9 @@ class CadastroPage extends StatelessWidget {
                             color: Colors.white,
                           ),
                           child: TextFormField(
+                            controller: controller.email,
                             cursorColor: Colors.black,
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                             keyboardType: TextInputType.emailAddress,
                           ),
                         ),
@@ -128,8 +139,9 @@ class CadastroPage extends StatelessWidget {
                             color: Colors.white,
                           ),
                           child: TextFormField(
+                            controller: controller.senha,
                             cursorColor: Colors.black,
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                             obscureText: true,
                           ),
                         ),
@@ -149,8 +161,9 @@ class CadastroPage extends StatelessWidget {
                             color: Colors.white,
                           ),
                           child: TextFormField(
+                            controller: controller.confirmar,
                             cursorColor: Colors.black,
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                             obscureText: true,
                           ),
                         ),
@@ -161,11 +174,18 @@ class CadastroPage extends StatelessWidget {
                             width: MediaQuery.of(context).size.width,
                             height: 55,
                             child: ElevatedButton(
-                                onPressed: () {
-                                  Get.to(HomePage());
+                                onPressed: () async{
+
+                                  var usuario = CadastroUsuarioModel(
+                                      name: controller.nome.text,
+                                      phone: controller.telefone.text,
+                                      email: controller.email.text,
+                                      password: controller.senha.text,
+                                      );
+                                  await controller.cadastrar(usuario);
                                 },
                                 style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
+                                    backgroundColor: WidgetStateProperty.all(
                                         TColors.buttonBackground)),
                                 child: const Text('Cadastrar', style: TextStyle(color: Colors.white),))),
                         Row(

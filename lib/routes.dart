@@ -3,14 +3,23 @@ import 'package:campus_connect/features/login/presentation/pages/cadastro_page.d
 import 'package:flutter/material.dart';
 
 class Routes {
-  static Map<String, Widget Function(BuildContext)> list =
-      <String, WidgetBuilder>{
-    '/home': (_) => HomePage(),
-    '/cadastro':(_) => const CadastroPage()
-  };
+  //Login
+  static const String initial = '/home';
 
-  static String initial = '/home';
-  static String cadastro = '/cadastro';
+  //Home
+  static const String cadastro = '/cadastro';
 
-  static GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
+
+  Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case Routes.initial:
+        return MaterialPageRoute(builder: (_) => const HomePage());
+      case Routes.cadastro:
+        return MaterialPageRoute(
+            builder: (_) =>
+            const CadastroPage());
+      default:
+        return null;
+    }
+  }
 }
