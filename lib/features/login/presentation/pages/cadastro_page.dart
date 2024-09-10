@@ -10,13 +10,20 @@ import 'package:get_it/get_it.dart';
 
 import '../controllers/login_controller.dart';
 
-class CadastroPage extends StatelessWidget {
+class CadastroPage extends StatefulWidget {
   const CadastroPage({super.key});
+
+  @override
+  _CadastroPageState createState() => _CadastroPageState();
+}
+
+class _CadastroPageState extends State<CadastroPage> {
+  final LoginController controller = GetIt.I.get<LoginController>();
+  bool senhaNaoConfere = false;
 
   @override
   Widget build(BuildContext context) {
     bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-    final LoginController controller = GetIt.I.get<LoginController>();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -44,11 +51,11 @@ class CadastroPage extends StatelessWidget {
                         Stack(
                           alignment: Alignment.center,
                           children: [
-                            const Divider(height:2),
+                            const Divider(height: 2),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0), // Ajuste o espaçamento conforme necessário
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
                               child: Container(
-                                color: isDarkTheme? TColors.darkBackground : Colors.white,
+                                color: isDarkTheme ? TColors.darkBackground : Colors.white,
                                 child: const Text('Cadastre-se com email e senha'),
                               ),
                             ),
@@ -167,27 +174,48 @@ class CadastroPage extends StatelessWidget {
                             obscureText: true,
                           ),
                         ),
+                        // Exibe mensagem de erro se as senhas não conferirem
+                        if (senhaNaoConfere)
+                          const Padding(
+                            padding: EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              'As senhas não conferem',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
                         const SizedBox(
                           height: TSizes.spaceBtwItens,
                         ),
                         SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 55,
-                            child: ElevatedButton(
-                                onPressed: () async{
+                          width: MediaQuery.of(context).size.width,
+                          height: 55,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              // Verifica se as senhas coincidem
+                              setState(() {
+                                senhaNaoConfere = controller.senha.text != controller.confirmar.text;
+                              });
 
-                                  var usuario = CadastroUsuarioModel(
-                                      name: controller.nome.text,
-                                      phone: controller.telefone.text,
-                                      email: controller.email.text,
-                                      password: controller.senha.text,
-                                      );
-                                  await controller.cadastrar(usuario);
-                                },
-                                style: ButtonStyle(
-                                    backgroundColor: WidgetStateProperty.all(
-                                        TColors.buttonBackground)),
-                                child: const Text('Cadastrar', style: TextStyle(color: Colors.white),))),
+                              // Se as senhas coincidem, prossegue com o cadastro
+                              if (!senhaNaoConfere) {
+                                var usuario = CadastroUsuarioModel(
+                                  name: controller.nome.text,
+                                  phone: controller.telefone.text,
+                                  email: controller.email.text,
+                                  password: controller.senha.text,
+                                );
+                                await controller.cadastrar(usuario);
+                              }
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(TColors.buttonBackground),
+                            ),
+                            child: const Text(
+                              'Cadastrar',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -196,15 +224,16 @@ class CadastroPage extends StatelessWidget {
                                   fontSize: 12,
                                 )),
                             TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text(
-                                  'Faça o login',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      decoration: TextDecoration.underline),
-                                )),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                'Faça o login',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    decoration: TextDecoration.underline),
+                              ),
+                            ),
                           ],
                         ),
                       ]),
