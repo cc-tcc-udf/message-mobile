@@ -174,7 +174,6 @@ class _CadastroPageState extends State<CadastroPage> {
                             obscureText: true,
                           ),
                         ),
-                        // Exibe mensagem de erro se as senhas não conferirem
                         if (senhaNaoConfere)
                           const Padding(
                             padding: EdgeInsets.only(top: 8.0),
@@ -191,12 +190,10 @@ class _CadastroPageState extends State<CadastroPage> {
                           height: 55,
                           child: ElevatedButton(
                             onPressed: () async {
-                              // Verifica se as senhas coincidem
                               setState(() {
                                 senhaNaoConfere = controller.senha.text != controller.confirmar.text;
                               });
 
-                              // Se as senhas coincidem, prossegue com o cadastro
                               if (!senhaNaoConfere) {
                                 var usuario = CadastroUsuarioModel(
                                   name: controller.nome.text,
@@ -205,10 +202,11 @@ class _CadastroPageState extends State<CadastroPage> {
                                   password: controller.senha.text,
                                 );
                                 await controller.cadastrar(usuario);
+
                               }
                             },
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(TColors.buttonBackground),
+                              backgroundColor: WidgetStateProperty.all(TColors.buttonBackground),
                             ),
                             child: const Text(
                               'Cadastrar',

@@ -1,4 +1,8 @@
 import 'package:campus_connect/core/localstorage/security_shared_preference.dart';
+import 'package:campus_connect/features/usuarios/data/datasources/usuarios_datasource.dart';
+import 'package:campus_connect/features/usuarios/data/repositories/usuario_repository.dart';
+import 'package:campus_connect/features/usuarios/domain/usecases/usuario_usecase.dart';
+import 'package:campus_connect/features/usuarios/presentation/controllers/usuario_controller.dart';
 import 'package:get_it/get_it.dart';
 import '../../features/login/data/datasources/login_datasource.dart';
 import '../../features/login/data/repositories/login_repository.dart';
@@ -23,6 +27,18 @@ class AppInjection {
       ..registerFactory<LoginUsecase>(
               () => LoginUsecaseImpl(repository: getIt.get<LoginRepository>()))
       ..registerLazySingleton(() => LoginController(
-          loginUsecase: getIt.get<LoginUsecase>()));
+          loginUsecase: getIt.get<LoginUsecase>()))
+
+    //Usuarios
+      ..registerFactory<UsuariosDatasource>(() => UsuariosDatasourceImpl(
+          client: getIt.get<HttpClientDio>(),
+          ))
+      ..registerFactory<UsuarioRepository>(() => UsuarioRepositoryImpl(
+          datasource: getIt.get<UsuariosDatasource>()))
+      ..registerFactory<UsuarioUsecase>(
+              () => UsuarioUsecaseImpl(repository: getIt.get<UsuarioRepository>()))
+      ..registerLazySingleton(() => UsuarioController(
+          usecase: getIt.get<UsuarioUsecase>()));
+
   }
 }

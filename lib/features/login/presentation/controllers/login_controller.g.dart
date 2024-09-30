@@ -25,6 +25,86 @@ mixin _$LoginController on LoginControllerBase, Store {
     });
   }
 
+  late final _$nomeAtom =
+      Atom(name: 'LoginControllerBase.nome', context: context);
+
+  @override
+  TextEditingController get nome {
+    _$nomeAtom.reportRead();
+    return super.nome;
+  }
+
+  @override
+  set nome(TextEditingController value) {
+    _$nomeAtom.reportWrite(value, super.nome, () {
+      super.nome = value;
+    });
+  }
+
+  late final _$telefoneAtom =
+      Atom(name: 'LoginControllerBase.telefone', context: context);
+
+  @override
+  TextEditingController get telefone {
+    _$telefoneAtom.reportRead();
+    return super.telefone;
+  }
+
+  @override
+  set telefone(TextEditingController value) {
+    _$telefoneAtom.reportWrite(value, super.telefone, () {
+      super.telefone = value;
+    });
+  }
+
+  late final _$emailAtom =
+      Atom(name: 'LoginControllerBase.email', context: context);
+
+  @override
+  TextEditingController get email {
+    _$emailAtom.reportRead();
+    return super.email;
+  }
+
+  @override
+  set email(TextEditingController value) {
+    _$emailAtom.reportWrite(value, super.email, () {
+      super.email = value;
+    });
+  }
+
+  late final _$senhaAtom =
+      Atom(name: 'LoginControllerBase.senha', context: context);
+
+  @override
+  TextEditingController get senha {
+    _$senhaAtom.reportRead();
+    return super.senha;
+  }
+
+  @override
+  set senha(TextEditingController value) {
+    _$senhaAtom.reportWrite(value, super.senha, () {
+      super.senha = value;
+    });
+  }
+
+  late final _$confirmarAtom =
+      Atom(name: 'LoginControllerBase.confirmar', context: context);
+
+  @override
+  TextEditingController get confirmar {
+    _$confirmarAtom.reportRead();
+    return super.confirmar;
+  }
+
+  @override
+  set confirmar(TextEditingController value) {
+    _$confirmarAtom.reportWrite(value, super.confirmar, () {
+      super.confirmar = value;
+    });
+  }
+
   late final _$errorAtom =
       Atom(name: 'LoginControllerBase.error', context: context);
 
@@ -89,6 +169,22 @@ mixin _$LoginController on LoginControllerBase, Store {
     });
   }
 
+  late final _$cadastroAtom =
+      Atom(name: 'LoginControllerBase.cadastro', context: context);
+
+  @override
+  ResponseCadastroUsuarioModel? get cadastro {
+    _$cadastroAtom.reportRead();
+    return super.cadastro;
+  }
+
+  @override
+  set cadastro(ResponseCadastroUsuarioModel? value) {
+    _$cadastroAtom.reportWrite(value, super.cadastro, () {
+      super.cadastro = value;
+    });
+  }
+
   late final _$loginAsyncAction =
       AsyncAction('LoginControllerBase.login', context: context);
 
@@ -96,6 +192,14 @@ mixin _$LoginController on LoginControllerBase, Store {
   Future<void> login({required String email, required String senha}) {
     return _$loginAsyncAction
         .run(() => super.login(email: email, senha: senha));
+  }
+
+  late final _$cadastrarAsyncAction =
+      AsyncAction('LoginControllerBase.cadastrar', context: context);
+
+  @override
+  Future<void> cadastrar(CadastroUsuarioModel usuario) {
+    return _$cadastrarAsyncAction.run(() => super.cadastrar(usuario));
   }
 
   late final _$LoginControllerBaseActionController =
@@ -116,10 +220,16 @@ mixin _$LoginController on LoginControllerBase, Store {
   String toString() {
     return '''
 isLoading: ${isLoading},
+nome: ${nome},
+telefone: ${telefone},
+email: ${email},
+senha: ${senha},
+confirmar: ${confirmar},
 error: ${error},
 passwordVisible: ${passwordVisible},
 manterConectado: ${manterConectado},
-loginEntity: ${loginEntity}
+loginEntity: ${loginEntity},
+cadastro: ${cadastro}
     ''';
   }
 }

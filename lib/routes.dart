@@ -1,5 +1,6 @@
 import 'package:campus_connect/features/home/presentation/pages/home_page.dart';
 import 'package:campus_connect/features/login/presentation/pages/cadastro_page.dart';
+import 'package:campus_connect/features/usuarios/presentation/pages/escolher_curso_page.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -8,6 +9,9 @@ class Routes {
 
   //Home
   static const String cadastro = '/cadastro';
+
+  //Cursos
+  static const String escolherCursos = '/escolherCursos';
 
 
   Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -18,6 +22,8 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) =>
             const CadastroPage());
+      case Routes.escolherCursos:
+        return MaterialPageRoute(builder: (_) => const EscolherCursoPage());
       default:
         return null;
     }

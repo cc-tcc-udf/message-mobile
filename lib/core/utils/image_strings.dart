@@ -10,4 +10,7 @@ class TImages {
       "assets/images/on_boarding_images/connection.png";
   static const String onBoardingImage2 =
       "assets/images/on_boarding_images/comunication.png";
+
+  //Escolher cursos
+  static const String escolherCursoImage = 'assets/images/escolher_curso.png';
 }

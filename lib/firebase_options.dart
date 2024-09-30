@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBhSlyzH_XFwBK1cKK5D7yIMWQoGQPBe_M',
-    appId: '1:62208346959:android:c14fd9c5ad5155bf61133a',
-    messagingSenderId: '62208346959',
-    projectId: 'campus-connect-bd2d4',
-    storageBucket: 'campus-connect-bd2d4.appspot.com',
+    apiKey: 'AIzaSyDFH-T5jbhIYylInPK6VFSxKwlJCpOqcK4',
+    appId: '1:209523366376:android:bdef107563177c7ff0ac5d',
+    messagingSenderId: '209523366376',
+    projectId: 'message-app-718ba',
+    storageBucket: 'message-app-718ba.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCbdST1_oFQXY3AUiGnZRfbql_Ee_q9y6c',
-    appId: '1:62208346959:ios:6d03d5db86009c2b61133a',
-    messagingSenderId: '62208346959',
-    projectId: 'campus-connect-bd2d4',
-    storageBucket: 'campus-connect-bd2d4.appspot.com',
+    apiKey: 'AIzaSyCvcjV4vx503Qu6DyN-DDtu4Wv9TwEwlVU',
+    appId: '1:209523366376:ios:d795850ed976c21df0ac5d',
+    messagingSenderId: '209523366376',
+    projectId: 'message-app-718ba',
+    storageBucket: 'message-app-718ba.appspot.com',
     iosBundleId: 'org.campus.connect.messageMobile',
   );
 }
