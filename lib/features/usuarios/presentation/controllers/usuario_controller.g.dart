@@ -73,6 +73,14 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
     return _$getDataUserAsyncAction.run(() => super.getDataUser(email: email));
   }
 
+  late final _$atualizarAsyncAction =
+      AsyncAction('_UsuarioControllerBase.atualizar', context: context);
+
+  @override
+  Future<void> atualizar(AtualizarUsuarioModel usuarios) {
+    return _$atualizarAsyncAction.run(() => super.atualizar(usuarios));
+  }
+
   @override
   String toString() {
     return '''

@@ -3,16 +3,28 @@ class ResponseDataUserModel {
   final String? uid;
   final String? name;
   final String? email;
+  final String? password;
   final String? phone;
+  final int? idCurso;
+  final ProfilePhoto? profilePhoto;
+  final CoverPhoto? coverPhoto;
   final List<String>? roles;
+  final List<String>? tokens;
+  final Course? course;
 
   ResponseDataUserModel({
     required this.id,
     required this.uid,
     required this.name,
     required this.email,
+    required this.password,
     required this.phone,
+    required this.idCurso,
+    required this.profilePhoto,
+    required this.coverPhoto,
     required this.roles,
+    required this.tokens,
+    required this.course,
   });
 
   factory ResponseDataUserModel.fromJson(Map<String, dynamic> json) {
@@ -21,8 +33,18 @@ class ResponseDataUserModel {
       uid: json['uid'],
       name: json['name'],
       email: json['email'],
+      password: json['password'],
       phone: json['phone'],
-      roles: List<String>.from(json['roles']),
+      idCurso: json['id_curso'],
+      profilePhoto: json['profilePhoto'] != null
+          ? ProfilePhoto.fromJson(json['profilePhoto'])
+          : null,
+      coverPhoto: json['coverPhoto'] != null
+          ? CoverPhoto.fromJson(json['coverPhoto'])
+          : null,
+      roles: json['roles'] != null ? List<String>.from(json['roles']) : [],
+      tokens: json['tokens'] != null ? List<String>.from(json['tokens']) : [],
+      course: json['course'] != null ? Course.fromJson(json['course']) : null,
     );
   }
 
@@ -32,21 +54,27 @@ class ResponseDataUserModel {
       'uid': uid,
       'name': name,
       'email': email,
+      'password': password,
       'phone': phone,
+      'id_curso': idCurso,
+      'profilePhoto': profilePhoto?.toJson(),
+      'coverPhoto': coverPhoto?.toJson(),
       'roles': roles,
+      'tokens': tokens,
+      'course': course?.toJson(),
     };
   }
 }
 
 class ProfilePhoto {
-  final int id;
-  final String name;
-  final String type;
-  final String url;
-  final int size;
-  final String key;
-  final String uid;
-  final int idExt;
+  final int? id;
+  final String? name;
+  final String? type;
+  final String? url;
+  final int? size;
+  final String? key;
+  final String? uid;
+  final int? idExt;
 
   ProfilePhoto({
     required this.id,
@@ -87,14 +115,14 @@ class ProfilePhoto {
 }
 
 class CoverPhoto {
-  final int id;
-  final String name;
-  final String type;
-  final String url;
-  final int size;
-  final String key;
-  final String uid;
-  final int idExt;
+  final int? id;
+  final String? name;
+  final String? type;
+  final String? url;
+  final int? size;
+  final String? key;
+  final String? uid;
+  final int? idExt;
 
   CoverPhoto({
     required this.id,
@@ -135,14 +163,14 @@ class CoverPhoto {
 }
 
 class Course {
-  final int id;
-  final String name;
-  final String description;
-  final String abbreviation;
-  final int resp;
-  final int courseGroupId;
-  final bool isGroup;
-  final List<String> courses;
+  final int? id;
+  final String? name;
+  final String? description;
+  final String? abbreviation;
+  final int? resp;
+  final int? courseGroupId;
+  final bool? isGroup;
+  final List<Course>? courses;
 
   Course({
     required this.id,
@@ -164,7 +192,9 @@ class Course {
       resp: json['resp'],
       courseGroupId: json['courseGroupId'],
       isGroup: json['isGroup'],
-      courses: List<String>.from(json['courses']),
+      courses: (json['courses'] as List<dynamic>?)
+          ?.map((course) => Course.fromJson(course))
+          .toList() ?? [],
     );
   }
 
@@ -177,7 +207,7 @@ class Course {
       'resp': resp,
       'courseGroupId': courseGroupId,
       'isGroup': isGroup,
-      'courses': courses,
+      'courses': courses?.map((course) => course.toJson()).toList(),
     };
   }
 }

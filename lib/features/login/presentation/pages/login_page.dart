@@ -61,19 +61,19 @@ class _LoginPageState extends State<LoginPage> {
         message: 'CPF e/ou senha inválidos',
       );
     } else {
-      // if(userController.usuario?.idCurso == null){
-      //   LocalNotificationService().uploadFcmToken();
-      //   Navigator.of(context).pushNamedAndRemoveUntil(
-      //     Routes.escolherCursos,
-      //         (Route<dynamic> route) => false,
-      //   );
-      // }else{
+      if(userController.usuario?.course?.id == null){
+        LocalNotificationService().uploadFcmToken();
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          Routes.escolherCursos,
+              (Route<dynamic> route) => false,
+        );
+      }else{
         LocalNotificationService().uploadFcmToken();
         Navigator.of(context).pushNamedAndRemoveUntil(
           Routes.initial,
               (Route<dynamic> route) => false,
         );
-      // }
+      }
     }
   }
 

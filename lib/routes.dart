@@ -1,5 +1,6 @@
 import 'package:campus_connect/features/home/presentation/pages/home_page.dart';
 import 'package:campus_connect/features/login/presentation/pages/cadastro_page.dart';
+import 'package:campus_connect/features/login/presentation/pages/login_page.dart';
 import 'package:campus_connect/features/usuarios/presentation/pages/escolher_curso_page.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class Routes {
 
   //Home
   static const String cadastro = '/cadastro';
+  static const String login = '/login';
 
   //Cursos
   static const String escolherCursos = '/escolherCursos';
@@ -18,6 +20,10 @@ class Routes {
     switch (settings.name) {
       case Routes.initial:
         return MaterialPageRoute(builder: (_) => const HomePage());
+      case Routes.login:
+        return MaterialPageRoute(
+            builder: (_) =>
+            const LoginPage());
       case Routes.cadastro:
         return MaterialPageRoute(
             builder: (_) =>

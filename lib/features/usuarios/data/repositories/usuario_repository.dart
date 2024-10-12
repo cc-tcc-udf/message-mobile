@@ -1,4 +1,5 @@
 import 'package:campus_connect/features/usuarios/data/datasources/usuarios_datasource.dart';
+import 'package:campus_connect/features/usuarios/data/models/atualizar_usuario_model.dart';
 import 'package:campus_connect/features/usuarios/data/models/response_list_courses_model.dart';
 
 import '../models/response_data_user_model.dart';
@@ -6,6 +7,7 @@ import '../models/response_data_user_model.dart';
 abstract class UsuarioRepository {
   Future<ResponseListCoursesModel?> getListCursos();
   Future<ResponseDataUserModel?> getDataUser({required String email});
+  Future<ResponseDataUserModel?> atualizar(AtualizarUsuarioModel usuarios);
 }
 
 class UsuarioRepositoryImpl implements UsuarioRepository {
@@ -26,6 +28,15 @@ class UsuarioRepositoryImpl implements UsuarioRepository {
   Future<ResponseDataUserModel?> getDataUser({required String email}) async {
     try {
       return await datasource.getDadosUsuario(email: email);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ResponseDataUserModel?> atualizar(AtualizarUsuarioModel usuarios) async {
+    try {
+      return await datasource.atualizarUsuario(usuarios);
     } catch (e) {
       rethrow;
     }

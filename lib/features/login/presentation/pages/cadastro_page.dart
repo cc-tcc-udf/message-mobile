@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../routes.dart';
 import '../controllers/login_controller.dart';
 
 class CadastroPage extends StatefulWidget {
@@ -202,7 +203,10 @@ class _CadastroPageState extends State<CadastroPage> {
                                   password: controller.senha.text,
                                 );
                                 await controller.cadastrar(usuario);
-
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                  Routes.login,
+                                      (Route<dynamic> route) => false,
+                                );
                               }
                             },
                             style: ButtonStyle(

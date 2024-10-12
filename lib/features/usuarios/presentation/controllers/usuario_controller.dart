@@ -1,7 +1,9 @@
+import 'package:campus_connect/features/usuarios/data/models/atualizar_usuario_model.dart';
 import 'package:campus_connect/features/usuarios/data/models/response_list_courses_model.dart';
 import 'package:campus_connect/features/usuarios/domain/usecases/usuario_usecase.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../login/data/models/response_cadastro_usuario_model.dart';
 import '../../data/models/response_data_user_model.dart';
 
 part 'usuario_controller.g.dart';
@@ -46,6 +48,18 @@ abstract class _UsuarioControllerBase with Store {
       usuario = await usecase.getDataUser(email: email);
     } catch (e) {
       isLoading = false;
+      rethrow;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @action
+  Future<void> atualizar(AtualizarUsuarioModel usuarios) async {
+    isLoading = true;
+    try {
+      usuario = await usecase.atualizar(usuarios);
+    } catch (e) {
       rethrow;
     } finally {
       isLoading = false;

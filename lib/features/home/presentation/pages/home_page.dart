@@ -1,24 +1,94 @@
+import 'package:campus_connect/core/utils/device.utility.dart';
+import 'package:campus_connect/features/home/presentation/widget/home_page_widget.dart';
+import 'package:campus_connect/features/mensagens/presentation/controllers/mensagem_controller.dart';
+import 'package:campus_connect/features/usuarios/presentation/controllers/usuario_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+import '../../../../core/design/widgets/s_bottom_navigation_bar.dart';
+import '../../../configuracoes/configuracoes_page.dart';
+import '../../../mensagens/data/models/mensagem_model.dart';
+import '../../../mensagens/presentation/pages/mensagem_page.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key, this.selectedIndex = 1});
+
+  final int selectedIndex;
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+  final bool _isSpecialColor = false;
+
+  late List<Widget> _widgetOptions;
+  bool _isLoading = true;
+  @override
+
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.selectedIndex;
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      _widgetOptions = <Widget>[
+        MensagemPage(),
+        const HomePageWidget(),
+        ConfiguracoesPage(),
+      ];
+      _isLoading = false;
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+      rethrow;
+    }
+  }
+
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _widgetOptions.isNotEmpty
+          ? _widgetOptions[_selectedIndex]
+          : const Center(child: Text('Nenhum conteúdo disponível')),
+      bottomNavigationBar: _isLoading
+          ? null
+          : SBottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message, size: 30),
+            label: 'Mensagens',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, size: 30),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings, size: 30),
+            label: 'Configurações',
+          ),
 
-          },
-          child: const Text('Enviar Notificação'),
-        ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey.shade600,
+        onTap: _onItemTapped,
+        preenchido: _isSpecialColor,
       ),
     );
   }
 }
+

@@ -4,12 +4,15 @@ import '../../../../../../../core/http/server_exception.dart';
 import '../../../../core/config/endpoints_consts.dart';
 import '../../../../core/localstorage/security_local_storage.dart';
 import '../../../../core/localstorage/security_shared_preference.dart';
+import '../../../login/data/models/response_cadastro_usuario_model.dart';
+import '../models/atualizar_usuario_model.dart';
 import '../models/response_data_user_model.dart';
 import '../models/response_list_courses_model.dart';
 
 abstract class UsuariosDatasource {
   Future<ResponseListCoursesModel?> getListCursos();
   Future<ResponseDataUserModel?> getDadosUsuario({required String email});
+  Future<ResponseDataUserModel?> atualizarUsuario(AtualizarUsuarioModel usuario);
 }
 
 class UsuariosDatasourceImpl implements UsuariosDatasource {
@@ -51,6 +54,29 @@ class UsuariosDatasourceImpl implements UsuariosDatasource {
         return ResponseDataUserModel.fromJson(result.data);
       } else {
         throw ServerException(result.statusMessage ?? "Unknown error");
+      }
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<ResponseDataUserModel?> atualizarUsuario(AtualizarUsuarioModel usuario) async {
+    try {
+      final SecurityLocalStorage storage = SecuritySharedPreference();
+      var token = await storage.read("token");
+      var result = await client.put(
+          baseOptions: HttpConfig.apiCampus,
+          headers: [{"Accept": '*/*', "Authorization": 'Bearer $token'}],
+          endpoint: EndPointsConsts.atualizarUsuario,
+          data: usuario.toJson()
+      );
+
+      if (result.statusCode == 200) {
+        final atualizar = ResponseDataUserModel.fromJson(result.data);
+        return atualizar;
+      } else {
+        throw ServerException(result.statusMessage);
       }
     } catch (e) {
       throw ServerException(e.toString());
