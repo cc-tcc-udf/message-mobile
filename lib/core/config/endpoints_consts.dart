@@ -10,5 +10,6 @@ class EndPointsConsts {
   static const String listaCursos = '/public/course/groups';
   //Mensagens
   static const String listaMensagens = '/public/msg/list';
+  static String detalheMensagem({required int id}) => '/public/msg/$id';
 
 }

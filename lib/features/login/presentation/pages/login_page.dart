@@ -83,134 +83,136 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: Padding(
-        padding: TSpacingStyle.paddingWithAppBarHeight,
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Image(
-                  image: AssetImage(
-                    isDarkTheme ? TImages.darkAppLogo : TImages.lightAppLogo,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: TSpacingStyle.paddingWithAppBarHeight,
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Image(
+                    image: AssetImage(
+                      isDarkTheme ? TImages.darkAppLogo : TImages.lightAppLogo,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: TSizes.defaultSpace,
-              ),
-              Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Digite seu email',
-                      style: TextStyle(fontSize: TSizes.fontSizeSm),
-                    ),
-                    const SizedBox(
-                      height: TSizes.sm,
-                    ),
-                    TextFormField(
-                      controller: emailController,
-                      focusNode: emailFocusNode,
-                      cursorColor: Colors.black,
-                      style: const TextStyle(color: Colors.black),
-                      keyboardType: TextInputType.emailAddress,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(senhaFocusNode);
-                      },
-                    ),
-                    const SizedBox(
-                      height: TSizes.spaceBtwItens,
-                    ),
-                    const Text(
-                      'Digite sua senha',
-                      style: TextStyle(fontSize: TSizes.fontSizeSm),
-                    ),
-                    const SizedBox(
-                      height: TSizes.sm,
-                    ),
-                    TextFormField(
-                      controller: senhaController,
-                      focusNode: senhaFocusNode,
-                      cursorColor: Colors.black,
-                      style: const TextStyle(color: Colors.black),
-                      obscureText: true,
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Esqueci minha senha',
-                          style: TextStyle(
-                            fontSize: 12,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
+                const SizedBox(
+                  height: TSizes.defaultSpace,
+                ),
+                Form(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Digite seu email',
+                        style: TextStyle(fontSize: TSizes.fontSizeSm),
                       ),
-                    ),
-                    const SizedBox(
-                      height: TSizes.spaceBtwItens,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 55,
-                      child: ElevatedButton(
-                        onPressed: isLoading
-                            ? null
-                            : _login,
-                        style: ButtonStyle(
-                          backgroundColor:
-                          isLoading?
-                          WidgetStateProperty.all(Colors.grey[100])
-                              :
-                          WidgetStateProperty.all(TColors.buttonBackground)
-                          ,
-                        ),
-                        child: isLoading
-                            ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                TColors.buttonBackground),
-                          ),
-                        )
-                            : const Text(
-                          'Acessar',
-                          style: TextStyle(color: Colors.white),
-                        ),
+                      const SizedBox(
+                        height: TSizes.sm,
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Não possui cadastro?',
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(Routes.cadastro);
-                          },
+                      TextFormField(
+                        controller: emailController,
+                        focusNode: emailFocusNode,
+                        cursorColor: Colors.black,
+                        style: const TextStyle(color: Colors.black),
+                        keyboardType: TextInputType.emailAddress,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(senhaFocusNode);
+                        },
+                      ),
+                      const SizedBox(
+                        height: TSizes.spaceBtwItens,
+                      ),
+                      const Text(
+                        'Digite sua senha',
+                        style: TextStyle(fontSize: TSizes.fontSizeSm),
+                      ),
+                      const SizedBox(
+                        height: TSizes.sm,
+                      ),
+                      TextFormField(
+                        controller: senhaController,
+                        focusNode: senhaFocusNode,
+                        cursorColor: Colors.black,
+                        style: const TextStyle(color: Colors.black),
+                        obscureText: true,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {},
                           child: const Text(
-                            'Se inscreva aqui',
+                            'Esqueci minha senha',
                             style: TextStyle(
                               fontSize: 12,
                               decoration: TextDecoration.underline,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      const SizedBox(
+                        height: TSizes.spaceBtwItens,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 55,
+                        child: ElevatedButton(
+                          onPressed: isLoading
+                              ? null
+                              : _login,
+                          style: ButtonStyle(
+                            backgroundColor:
+                            isLoading?
+                            WidgetStateProperty.all(Colors.grey[100])
+                                :
+                            WidgetStateProperty.all(TColors.buttonBackground)
+                            ,
+                          ),
+                          child: isLoading
+                              ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  TColors.buttonBackground),
+                            ),
+                          )
+                              : const Text(
+                            'Acessar',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Não possui cadastro?',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(Routes.cadastro);
+                            },
+                            child: const Text(
+                              'Se inscreva aqui',
+                              style: TextStyle(
+                                fontSize: 12,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

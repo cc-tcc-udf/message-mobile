@@ -4,12 +4,13 @@ import '../../../../core/http/http_client_dio.dart';
 import '../../../../core/http/server_exception.dart';
 import '../../../../core/localstorage/security_local_storage.dart';
 import '../../../../core/localstorage/security_shared_preference.dart';
+import '../models/detalhe_mensagem_model.dart';
 import '../models/mensagem_model.dart';
 
 
 abstract class MensagemDatasource {
   Future<MensagemModel?> listarMensagens();
-  // Future<ResponseCadastroUsuarioModel?> cadastroUsuario(CadastroUsuarioModel usuarios);
+  Future<DetalheMensagemModel?> detalheMensagem(int id);
 }
 
 class MensagemDatasourceImpl implements MensagemDatasource {
@@ -38,26 +39,23 @@ class MensagemDatasourceImpl implements MensagemDatasource {
     }
   }
 
-  // @override
-  // Future<bool> alterarSenha(
-  //     {required AlterarSenhaEntity alterarSenhaEntity}) async {
-  //   try {
-  //     var response = await httpClient.post(
-  //         baseOptions: HttpConfig.optionsSIGOPPortal,
-  //         endpoint: EndPointsConsts.alterarSenha,
-  //         data: {
-  //           "idCliente": alterarSenhaEntity.idCliente,
-  //           "senhaAtual": alterarSenhaEntity.senhaAtual,
-  //           "novaSenha": alterarSenhaEntity.novaSenha,
-  //           "novaSenhaConfirmacao": alterarSenhaEntity.novaSenhaConfirmacao
-  //         });
-  //     if (response.statusCode == 200) {
-  //       return response.data;
-  //     } else {
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     return false;
-  //   }
-  // }
+  @override
+  Future<DetalheMensagemModel?> detalheMensagem(int id) async {
+    try {
+      final SecurityLocalStorage storage = SecuritySharedPreference();
+      var result = await client.get(
+        baseOptions: HttpConfig.apiCampus,
+        endpoint: EndPointsConsts.detalheMensagem(id: id),
+      );
+
+      if (result.statusCode == 200) {
+        final mensagem = DetalheMensagemModel.fromJson(result.data);
+        return mensagem;
+      } else {
+        throw ServerException(result.statusMessage);
+      }
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
 }

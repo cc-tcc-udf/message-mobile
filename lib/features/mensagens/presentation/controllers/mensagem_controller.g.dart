@@ -57,6 +57,22 @@ mixin _$MensagemController on MensagemControllerBase, Store {
     });
   }
 
+  late final _$detalheMensagemAtom =
+      Atom(name: 'MensagemControllerBase.detalheMensagem', context: context);
+
+  @override
+  DetalheMensagemModel? get detalheMensagem {
+    _$detalheMensagemAtom.reportRead();
+    return super.detalheMensagem;
+  }
+
+  @override
+  set detalheMensagem(DetalheMensagemModel? value) {
+    _$detalheMensagemAtom.reportWrite(value, super.detalheMensagem, () {
+      super.detalheMensagem = value;
+    });
+  }
+
   late final _$listarMensagensAsyncAction =
       AsyncAction('MensagemControllerBase.listarMensagens', context: context);
 
@@ -65,12 +81,21 @@ mixin _$MensagemController on MensagemControllerBase, Store {
     return _$listarMensagensAsyncAction.run(() => super.listarMensagens());
   }
 
+  late final _$detalhesMensagemAsyncAction =
+      AsyncAction('MensagemControllerBase.detalhesMensagem', context: context);
+
+  @override
+  Future<DetalheMensagemModel?> detalhesMensagem(int id) {
+    return _$detalhesMensagemAsyncAction.run(() => super.detalhesMensagem(id));
+  }
+
   @override
   String toString() {
     return '''
 isLoading: ${isLoading},
 error: ${error},
-mensagem: ${mensagem}
+mensagem: ${mensagem},
+detalheMensagem: ${detalheMensagem}
     ''';
   }
 }

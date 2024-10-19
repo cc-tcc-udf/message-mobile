@@ -1,19 +1,19 @@
-class MensagemModel {
-  final String message;
-  final bool success;
-  final List<MessageData> data;
+class DetalheMensagemModel {
+  final String? message;
+  final bool? success;
+  final MessageData? data;
 
-  MensagemModel({
+  DetalheMensagemModel({
     required this.message,
     required this.success,
     required this.data,
   });
 
-  factory MensagemModel.fromJson(Map<String, dynamic> json) {
-    return MensagemModel(
+  factory DetalheMensagemModel.fromJson(Map<String, dynamic> json) {
+    return DetalheMensagemModel(
       message: json['message'] as String,
       success: json['success'] as bool,
-      data: (json['data'] as List<dynamic>).map((item) => MessageData.fromJson(item)).toList(),
+      data: MessageData.fromJson(json['data']),
     );
   }
 
@@ -21,20 +21,20 @@ class MensagemModel {
     return {
       'message': message,
       'success': success,
-      'data': data.map((item) => item.toJson()).toList(),
+      'data': data!.toJson(),
     };
   }
 }
 
 class MessageData {
-  final int id;
-  final String title;
-  final String summary;
-  final String status;
-  final String message;
-  final String responsible;
-  final List<dynamic> attachments;
-  final List<LinkData> links;
+  final int? id;
+  final String? title;
+  final String? summary;
+  final String? status;
+  final String? message;
+  final String? responsible;
+  final List<dynamic>? attachments;
+  final List<LinkData>? links;
 
   MessageData({
     required this.id,
@@ -56,7 +56,9 @@ class MessageData {
       message: json['message'] as String,
       responsible: json['responsible'] as String,
       attachments: json['attachments'] as List<dynamic>,
-      links: (json['links'] as List<dynamic>).map((item) => LinkData.fromJson(item)).toList(),
+      links: (json['links'] as List<dynamic>)
+          .map((item) => LinkData.fromJson(item))
+          .toList(),
     );
   }
 
@@ -69,15 +71,15 @@ class MessageData {
       'message': message,
       'responsible': responsible,
       'attachments': attachments,
-      'links': links.map((item) => item.toJson()).toList(),
+      'links': links!.map((item) => item.toJson()).toList(),
     };
   }
 }
 
 class LinkData {
-  final int id;
-  final String title;
-  final String link;
+  final int? id;
+  final String? title;
+  final String? link;
 
   LinkData({
     required this.id,
