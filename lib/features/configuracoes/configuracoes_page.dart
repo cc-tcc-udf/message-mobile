@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../core/design/themes/colors.dart';
+import '../../routes.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
   const ConfiguracoesPage({super.key});
@@ -68,7 +69,12 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                                 ),
                                 const Spacer(),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.perfil,
+                                    );
+                                  },
                                   child: const Align(
                                     alignment: Alignment.bottomRight,
                                     child: Row(
@@ -92,7 +98,12 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 40.0),
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.notificacao,
+                              );
+                            },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: 40,
@@ -123,7 +134,12 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.tema,
+                              );
+                            },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: 40,
@@ -154,7 +170,12 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.termos,
+                              );
+                            },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: 40,
@@ -193,7 +214,14 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          Routes.login,
+                              (Route<dynamic> route) => false,
+                        );
+
+                      },
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.3,
                         height: 40,
@@ -202,7 +230,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center, // Centraliza na horizontal
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.logout, size: 20),
                             SizedBox(width: 10),
