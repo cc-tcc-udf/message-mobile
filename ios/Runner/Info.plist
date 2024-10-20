@@ -46,6 +46,13 @@
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>LSApplicationQueriesSchemes</key>
+		<key>NSCameraUsageDescription</key>
+        <string>Este aplicativo precisa acessar sua câmera para tirar fotos.</string>
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>Este aplicativo precisa acessar sua galeria de fotos para selecionar uma imagem.</string>
+        <key>NSPhotoLibraryAddUsageDescription</key>
+        <string>Este aplicativo precisa de permissão para salvar fotos na sua galeria.</string>
+
         <array>
           <string>sms</string>
           <string>tel</string>

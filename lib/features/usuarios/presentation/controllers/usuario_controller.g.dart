@@ -57,12 +57,12 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
     });
   }
 
-  late final _$getListTypeDanoAsyncAction =
-      AsyncAction('_UsuarioControllerBase.getListTypeDano', context: context);
+  late final _$getListCoursesAsyncAction =
+      AsyncAction('_UsuarioControllerBase.getListCourses', context: context);
 
   @override
-  Future<void> getListTypeDano() {
-    return _$getListTypeDanoAsyncAction.run(() => super.getListTypeDano());
+  Future<void> getListCourses() {
+    return _$getListCoursesAsyncAction.run(() => super.getListCourses());
   }
 
   late final _$getDataUserAsyncAction =

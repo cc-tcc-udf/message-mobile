@@ -29,7 +29,7 @@ abstract class _UsuarioControllerBase with Store {
 
 
   @action
-  Future<void> getListTypeDano() async {
+  Future<void> getListCourses() async {
     isLoading = true;
     try {
       cursos = await usecase.getListCourses();

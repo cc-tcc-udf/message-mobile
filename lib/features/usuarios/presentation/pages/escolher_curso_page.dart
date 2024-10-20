@@ -24,7 +24,7 @@ class _EscolherCursoPageState extends State<EscolherCursoPage> {
   @override
   void initState() {
     super.initState();
-    controller.getListTypeDano();
+    controller.getListCourses();
   }
 
   Future<void> _atualizarUsuario() async {
@@ -112,6 +112,7 @@ class _EscolherCursoPageState extends State<EscolherCursoPage> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedCurso = newValue;
+
                                 });
                               },
                               items: cursosMap.entries

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'core/injection/app_injection.dart';
 
@@ -18,8 +19,19 @@ void main() async {
   );
   await LocalNotificationService().requestPermission();
   await LocalNotificationService().init();
+  await requestPermissions();
   runApp(const MyApp());
 }
+
+Future<void> requestPermissions() async {
+  PermissionStatus cameraStatus = await Permission.camera.request();
+  PermissionStatus photosStatus = await Permission.photos.request();
+
+  if (!cameraStatus.isGranted || !photosStatus.isGranted) {
+    print("Permissões necessárias não foram concedidas.");
+  }
+}
+
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
