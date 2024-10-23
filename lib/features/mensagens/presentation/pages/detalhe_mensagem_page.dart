@@ -26,32 +26,73 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
     _controller.detalhesMensagem(widget.id);
   }
 
-  void _showConfirmationDialog(String link) {
-    showDialog(
+  void _showBottomSheet(String link) {
+    showModalBottomSheet(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text('Atenção!'),
-          content: const Text('Este link será aberto em um navegador externo. Deseja continuar?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Não'),
-            ),
-            TextButton(
-              onPressed: () {
-                _launchURL(link);
-                Navigator.of(context).pop();
-              },
-              child: const Text('Sim'),
-            ),
-          ],
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.5,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30.0),
+                child: const Icon(Icons.open_in_new, size: 60),
+              ),
+              const Text(
+                'Atenção!',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              ),
+              const SizedBox(height: 16),
+              const Text('Você será redirecionado para o ambiente externo. Deseja continuar?', style: TextStyle(fontSize: 25), textAlign: TextAlign.center,),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        side: const BorderSide(color: Colors.black),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(9.5),
+                        ),
+                      ),
+                      child: const Text('Não', style: TextStyle(color: Colors.black),),
+                    ),
+                  ),
+
+                  const SizedBox(width: 8),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _launchURL(link);
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(9.5),
+                        ),
+                      ),
+                      child: const Text('Sim', style: TextStyle(color: Colors.white),),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
       },
     );
   }
+
+
 
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
@@ -113,7 +154,7 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                             child: GestureDetector(
                               onTap: () {
                                 if (links.link!.startsWith('http://') || links.link!.startsWith('https://')) {
-                                  _showConfirmationDialog(links.link!);
+                                  _showBottomSheet(links.link!);
                                 } else {
                                   print('URL inválido: ${links.link}');
                                 }
@@ -149,7 +190,7 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                             child: GestureDetector(
                               onTap: () {
                                 if (attachment.link!.startsWith('http://') || attachment.link!.startsWith('https://')) {
-                                  _showConfirmationDialog(attachment.link!);
+                                  _showBottomSheet(attachment.link!);
                                 } else {
                                   print('URL inválido: ${attachment.link}');
                                 }
