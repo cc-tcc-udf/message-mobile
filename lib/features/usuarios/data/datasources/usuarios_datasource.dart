@@ -60,6 +60,44 @@ class UsuariosDatasourceImpl implements UsuariosDatasource {
     }
   }
 
+  // @override
+  // Future<RespostaEnvioAnexoModel> envioArquivo({
+  //   required AnexoModel arquivo,
+  // }) async {
+  //   try {
+  //     final SecurityLocalStorage storage = SecuritySharedPreference();
+  //     var token = await storage.read("token");
+  //
+  //     MultipartFile multipartFile = MultipartFile.fromBytes(
+  //       arquivo.arquivo,
+  //       filename: 'image.jpg',
+  //     );
+  //
+  //     FormData formData = FormData.fromMap({
+  //       'arquivo': multipartFile,
+  //     });
+  //
+  //     var result = await client.post(
+  //       baseOptions: HttpConfig.apiRetaguarda,
+  //       headers: [{
+  //         "Accept": '*/*',
+  //         "Authorization": 'Bearer $token',
+  //       }],
+  //       endpoint: EndPointsConsts.anexo,
+  //       data: formData,
+  //     );
+  //
+  //     if (result.statusCode == 200) {
+  //       final arquivo = RespostaEnvioAnexoModel.fromJson(result.data);
+  //       return arquivo;
+  //     } else {
+  //       throw ServerException('Erro ao enviar arquivo: ${result.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     throw ServerException(e.toString());
+  //   }
+  // }
+
   @override
   Future<ResponseDataUserModel?> atualizarUsuario(AtualizarUsuarioModel usuario) async {
     try {

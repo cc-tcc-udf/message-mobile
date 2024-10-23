@@ -11,5 +11,7 @@ class EndPointsConsts {
   //Mensagens
   static const String listaMensagens = '/public/msg/list';
   static String detalheMensagem({required int id}) => '/public/msg/$id';
+  //Files
+  static const String envioFoto = '/public/file/create';
 
 }

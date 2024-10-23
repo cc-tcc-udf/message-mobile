@@ -13,4 +13,7 @@ class TImages {
 
   //Escolher cursos
   static const String escolherCursoImage = 'assets/images/escolher_curso.png';
+
+  //Notificações
+  static const notificacoesImage = 'assets/images/notifications.png';
 }
