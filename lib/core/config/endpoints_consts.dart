@@ -2,7 +2,7 @@ class EndPointsConsts {
   //Login
   static const String login = '/public/auth/login';
   //Cadastro
-  static const String cadastro = '/public/auth/register';
+  static const String cadastro = '/public/auth/register?isMobile=true';
   //Usuário
   static String dadosUsuario({required String email}) => '/private/auth/getUser?email=$email';
   static const String atualizarUsuario = '/private/auth/update';
