@@ -57,11 +57,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Theme.of(context).brightness == Brightness.light ?
                     Image.asset(
                       'assets/images/logo campus connect 1.png',
                       width: 100,
                       height: 100,
+                    )
+                    : Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Image.asset(
+                        'assets/images/loading_dark.png',
+                        width: 70,
+                        height: 70,
+                      ),
                     ),
+
                     const Text(
                       'Seja bem-vindo(a)!!',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
@@ -77,70 +87,89 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
-                      child: Text('Recentes ($index)', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
+                      child: Text(
+                        'Recentes ($index)',
+                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                      ),
                     ),
-                    ListView.builder(
-                      itemCount: _controller.mensagem?.data.length ?? 0,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final mensagem = _controller.mensagem!.data[index];
-                        return GestureDetector(
-                          onTap: (){
-                            Navigator.pushNamed(
-                              context,
-                              Routes.detalheMensagem,
-                              arguments: {
-                                'id': mensagem.id,
-                              },
-                            );
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(bottom: 16),
-                            width: MediaQuery.of(context).size.width,
-                            height: 120,
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                            ),
-                            child: Stack(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        mensagem.title,
-                                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        TDeviceUtils.truncateWithEllipsis(200, mensagem.summary),
-                                        style: const TextStyle(fontSize: 12),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 8,
-                                  right: 8,
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width * 0.10,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: const Icon(Icons.remove_red_eye_outlined),
-                                  ),
-                                ),
-                              ],
-                            ),
+                    if (_mensagem == null || _mensagem!.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Image.asset('assets/images/message_null.png'),
+                              const Text(
+                                'Nenhuma mensagem disponível para leitura.',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      )
+                    else
+                      ListView.builder(
+                        itemCount: _controller.mensagem?.data.length ?? 0,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final mensagem = _controller.mensagem!.data[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.detalheMensagem,
+                                arguments: {
+                                  'id': mensagem.id,
+                                },
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 16),
+                              width: MediaQuery.of(context).size.width,
+                              height: 120,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          mensagem.title,
+                                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          TDeviceUtils.truncateWithEllipsis(200, mensagem.summary),
+                                          style: const TextStyle(fontSize: 12),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 8,
+                                    right: 8,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width * 0.10,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(width: 1, color: Colors.grey),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: const Icon(Icons.remove_red_eye_outlined),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                   ],
                 );
               }
@@ -150,5 +179,4 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ),
     );
   }
-
 }

@@ -121,7 +121,24 @@ class _LoginPageState extends State<LoginPage> {
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(senhaFocusNode);
                         },
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.grey.shade300), // Define a borda
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.grey.shade500),
+                          ),
+                        ),
                       ),
+
                       const SizedBox(
                         height: TSizes.spaceBtwItens,
                       ),
@@ -138,6 +155,22 @@ class _LoginPageState extends State<LoginPage> {
                         cursorColor: Colors.black,
                         style: const TextStyle(color: Colors.black),
                         obscureText: true,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.grey.shade300), // Define a borda
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.grey.shade500),
+                          ),
+                        ),
                       ),
                       Align(
                         alignment: Alignment.centerRight,
@@ -158,30 +191,26 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: 55,
-                        child: ElevatedButton(
-                          onPressed: isLoading
-                              ? null
-                              : _login,
-                          style: ButtonStyle(
-                            backgroundColor:
-                            isLoading?
-                            WidgetStateProperty.all(Colors.grey[100])
-                                :
-                            WidgetStateProperty.all(TColors.buttonBackground)
-                            ,
-                          ),
-                          child: isLoading
-                              ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  TColors.buttonBackground),
+                        child: GestureDetector(
+                          onTap: isLoading ? null : _login,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: isLoading ? Colors.grey[100] : TColors.buttonBackground,
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          )
-                              : const Text(
-                            'Acessar',
-                            style: TextStyle(color: Colors.white),
+                            alignment: Alignment.center,
+                            child: isLoading
+                                ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(TColors.buttonBackground),
+                              ),
+                            )
+                                : const Text(
+                              'Acessar',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),

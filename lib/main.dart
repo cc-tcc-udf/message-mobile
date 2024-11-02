@@ -6,9 +6,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'core/injection/app_injection.dart';
 
 void main() async {
@@ -20,8 +20,25 @@ void main() async {
   await LocalNotificationService().requestPermission();
   await LocalNotificationService().init();
   await requestPermissions();
+
+  String initialTheme = await _getInitialTheme();
+  if (initialTheme == 'light') {
+    themeNotifier.value = ThemeMode.light;
+  } else if (initialTheme == 'dark') {
+    themeNotifier.value = ThemeMode.dark;
+  } else {
+    themeNotifier.value = ThemeMode.system;
+  }
+
   runApp(const MyApp());
 }
+
+Future<String> _getInitialTheme() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('selectedTheme') ?? 'system';
+}
+
+final themeNotifier = ValueNotifier<ThemeMode>(ThemeMode.system);
 
 Future<void> requestPermissions() async {
   PermissionStatus cameraStatus = await Permission.camera.request();
@@ -31,7 +48,6 @@ Future<void> requestPermissions() async {
     print("Permissões necessárias não foram concedidas.");
   }
 }
-
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -48,7 +64,7 @@ class _MyAppState extends State<MyApp> {
     notificationHandler();
   }
 
-  void notificationHandler(){
+  void notificationHandler() {
     FirebaseMessaging.onMessage.listen((event) async {
       LocalNotificationService().showNotification(event);
     });
@@ -56,14 +72,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.system,
-      theme: TAppTheme.lightTheme,
-      darkTheme: TAppTheme.darkTheme,
-      onGenerateRoute: Routes().onGenerateRoute,
-      home: const OnBoardingScreen(),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (context, currentTheme, child) {
+        return GetMaterialApp(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          themeMode: currentTheme,
+          theme: TAppTheme.lightTheme,
+          darkTheme: TAppTheme.darkTheme,
+          onGenerateRoute: Routes().onGenerateRoute,
+          home: const OnBoardingScreen(),
+        );
+      },
     );
   }
 }

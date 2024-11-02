@@ -27,6 +27,7 @@ class MensagemDatasourceImpl implements MensagemDatasource {
           baseOptions: HttpConfig.apiCampus,
           endpoint: EndPointsConsts.listaMensagens,
       );
+      print(result.data);
 
       if (result.statusCode == 200) {
         final mensagem = MensagemModel.fromJson(result.data);

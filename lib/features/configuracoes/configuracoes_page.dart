@@ -29,72 +29,71 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                     padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 16),
                     child: Column(
                       children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey,
-                                        borderRadius: BorderRadius.circular(50),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              Routes.perfil,
+                            );
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 120,
+                            decoration: BoxDecoration(
+                              color: TColors.buttonBackground,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          borderRadius: BorderRadius.circular(50),
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 16.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          AutoSizeText(
-                                            usuarioController.usuario!.name!,
-                                            style: const TextStyle(fontSize: 18),
-                                            maxLines: 2,
-                                          ),
-                                          Text(usuarioController.usuario!.course!.name!),
-                                        ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 16.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            AutoSizeText(
+                                              usuarioController.usuario!.name!,
+                                              style: const TextStyle(fontSize: 18, color: Colors.white),
+                                              maxLines: 2,
+                                            ),
+                                            Text(usuarioController.usuario!.course!.name!, style: const TextStyle(color: Colors.white),),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      Routes.perfil,
-                                    );
-                                  },
-                                  child: const Align(
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  const Align(
                                     alignment: Alignment.bottomRight,
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
                                           'Acessar perfil',
-                                          style: TextStyle(color: TColors.buttonBackground),
+                                          style: TextStyle(color: Colors.white),
                                         ),
                                         Icon(Icons.arrow_forward,
-                                            color: TColors.buttonBackground, size: 15),
+                                            color: Colors.white, size: 15),
                                       ],
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                        // Restante do conteúdo
                         Padding(
                           padding: const EdgeInsets.only(top: 40.0),
                           child: GestureDetector(
@@ -108,7 +107,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                               width: MediaQuery.of(context).size.width,
                               height: 40,
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey.shade300),
+                                color: TColors.buttonBackground,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Padding(
@@ -118,13 +117,13 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.notifications_none, size: 20),
+                                        Icon(Icons.notifications_none,color: Colors.white, size: 20),
                                         SizedBox(width: 10),
-                                        Text('Notificações'),
+                                        Text('Notificações', style: TextStyle(color: Colors.white),),
                                       ],
                                     ),
                                     Icon(Icons.arrow_forward_ios_sharp,
-                                        color: Colors.grey, size: 20),
+                                        color: Colors.white, size: 20),
                                   ],
                                 ),
                               ),
@@ -144,7 +143,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                               width: MediaQuery.of(context).size.width,
                               height: 40,
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey.shade300),
+                                color: TColors.buttonBackground,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Padding(
@@ -154,13 +153,13 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.brightness_medium, size: 20),
+                                        Icon(Icons.brightness_medium,color: Colors.white, size: 20),
                                         SizedBox(width: 10),
-                                        Text('Tema'),
+                                        Text('Tema', style: TextStyle(color: Colors.white),),
                                       ],
                                     ),
                                     Icon(Icons.arrow_forward_ios_sharp,
-                                        color: Colors.grey, size: 20),
+                                        color: Colors.white, size: 20),
                                   ],
                                 ),
                               ),
@@ -180,7 +179,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                               width: MediaQuery.of(context).size.width,
                               height: 40,
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey.shade300),
+                                color: TColors.buttonBackground,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Padding(
@@ -190,13 +189,13 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.description_outlined, size: 20),
+                                        Icon(Icons.description_outlined,color: Colors.white, size: 20),
                                         SizedBox(width: 10),
-                                        Text('Termos e Política de Privacidade'),
+                                        Text('Termos e Política de Privacidade', style: TextStyle(color: Colors.white),),
                                       ],
                                     ),
                                     Icon(Icons.arrow_forward_ios_sharp,
-                                        color: Colors.grey, size: 20),
+                                        color: Colors.white, size: 20),
                                   ],
                                 ),
                               ),
@@ -208,7 +207,6 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                   ),
                 ),
               ),
-              // Conteúdo na parte inferior
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Column(
@@ -226,23 +224,27 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                         width: MediaQuery.of(context).size.width * 0.3,
                         height: 40,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade300),
+                          color: TColors.buttonBackground,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.logout, size: 20),
+                            Icon(Icons.logout,color: Colors.white, size: 20),
                             SizedBox(width: 10),
-                            Text('Sair'),
+                            Text('Sair', style: TextStyle(color: Colors.white),),
                           ],
                         ),
                       ),
 
                     ),
                     const SizedBox(height: 20),
+                    Theme.of(context).brightness == Brightness.light ?
                     Image.asset('assets/images/on_boarding_images/campus_connect_black.png',
-                        width: 120),
+                        width: 120):
+                    Image.asset('assets/images/on_boarding_images/campus_connect_white.png',
+                        width: 120)
+                    ,
                     const SizedBox(height: 10),
                     const Text('Versão 1.0.0'),
                   ],

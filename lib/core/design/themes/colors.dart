@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
 class TColors {
-  static const darkBackground = Color(0xFF041C32);
-  static const buttonBackground = Color(0xFF214177);
+  static const darkBackground = Color(0xFF0f0f11);
+  static const buttonBackground = Color(0xFF1C2837);
 }

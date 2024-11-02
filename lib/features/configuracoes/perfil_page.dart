@@ -151,7 +151,7 @@ class _PerfilPageState extends State<PerfilPage> {
                           : null,
                     ),
                     child: _selectedImage == null
-                        ? const Center(child: Icon(Icons.file_upload_outlined, size: 40))
+                        ? const Center(child: Icon(Icons.file_upload_outlined,color: Colors.black, size: 40))
                         : null,
                   ),
                 ),
@@ -269,13 +269,13 @@ class _PerfilPageState extends State<PerfilPage> {
                             ),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
-                                value: selectedCurso,  // O valor será o ID do curso
+                                value: selectedCurso,
                                 hint: const Text('    Escolha uma opção'),
                                 isExpanded: true,
                                 dropdownColor: Colors.white,
                                 onChanged: (String? newValue) {
                                   setState(() {
-                                    selectedCurso = newValue; // Armazena o ID do curso selecionado
+                                    selectedCurso = newValue;
                                   });
                                 },
                                 items: cursosMap.entries
@@ -283,9 +283,10 @@ class _PerfilPageState extends State<PerfilPage> {
                                   DropdownMenuItem<String>(
                                     enabled: false,
                                     child: Text(
-                                      entry.key,  // Nome do grupo
+                                      entry.key,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
+                                        color: Colors.black,
                                         fontSize: 16,
                                       ),
                                     ),
@@ -295,7 +296,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                       value: curso['id'],  // ID do curso como valor
                                       child: Padding(
                                         padding: const EdgeInsets.only(left: 16.0),
-                                        child: Text(curso['name']!),  // Exibe o nome do curso
+                                        child: Text(curso['name']!, style: const TextStyle(color: Colors.black,),),
                                       ),
                                     ),
                                   ),
@@ -319,19 +320,21 @@ class _PerfilPageState extends State<PerfilPage> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: 55,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            // isLoading
-                            //     ? null
-                            //     : _alterar,
-
+                        child: GestureDetector(
+                          onTap: () async {
+                            // Adicione sua lógica aqui
+                            // isLoading ? null : _alterar,
                           },
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(TColors.buttonBackground),
-                          ),
-                          child: const Text(
-                            'Salvar alterações',
-                            style: TextStyle(color: Colors.white),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: TColors.buttonBackground,
+                              borderRadius: BorderRadius.circular(10), // Adiciona bordas arredondadas
+                            ),
+                            alignment: Alignment.center,
+                            child: const Text(
+                              'Salvar alterações',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
