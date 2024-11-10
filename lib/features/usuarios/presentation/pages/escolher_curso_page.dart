@@ -8,7 +8,7 @@ import '../../../../core/utils/image_strings.dart';
 import '../../../../core/utils/sizes.dart';
 import '../../../../core/utils/spacing_styles.dart';
 import '../../../../routes.dart';
-import '../../data/models/atualizar_usuario_model.dart'; // Certifique-se de importar o model correto
+import '../../data/models/atualizar_usuario_model.dart';
 
 class EscolherCursoPage extends StatefulWidget {
   const EscolherCursoPage({super.key});
@@ -35,6 +35,7 @@ class _EscolherCursoPageState extends State<EscolherCursoPage> {
           .id;
 
       if (cursoId != null) {
+        print(controller.usuario!.email);
         final AtualizarUsuarioModel atualizarModel = AtualizarUsuarioModel(
           id: controller.usuario!.id!,
           idCurso: cursoId,

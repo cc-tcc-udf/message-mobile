@@ -201,6 +201,7 @@ class _CadastroPageState extends State<CadastroPage> {
                                   phone: controller.telefone.text,
                                   email: controller.email.text,
                                   password: controller.senha.text,
+                                  active: true
                                 );
                                 await controller.cadastrar(usuario);
                                 Navigator.of(context).pushNamedAndRemoveUntil(

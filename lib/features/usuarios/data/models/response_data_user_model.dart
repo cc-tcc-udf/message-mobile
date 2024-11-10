@@ -3,24 +3,24 @@ class ResponseDataUserModel {
   final String? uid;
   final String? name;
   final String? email;
-  final String? password;
   final String? phone;
   final ProfilePhoto? profilePhoto;
   final CoverPhoto? coverPhoto;
   final List<String>? roles;
   final Course? course;
+  final bool? active;
 
   ResponseDataUserModel({
     required this.id,
     required this.uid,
     required this.name,
     required this.email,
-    required this.password,
     required this.phone,
     required this.profilePhoto,
     required this.coverPhoto,
     required this.roles,
     required this.course,
+    required this.active,
   });
 
   factory ResponseDataUserModel.fromJson(Map<String, dynamic> json) {
@@ -29,7 +29,6 @@ class ResponseDataUserModel {
       uid: json['uid'],
       name: json['name'],
       email: json['email'],
-      password: json['password'], // Pode ser null
       phone: json['phone'],
       profilePhoto: json['profilePhoto'] != null
           ? ProfilePhoto.fromJson(json['profilePhoto'])
@@ -39,6 +38,7 @@ class ResponseDataUserModel {
           : null,
       roles: json['roles'] != null ? List<String>.from(json['roles']) : [],
       course: json['course'] != null ? Course.fromJson(json['course']) : null,
+      active: json['active'],
     );
   }
 
@@ -48,12 +48,12 @@ class ResponseDataUserModel {
       'uid': uid,
       'name': name,
       'email': email,
-      'password': password,
       'phone': phone,
       'profilePhoto': profilePhoto?.toJson(),
       'coverPhoto': coverPhoto?.toJson(),
       'roles': roles,
       'course': course?.toJson(),
+      'active': active,
     };
   }
 }
@@ -102,6 +102,7 @@ class Course {
   final Resp? resp;
   final int? courseGroupId;
   final bool? isGroup;
+  final List<Course>? courses;
 
   Course({
     required this.id,
@@ -111,6 +112,7 @@ class Course {
     required this.resp,
     required this.courseGroupId,
     required this.isGroup,
+    this.courses,
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
@@ -122,6 +124,11 @@ class Course {
       resp: json['resp'] != null ? Resp.fromJson(json['resp']) : null,
       courseGroupId: json['courseGroupId'],
       isGroup: json['isGroup'],
+      courses: json['courses'] != null
+          ? (json['courses'] as List)
+          .map((courseJson) => Course.fromJson(courseJson))
+          .toList()
+          : null,
     );
   }
 
@@ -134,6 +141,7 @@ class Course {
       'resp': resp?.toJson(),
       'courseGroupId': courseGroupId,
       'isGroup': isGroup,
+      'courses': courses?.map((course) => course.toJson()).toList(),
     };
   }
 }
@@ -146,6 +154,7 @@ class Resp {
   final String? phone;
   final ProfilePhoto? profilePhoto;
   final List<String>? roles;
+  final bool? active;
 
   Resp({
     required this.id,
@@ -155,6 +164,7 @@ class Resp {
     required this.phone,
     required this.profilePhoto,
     required this.roles,
+    required this.active,
   });
 
   factory Resp.fromJson(Map<String, dynamic> json) {
@@ -168,6 +178,7 @@ class Resp {
           ? ProfilePhoto.fromJson(json['profilePhoto'])
           : null,
       roles: json['roles'] != null ? List<String>.from(json['roles']) : [],
+      active: json['active'],
     );
   }
 
@@ -180,6 +191,7 @@ class Resp {
       'phone': phone,
       'profilePhoto': profilePhoto?.toJson(),
       'roles': roles,
+      'active': active,
     };
   }
 }

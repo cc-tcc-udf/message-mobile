@@ -4,6 +4,7 @@ class CadastroUsuarioModel {
   final String? phone;
   final String? email;
   final String? password;
+  final bool active;
 
 
   const CadastroUsuarioModel({
@@ -11,6 +12,7 @@ class CadastroUsuarioModel {
     required this.phone,
     required this.email,
     required this.password,
+    required this.active
   });
 
   factory CadastroUsuarioModel.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,7 @@ class CadastroUsuarioModel {
       phone: json['phone'],
       email: json['email'],
       password: json['password'],
+      active: json['active']
     );
   }
 
@@ -28,6 +31,7 @@ class CadastroUsuarioModel {
       'phone': phone,
       'email': email,
       'password': password,
+      'active': active
     };
   }
 }

@@ -1,9 +1,9 @@
 
+
 import 'package:campus_connect/features/login/data/models/cadastro_usuario_model.dart';
 import 'package:campus_connect/features/login/data/models/login_model.dart';
 import 'package:campus_connect/features/login/data/models/response_cadastro_usuario_model.dart';
 
-import '../../domain/entities/login_entity.dart';
 import '../datasources/login_datasource.dart';
 
 abstract class LoginRepository {
@@ -33,6 +33,8 @@ class LoginRepositoryImpl implements LoginRepository {
       rethrow;
     }
   }
+
+
 
   // @override
   // Future<bool> alterarSenha(

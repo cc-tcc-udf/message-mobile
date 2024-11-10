@@ -1,4 +1,3 @@
-import 'package:campus_connect/features/configuracoes/notificacao_page.dart';
 import 'package:campus_connect/features/configuracoes/perfil_page.dart';
 import 'package:campus_connect/features/configuracoes/tema_page.dart';
 import 'package:campus_connect/features/configuracoes/termos_e_politica_page.dart';
@@ -25,7 +24,6 @@ class Routes {
 
   //Configurações
   static const String perfil = '/perfil';
-  static const String notificacao = '/notificacao';
   static const String tema = '/tema';
   static const String termos = '/termos';
 
@@ -47,8 +45,6 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const EscolherCursoPage());
       case Routes.perfil:
         return MaterialPageRoute(builder: (_) => const PerfilPage());
-      case Routes.notificacao:
-        return MaterialPageRoute(builder: (_) => const NotificacaoPage());
       case Routes.tema:
         return MaterialPageRoute(builder: (_) => const TemaPage());
       case Routes.termos:

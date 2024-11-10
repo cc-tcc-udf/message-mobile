@@ -95,42 +95,6 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 40.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                Routes.notificacao,
-                              );
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: TColors.buttonBackground,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(Icons.notifications_none,color: Colors.white, size: 20),
-                                        SizedBox(width: 10),
-                                        Text('Notificações', style: TextStyle(color: Colors.white),),
-                                      ],
-                                    ),
-                                    Icon(Icons.arrow_forward_ios_sharp,
-                                        color: Colors.white, size: 20),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: GestureDetector(
                             onTap: () {
@@ -241,12 +205,13 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                     const SizedBox(height: 20),
                     Theme.of(context).brightness == Brightness.light ?
                     Image.asset('assets/images/on_boarding_images/campus_connect_black.png',
-                        width: 120):
+                        width: 100):
                     Image.asset('assets/images/on_boarding_images/campus_connect_white.png',
-                        width: 120)
+                        width: 100)
                     ,
                     const SizedBox(height: 10),
                     const Text('Versão 1.0.0'),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),

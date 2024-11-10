@@ -38,7 +38,7 @@ class _PerfilPageState extends State<PerfilPage> {
     _nome.text = usuarioController.usuario!.name!;
     _telefone.text = usuarioController.usuario!.phone!;
     _email.text = usuarioController.usuario!.email!;
-    selectedCurso = usuarioController.usuario!.course!.id!.toString();
+    selectedCurso = usuarioController.usuario!.course!.courses![0].id!.toString();
   }
 
   Future<void> _openImagePicker() async {
@@ -86,13 +86,13 @@ class _PerfilPageState extends State<PerfilPage> {
   //     isLoading = true;
   //   });
   //
+  //   await
+  //
   //   final AtualizarUsuarioModel atualizarModel = AtualizarUsuarioModel(
   //       profilePhoto:
   //   );
   //
-  //   await usuarioController.atualizar(
-  //
-  //   );
+  //   await usuarioController.atualizar(atualizarModel);
   //
   //   if(controller.loginEntity != null){
   //     await userController.getDataUser(email: controller.loginEntity!.email!);
@@ -102,26 +102,6 @@ class _PerfilPageState extends State<PerfilPage> {
   //     isLoading = false;
   //   });
   //
-  //   // if (controller.loginEntity == null) {
-  //   //   _showDialog(
-  //   //     context,
-  //   //     message: 'CPF e/ou senha inválidos',
-  //   //   );
-  //   // } else {
-  //   //   if(userController.usuario?.course?.id == null){
-  //   //     LocalNotificationService().uploadFcmToken();
-  //   //     Navigator.of(context).pushNamedAndRemoveUntil(
-  //   //       Routes.escolherCursos,
-  //   //           (Route<dynamic> route) => false,
-  //   //     );
-  //   //   }else{
-  //   //     LocalNotificationService().uploadFcmToken();
-  //   //     Navigator.of(context).pushNamedAndRemoveUntil(
-  //   //       Routes.initial,
-  //   //           (Route<dynamic> route) => false,
-  //   //     );
-  //   //   }
-  //   // }
   // }
 
   @override
@@ -328,7 +308,7 @@ class _PerfilPageState extends State<PerfilPage> {
                           child: Container(
                             decoration: BoxDecoration(
                               color: TColors.buttonBackground,
-                              borderRadius: BorderRadius.circular(10), // Adiciona bordas arredondadas
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             alignment: Alignment.center,
                             child: const Text(
