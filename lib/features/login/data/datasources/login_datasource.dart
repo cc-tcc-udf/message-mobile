@@ -35,6 +35,7 @@ class LoginDatasourceImpl implements LoginDatasource {
       if (result.statusCode == 200) {
         final login = LoginModel.fromJson(result.data);
         await storage.write("token", login.token);
+        await storage.write("email", login.email);
         return login;
       } else {
         throw ServerException(result.statusMessage);

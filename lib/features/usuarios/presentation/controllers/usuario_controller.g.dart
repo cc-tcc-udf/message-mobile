@@ -57,6 +57,22 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
     });
   }
 
+  late final _$arquivoAtom =
+      Atom(name: '_UsuarioControllerBase.arquivo', context: context);
+
+  @override
+  FileEntity? get arquivo {
+    _$arquivoAtom.reportRead();
+    return super.arquivo;
+  }
+
+  @override
+  set arquivo(FileEntity? value) {
+    _$arquivoAtom.reportWrite(value, super.arquivo, () {
+      super.arquivo = value;
+    });
+  }
+
   late final _$getListCoursesAsyncAction =
       AsyncAction('_UsuarioControllerBase.getListCourses', context: context);
 
@@ -81,12 +97,29 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
     return _$atualizarAsyncAction.run(() => super.atualizar(usuarios));
   }
 
+  late final _$envioAnexoAsyncAction =
+      AsyncAction('_UsuarioControllerBase.envioAnexo', context: context);
+
+  @override
+  Future<FileEntity?> envioAnexo(AnexoModel anexo) {
+    return _$envioAnexoAsyncAction.run(() => super.envioAnexo(anexo));
+  }
+
+  late final _$updateAnexoAsyncAction =
+      AsyncAction('_UsuarioControllerBase.updateAnexo', context: context);
+
+  @override
+  Future<FileEntity?> updateAnexo(AnexoModel anexo, int id) {
+    return _$updateAnexoAsyncAction.run(() => super.updateAnexo(anexo, id));
+  }
+
   @override
   String toString() {
     return '''
 isLoading: ${isLoading},
 cursos: ${cursos},
-usuario: ${usuario}
+usuario: ${usuario},
+arquivo: ${arquivo}
     ''';
   }
 }

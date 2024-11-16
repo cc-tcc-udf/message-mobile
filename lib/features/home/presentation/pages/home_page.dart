@@ -1,13 +1,8 @@
-import 'package:campus_connect/core/utils/device.utility.dart';
 import 'package:campus_connect/features/home/presentation/widget/home_page_widget.dart';
-import 'package:campus_connect/features/mensagens/presentation/controllers/mensagem_controller.dart';
-import 'package:campus_connect/features/usuarios/presentation/controllers/usuario_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 import '../../../../core/design/widgets/s_bottom_navigation_bar.dart';
 import '../../../configuracoes/configuracoes_page.dart';
-import '../../../mensagens/data/models/mensagem_model.dart';
 import '../../../mensagens/presentation/pages/mensagem_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,8 +20,8 @@ class _HomePageState extends State<HomePage> {
 
   late List<Widget> _widgetOptions;
   bool _isLoading = true;
-  @override
 
+  @override
   void initState() {
     super.initState();
     _selectedIndex = widget.selectedIndex;
@@ -35,12 +30,14 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _loadData() async {
     try {
-      _widgetOptions = <Widget>[
-        MensagemPage(),
-        const HomePageWidget(),
-        ConfiguracoesPage(),
-      ];
-      _isLoading = false;
+      setState(() {
+        _widgetOptions = <Widget>[
+          const MensagemPage(),
+          const HomePageWidget(),
+          const ConfiguracoesPage(),
+        ];
+        _isLoading = false;
+      });
     } catch (error) {
       setState(() {
         _isLoading = false;
@@ -48,7 +45,6 @@ class _HomePageState extends State<HomePage> {
       rethrow;
     }
   }
-
 
   void _onItemTapped(int index) {
     setState(() {
@@ -80,7 +76,6 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.settings, size: 30),
             label: 'Configurações',
           ),
-
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
@@ -91,4 +86,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
 
