@@ -58,20 +58,32 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                                           borderRadius: BorderRadius.circular(50),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 16.0),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            AutoSizeText(
-                                              usuarioController.usuario!.name!,
-                                              style: const TextStyle(fontSize: 18, color: Colors.white),
-                                              maxLines: 2,
-                                            ),
-                                            Text(usuarioController.usuario!.course!.name!, style: const TextStyle(color: Colors.white),),
-                                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: SizedBox(
+                                  height: 60,
+                                  width: MediaQuery.of(context).size.width * 0.60,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded( // ou Flexible
+                                        child: AutoSizeText(
+                                          usuarioController.usuario!.name!,
+                                          style: const TextStyle(fontSize: 18, color: Colors.white),
+                                          maxLines: 2,
                                         ),
                                       ),
+                                      Expanded( // ou Flexible
+                                        child: AutoSizeText(
+                                          usuarioController.usuario!.course!.name!,
+                                          style: const TextStyle(color: Colors.white, fontSize: 20),
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                                     ],
                                   ),
                                   const Spacer(),

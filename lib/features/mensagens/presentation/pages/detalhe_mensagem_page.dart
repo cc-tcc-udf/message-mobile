@@ -108,7 +108,12 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -118,11 +123,12 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
             return Text(
               _controller.isLoading
                   ? ''
-                  : _controller.detalheMensagem?.data!.title ?? 'Erro ao carregar',
+                  : _controller.detalheMensagem?.data?.title ?? 'Erro ao carregar',
             );
           },
         ),
       ),
+
       body: Observer(
         builder: (context) {
           if (_controller.isLoading) {

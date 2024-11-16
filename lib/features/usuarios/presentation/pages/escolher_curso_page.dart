@@ -107,9 +107,10 @@ class _EscolherCursoPageState extends State<EscolherCursoPage> {
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
                               value: selectedCurso,
-                              hint: const Text('    Escolha uma opção'),
+                              hint: const Text('    Escolha uma opção', style:const TextStyle(color: Colors.black)),
                               isExpanded: true,
                               dropdownColor: Colors.white,
+                              icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedCurso = newValue;
@@ -125,6 +126,7 @@ class _EscolherCursoPageState extends State<EscolherCursoPage> {
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
+                                      color: Colors.black
                                     ),
                                   ),
                                 ),
@@ -133,7 +135,7 @@ class _EscolherCursoPageState extends State<EscolherCursoPage> {
                                     value: curso,
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 16.0),
-                                      child: Text(curso),
+                                      child: Text(curso, style:const TextStyle(color: Colors.black),),
                                     ),
                                   ),
                                 ),

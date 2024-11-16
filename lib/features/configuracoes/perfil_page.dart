@@ -38,7 +38,7 @@ class _PerfilPageState extends State<PerfilPage> {
     _nome.text = usuarioController.usuario!.name!;
     _telefone.text = usuarioController.usuario!.phone!;
     _email.text = usuarioController.usuario!.email!;
-    selectedCurso = usuarioController.usuario!.course!.courses![0].id!.toString();
+    selectedCurso = usuarioController.usuario!.course!.id!.toString();
   }
 
   Future<void> _openImagePicker() async {

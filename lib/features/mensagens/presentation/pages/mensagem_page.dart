@@ -77,7 +77,7 @@ class _MensagemPageState extends State<MensagemPage> {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          _usuarioController.usuario!.course!.courses![0].name!,
+                          _usuarioController.usuario!.course!.name!,
                           style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                         ),
                         Padding(
@@ -142,12 +142,12 @@ class _MensagemPageState extends State<MensagemPage> {
                                                 Text(
                                                   mensagem.title,
                                                   style: const TextStyle(
-                                                      fontSize: 14, fontWeight: FontWeight.w700),
+                                                      fontSize: 14, fontWeight: FontWeight.w700, color: Colors.black),
                                                 ),
                                                 const SizedBox(height: 8),
                                                 Text(
                                                   TDeviceUtils.truncateWithEllipsis(200, mensagem.summary),
-                                                  style: const TextStyle(fontSize: 12),
+                                                  style: const TextStyle(fontSize: 12, color: Colors.black),
                                                 ),
                                               ],
                                             ),
@@ -161,7 +161,7 @@ class _MensagemPageState extends State<MensagemPage> {
                                                 border: Border.all(width: 1, color: Colors.grey),
                                                 borderRadius: BorderRadius.circular(10),
                                               ),
-                                              child: const Icon(Icons.remove_red_eye_outlined),
+                                              child: const Icon(Icons.remove_red_eye_outlined, color: Colors.black),
                                             ),
                                           ),
                                         ],
@@ -177,8 +177,17 @@ class _MensagemPageState extends State<MensagemPage> {
                                       _showAllMessages = !_showAllMessages;
                                     });
                                   },
-                                  child: Text(_showAllMessages ? 'Ver menos' : 'Ver mais', style: TextStyle(fontWeight: FontWeight.w700, color: TColors.buttonBackground),),
+                                  child: Text(
+                                    _showAllMessages ? 'Ver menos' : 'Ver mais',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Theme.of(context).brightness == Brightness.dark
+                                          ? Colors.white
+                                          : TColors.buttonBackground,
+                                    ),
+                                  ),
                                 ),
+
                             ],
                           ),
                       ],
@@ -259,12 +268,12 @@ class _MensagemPageState extends State<MensagemPage> {
                                             children: [
                                               Text(
                                                 mensagem.title,
-                                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.black),
                                               ),
                                               const SizedBox(height: 8),
                                               Text(
                                                 TDeviceUtils.truncateWithEllipsis(200, mensagem.summary),
-                                                style: const TextStyle(fontSize: 12),
+                                                style: const TextStyle(fontSize: 12, color: Colors.black),
                                               ),
                                             ],
                                           ),
@@ -278,7 +287,7 @@ class _MensagemPageState extends State<MensagemPage> {
                                               border: Border.all(width: 1, color: Colors.grey),
                                               borderRadius: BorderRadius.circular(10),
                                             ),
-                                            child: const Icon(Icons.remove_red_eye_outlined),
+                                            child: const Icon(Icons.remove_red_eye_outlined, color: Colors.black),
                                           ),
                                         ),
                                       ],

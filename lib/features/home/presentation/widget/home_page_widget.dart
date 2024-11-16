@@ -142,12 +142,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       children: [
                                         Text(
                                           mensagem.title,
-                                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.black),
                                         ),
                                         const SizedBox(height: 8),
                                         Text(
                                           TDeviceUtils.truncateWithEllipsis(200, mensagem.summary),
-                                          style: const TextStyle(fontSize: 12),
+                                          style: const TextStyle(fontSize: 12, color: Colors.black),
                                         ),
                                       ],
                                     ),
@@ -161,7 +161,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         border: Border.all(width: 1, color: Colors.grey),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child: const Icon(Icons.remove_red_eye_outlined),
+                                      child: const Icon(Icons.remove_red_eye_outlined, color: Colors.black,),
                                     ),
                                   ),
                                 ],
