@@ -1,76 +1,90 @@
-import 'package:campus_connect/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:campus_connect/core/design/themes/theme.dart';
+import 'package:campus_connect/features/login/presentation/pages/onboarding.dart';
+import 'package:campus_connect/features/service/notification_service.dart';
+import 'package:campus_connect/routes.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'firebase_options.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'core/injection/app_injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await AppInjection.init();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
+    options: DefaultFirebaseOptions.currentPlatform,
   );
+  await LocalNotificationService().requestPermission();
+  await LocalNotificationService().init();
+  await requestPermissions();
+
+  String initialTheme = await _getInitialTheme();
+  if (initialTheme == 'light') {
+    themeNotifier.value = ThemeMode.light;
+  } else if (initialTheme == 'dark') {
+    themeNotifier.value = ThemeMode.dark;
+  } else {
+    themeNotifier.value = ThemeMode.system;
+  }
+
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+Future<String> _getInitialTheme() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('selectedTheme') ?? 'system';
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+final themeNotifier = ValueNotifier<ThemeMode>(ThemeMode.system);
+
+Future<void> requestPermissions() async {
+  PermissionStatus cameraStatus = await Permission.camera.request();
+  PermissionStatus photosStatus = await Permission.photos.request();
+
+  if (!cameraStatus.isGranted || !photosStatus.isGranted) {
+    print("Permissões necessárias não foram concedidas.");
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _MyAppState extends State<MyApp> {
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  @override
+  void initState() {
+    super.initState();
+    notificationHandler();
+  }
+
+  void notificationHandler() {
+    FirebaseMessaging.onMessage.listen((event) async {
+      LocalNotificationService().showNotification(event);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (context, currentTheme, child) {
+        return GetMaterialApp(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          themeMode: currentTheme,
+          theme: TAppTheme.lightTheme,
+          darkTheme: TAppTheme.darkTheme,
+          onGenerateRoute: Routes().onGenerateRoute,
+          home: const OnBoardingScreen(),
+        );
+      },
     );
   }
 }

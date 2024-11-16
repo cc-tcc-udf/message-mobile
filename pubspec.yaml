@@ -8,32 +8,58 @@ environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
+  auto_size_text: ^3.0.0
+  auto_size_text_field: ^2.2.4
+  brasil_fields: ^1.15.0
+  cloud_firestore: ^4.17.5
+  cupertino_icons: ^1.0.8
+  dio: ^5.4.3+1
+  equatable: ^2.0.5
+  firebase_analytics: ^10.10.7
+  firebase_auth: ^4.16.0
+  firebase_core: ^2.27.0
+  firebase_messaging: ^14.7.10
   flutter:
     sdk: flutter
-    
-  cupertino_icons: ^1.0.2
-  firebase_core: ^3.1.0
-  provider: ^6.1.2
-  timezone: ^0.9.3
-  flutter_native_timezone: ^2.0.0
+  flutter_html: ^3.0.0-beta.2
+  flutter_launcher_icons: ^0.13.1
   flutter_local_notifications: ^17.1.2
-  firebase_messaging: ^15.0.1
-  dio: ^5.4.3+1
-  get_it: ^7.7.0
-  shared_preferences: ^2.2.3
-  flutter_secure_storage: ^4.2.1
+  flutter_mobx: ^2.2.1+1
+  flutter_native_splash: ^2.3.10
+#  flutter_native_timezone: ^2.0.0
+  flutter_secure_storage: ^9.2.2
   get: ^4.6.6
+  get_it: ^7.6.7
+  html: ^0.15.4
+  image_picker: ^1.1.2
   intl: ^0.19.0
+  mobx: ^2.3.3+2
+  mobx_codegen: ^2.6.1
+  permission_handler: ^11.3.1
+  provider: ^6.1.2
+  shared_preferences: ^2.2.3
+  smooth_page_indicator: ^1.1.0
+  timezone: ^0.9.3
+  url_launcher: ^6.3.1
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
 
-  flutter_lints: ^2.0.0
+  build_runner: ^2.4.11
+  flutter_lints: ^4.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo_campus_connect_preto.png"
 
 flutter:
 
   uses-material-design: true
+
+  assets:
+    - assets/icons/
+    - assets/images/
+    - assets/images/on_boarding_images/
 
   # fonts:
   #   - family: Schyler

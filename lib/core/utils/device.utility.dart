@@ -28,6 +28,10 @@ class TDeviceUtils {
     return MediaQuery.of(Get.context!).size.height;
   }
 
+  static double getBottomNavigationBarHeight() {
+    return kBottomNavigationBarHeight;
+  }
+
   //Retorna a largura da tela do dispositivo
   static double getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
@@ -45,10 +49,9 @@ class TDeviceUtils {
 
   //Verifica se o teclado está visível
   static Future<bool> isKeyboardVisible() async {
-  final viewInsets = MediaQuery.of(Get.context!).viewInsets;
-  return viewInsets.bottom > 0;
-}
-
+    final viewInsets = MediaQuery.of(Get.context!).viewInsets;
+    return viewInsets.bottom > 0;
+  }
 
   //Esconde a barra de status do sistema
   static void hideStatusBar() {
@@ -61,6 +64,10 @@ class TDeviceUtils {
         overlays: SystemUiOverlay.values);
   }
 
+  static double getAppBarHeight() {
+    return kToolbarHeight;
+  }
+
   //Verifica se há uma conexão com a internet. Retorna true se houver conexão e false caso contrário
   static Future<bool> hasInternetConnection() async {
     try {
@@ -69,5 +76,10 @@ class TDeviceUtils {
     } on SocketException catch (_) {
       return false;
     }
+  }
+
+  //Coloca um ... para textos grandes
+  static String truncateWithEllipsis(int cutoff, String text) {
+    return (text.length <= cutoff) ? text : '${text.substring(0, cutoff)}...';
   }
 }
