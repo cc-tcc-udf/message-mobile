@@ -26,7 +26,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 80.0, horizontal: 16),
                     child: Column(
                       children: [
                         GestureDetector(

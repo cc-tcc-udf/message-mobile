@@ -82,7 +82,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      _usuarioController.usuario!.course!.courses![0].name!,
+                      _usuarioController.usuario!.course!.name!,
                       style: const TextStyle(fontSize: 15),
                     ),
                     Padding(
