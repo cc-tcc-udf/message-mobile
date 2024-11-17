@@ -13,4 +13,5 @@ class EndPointsConsts {
   static String detalheMensagem({required String id}) => '/public/msg/$id';
   //Files
   static const String envioFoto = '/public/file/create';
+  static String updateFoto({required int id}) => '/api/private/file/$id/update';
 }

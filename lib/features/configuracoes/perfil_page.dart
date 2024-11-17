@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:campus_connect/core/services/file_entity.dart';
 import 'package:campus_connect/features/usuarios/presentation/controllers/usuario_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +11,11 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../core/design/themes/colors.dart';
 import '../../core/design/widgets/s_app_bar.dart';
+import '../../core/services/anexo_model.dart';
 import '../../core/utils/sizes.dart';
+import '../home/presentation/pages/home_page.dart';
+import '../usuarios/data/models/atualizar_usuario_model.dart';
+import '../usuarios/data/models/response_data_user_model.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -82,28 +87,81 @@ class _PerfilPageState extends State<PerfilPage> {
     );
   }
 
-  // Future<void> _login() async {
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-  //
-  //   await
-  //
-  //   final AtualizarUsuarioModel atualizarModel = AtualizarUsuarioModel(
-  //       profilePhoto:
-  //   );
-  //
-  //   await usuarioController.atualizar(atualizarModel);
-  //
-  //   if(controller.loginEntity != null){
-  //     await userController.getDataUser(email: controller.loginEntity!.email!);
-  //   }
-  //
-  //   setState(() {
-  //     isLoading = false;
-  //   });
-  //
-  // }
+  Future<void> _alterar() async {
+    if (_selectedImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Por favor, selecione uma imagem antes de salvar.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final imageBytes = await _selectedImage!.readAsBytes();
+
+      AnexoModel anexo = AnexoModel(file: imageBytes);
+
+      FileEntity? respostaAnexo = await usuarioController.envioAnexo(anexo);
+
+      if (respostaAnexo != null) {
+        ProfilePhoto profilePhoto = ProfilePhoto(
+            id: respostaAnexo.id,
+            name: respostaAnexo.name,
+            type: respostaAnexo.type,
+            url: respostaAnexo.url,
+            size: respostaAnexo.size);
+
+        final AtualizarUsuarioModel atualizarModel = AtualizarUsuarioModel(
+          id: usuarioController.usuario!.id,
+          name: _nome.text,
+          email: _email.text,
+          phone: _telefone.text,
+          idCurso: selectedCurso,
+          profilePhoto: profilePhoto,
+        );
+
+        if (usuarioController.usuario?.profilePhoto?.url == null) {
+          await usuarioController.atualizar(atualizarModel);
+        } else {
+          await usuarioController.updateAnexo(
+              anexo, usuarioController.usuario!.profilePhoto!.id!);
+        }
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(selectedIndex: 2),
+          ),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Alterações salvas com sucesso!'),
+            backgroundColor: Colors.black,
+          ),
+        );
+      } else {
+        throw Exception('Falha ao enviar a imagem.');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro ao salvar alterações'),
+          backgroundColor: Colors.black,
+        ),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,15 +181,23 @@ class _PerfilPageState extends State<PerfilPage> {
                     height: 120,
                     decoration: BoxDecoration(
                       color: Colors.grey,
-                      borderRadius: BorderRadius.circular(80),
+                      borderRadius: BorderRadius.circular(50),
                       image: _selectedImage != null
                           ? DecorationImage(
                               image: FileImage(_selectedImage!),
                               fit: BoxFit.cover,
                             )
-                          : null,
+                          : (usuarioController.usuario?.profilePhoto?.url !=
+                                  null
+                              ? DecorationImage(
+                                  image: NetworkImage(usuarioController
+                                      .usuario!.profilePhoto!.url!),
+                                  fit: BoxFit.cover,
+                                )
+                              : null),
                     ),
-                    child: _selectedImage == null
+                    child: _selectedImage == null &&
+                            usuarioController.usuario?.profilePhoto?.url == null
                         ? const Center(
                             child: Icon(Icons.file_upload_outlined,
                                 color: Colors.black, size: 40))
@@ -261,6 +327,8 @@ class _PerfilPageState extends State<PerfilPage> {
                                 hint: const Text('    Escolha uma opção'),
                                 isExpanded: true,
                                 dropdownColor: Colors.white,
+                                icon: const Icon(Icons.arrow_drop_down,
+                                    color: Colors.black),
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     selectedCurso = newValue;
@@ -317,8 +385,7 @@ class _PerfilPageState extends State<PerfilPage> {
                         height: 55,
                         child: GestureDetector(
                           onTap: () async {
-                            // Adicione sua lógica aqui
-                            // isLoading ? null : _alterar,
+                            _alterar();
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -326,10 +393,19 @@ class _PerfilPageState extends State<PerfilPage> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             alignment: Alignment.center,
-                            child: const Text(
-                              'Salvar alterações',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                            child: isLoading
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          TColors.buttonBackground),
+                                    ),
+                                  )
+                                : const Text(
+                                    'Salvar alterações',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                           ),
                         ),
                       ),

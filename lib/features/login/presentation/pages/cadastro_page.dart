@@ -21,6 +21,7 @@ class CadastroPage extends StatefulWidget {
 class _CadastroPageState extends State<CadastroPage> {
   final LoginController controller = GetIt.I.get<LoginController>();
   bool senhaNaoConfere = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -192,6 +193,7 @@ class _CadastroPageState extends State<CadastroPage> {
                           child: ElevatedButton(
                             onPressed: () async {
                               setState(() {
+                                isLoading = true;
                                 senhaNaoConfere = controller.senha.text != controller.confirmar.text;
                               });
 
@@ -213,7 +215,14 @@ class _CadastroPageState extends State<CadastroPage> {
                             style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all(TColors.buttonBackground),
                             ),
-                            child: const Text(
+                            child: isLoading
+                                ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(TColors.buttonBackground),
+                              ),
+                            ): const Text(
                               'Cadastrar',
                               style: TextStyle(color: Colors.white),
                             ),

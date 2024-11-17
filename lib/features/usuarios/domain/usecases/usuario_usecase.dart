@@ -14,6 +14,8 @@ abstract class UsuarioUsecase {
   Future<ResponseDataUserModel?> atualizar(AtualizarUsuarioModel usuario);
 
   Future<FileEntity> envioArquivo({required AnexoModel file});
+  Future<FileEntity> updateArquivo(
+      {required AnexoModel file, required int id});
 }
 
 class UsuarioUsecaseImpl implements UsuarioUsecase {
@@ -43,6 +45,17 @@ class UsuarioUsecaseImpl implements UsuarioUsecase {
   Future<FileEntity> envioArquivo({required AnexoModel file}) async {
     try {
       var arquivo = await repository.envioArquivo(file: file);
+      return arquivo;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<FileEntity> updateArquivo(
+      {required AnexoModel file, required int id}) async {
+    try {
+      var arquivo = await repository.updateArquivo(file: file, id: id);
       return arquivo;
     } catch (e) {
       rethrow;

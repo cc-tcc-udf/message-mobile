@@ -16,6 +16,7 @@ abstract class UsuariosDatasource {
   Future<ResponseDataUserModel?> getDadosUsuario({required String email});
   Future<ResponseDataUserModel?> atualizarUsuario(AtualizarUsuarioModel usuario);
   Future<FileEntity> envioArquivo({required AnexoModel file});
+  Future<FileEntity> updateArquivo({required AnexoModel file, required int id});
 }
 
 class UsuariosDatasourceImpl implements UsuariosDatasource {
@@ -77,7 +78,7 @@ class UsuariosDatasourceImpl implements UsuariosDatasource {
       );
 
       FormData formData = FormData.fromMap({
-        'arquivo': multipartFile,
+        'file': multipartFile,
       });
 
       var result = await client.post(
@@ -87,6 +88,42 @@ class UsuariosDatasourceImpl implements UsuariosDatasource {
           "Authorization": 'Bearer $token',
         }],
         endpoint: EndPointsConsts.envioFoto,
+        data: formData,
+      );
+
+      if (result.statusCode == 200) {
+        final file = FileEntity.fromJson(result.data);
+        return file;
+      } else {
+        throw ServerException('Erro ao enviar arquivo: ${result.statusCode}');
+      }
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<FileEntity> updateArquivo({required AnexoModel file, required int id}) async {
+    try {
+      final SecurityLocalStorage storage = SecuritySharedPreference();
+      var token = await storage.read("token");
+
+      MultipartFile multipartFile = MultipartFile.fromBytes(
+        file.file,
+        filename: 'image.jpg',
+      );
+
+      FormData formData = FormData.fromMap({
+        'file': multipartFile,
+      });
+
+      var result = await client.post(
+        baseOptions: HttpConfig.apiCampus,
+        headers: [{
+          "Accept": '*/*',
+          "Authorization": 'Bearer $token',
+        }],
+        endpoint: EndPointsConsts.updateFoto(id: id),
         data: formData,
       );
 

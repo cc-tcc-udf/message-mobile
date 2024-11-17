@@ -5,16 +5,17 @@ class FileEntity {
   final String? url;
   final int? size;
   final String? key;
-  final String? idExt;
 
+  final String? idExt;
   FileEntity({
     required this.id,
     required this.name,
     required this.type,
     required this.url,
     required this.size,
-    required this.key, d,
+    required this.key,
     required this.idExt,
+
   });
 
   factory FileEntity.fromJson(Map<String, dynamic> json) {
@@ -26,6 +27,7 @@ class FileEntity {
       size: json['size'],
       key: json['key'],
       idExt: json['id_ext'],
+
     );
   }
 
@@ -38,6 +40,7 @@ class FileEntity {
       'size': size,
       'key': key,
       'id_ext': idExt,
+
     };
   }
 }

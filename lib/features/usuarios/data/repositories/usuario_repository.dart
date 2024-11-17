@@ -11,6 +11,8 @@ abstract class UsuarioRepository {
   Future<ResponseDataUserModel?> getDataUser({required String email});
   Future<ResponseDataUserModel?> atualizar(AtualizarUsuarioModel usuarios);
   Future<FileEntity> envioArquivo({required AnexoModel file});
+  Future<FileEntity> updateArquivo(
+      {required AnexoModel file, required int id});
 }
 
 class UsuarioRepositoryImpl implements UsuarioRepository {
@@ -41,6 +43,17 @@ class UsuarioRepositoryImpl implements UsuarioRepository {
       {required AnexoModel file}) async {
     try {
       var arquivo = await datasource.envioArquivo(file: file);
+      return arquivo;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<FileEntity> updateArquivo(
+      {required AnexoModel file, required int id}) async {
+    try {
+      var arquivo = await datasource.updateArquivo(file: file, id: id);
       return arquivo;
     } catch (e) {
       rethrow;

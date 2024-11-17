@@ -64,7 +64,8 @@ class ProfilePhoto {
   final String? type;
   final String? url;
   final int? size;
-  final String? uid;
+  final String? key;
+  final int? idExt;
 
   ProfilePhoto({
     this.id,
@@ -72,7 +73,8 @@ class ProfilePhoto {
     required this.type,
     required this.url,
     required this.size,
-    required this.uid,
+    this.key,
+    this.idExt,
   });
 
   factory ProfilePhoto.fromJson(Map<String, dynamic> json) {
@@ -82,7 +84,8 @@ class ProfilePhoto {
       type: json['type'],
       url: json['url'],
       size: json['size'],
-      uid: json['uid'],
+      key: json['key'],
+      idExt: json['id_ext'],
     );
   }
 
@@ -93,7 +96,8 @@ class ProfilePhoto {
       'type': type,
       'url': url,
       'size': size,
-      'uid': uid,
+      'key': key,
+      'id_ext': idExt,
     };
   }
 }

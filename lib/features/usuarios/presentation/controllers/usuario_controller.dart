@@ -1,10 +1,11 @@
+import 'package:campus_connect/core/services/file_entity.dart';
 import 'package:campus_connect/features/usuarios/data/models/atualizar_usuario_model.dart';
 import 'package:campus_connect/features/usuarios/data/models/response_list_courses_model.dart';
 import 'package:campus_connect/features/usuarios/domain/usecases/usuario_usecase.dart';
 import 'package:mobx/mobx.dart';
-
 import '../../../../core/localstorage/security_local_storage.dart';
 import '../../../../core/localstorage/security_shared_preference.dart';
+import '../../../../core/services/anexo_model.dart';
 import '../../data/models/response_data_user_model.dart';
 
 part 'usuario_controller.g.dart';
@@ -26,6 +27,9 @@ abstract class _UsuarioControllerBase with Store {
 
   @observable
   ResponseDataUserModel? usuario;
+
+  @observable
+  FileEntity? arquivo;
 
   @action
   Future<void> getListCourses() async {
@@ -68,6 +72,32 @@ abstract class _UsuarioControllerBase with Store {
     isLoading = true;
     try {
       usuario = await usecase.atualizar(usuarios);
+    } catch (e) {
+      rethrow;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @action
+  Future<FileEntity?> envioAnexo(AnexoModel anexo) async {
+    try {
+      isLoading = true;
+      arquivo = await usecase.envioArquivo(file: anexo);
+      return arquivo;
+    } catch (e) {
+      rethrow;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @action
+  Future<FileEntity?> updateAnexo(AnexoModel anexo, String id) async {
+    try {
+      isLoading = true;
+      arquivo = await usecase.updateArquivo(file: anexo, id: id);
+      return arquivo;
     } catch (e) {
       rethrow;
     } finally {
