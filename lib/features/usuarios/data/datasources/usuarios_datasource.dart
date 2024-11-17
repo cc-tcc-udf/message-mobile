@@ -16,7 +16,7 @@ abstract class UsuariosDatasource {
   Future<ResponseDataUserModel?> getDadosUsuario({required String email});
   Future<ResponseDataUserModel?> atualizarUsuario(AtualizarUsuarioModel usuario);
   Future<FileEntity> envioArquivo({required AnexoModel file});
-  Future<FileEntity> updateArquivo({required AnexoModel file, required int id});
+  Future<FileEntity> updateArquivo({required AnexoModel file, required String id});
 }
 
 class UsuariosDatasourceImpl implements UsuariosDatasource {
@@ -103,7 +103,7 @@ class UsuariosDatasourceImpl implements UsuariosDatasource {
   }
 
   @override
-  Future<FileEntity> updateArquivo({required AnexoModel file, required int id}) async {
+  Future<FileEntity> updateArquivo({required AnexoModel file, required String id}) async {
     try {
       final SecurityLocalStorage storage = SecuritySharedPreference();
       var token = await storage.read("token");

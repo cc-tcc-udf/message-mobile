@@ -117,7 +117,7 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
       AsyncAction('_UsuarioControllerBase.updateAnexo', context: context);
 
   @override
-  Future<FileEntity?> updateAnexo(AnexoModel anexo, int id) {
+  Future<FileEntity?> updateAnexo(AnexoModel anexo, String id) {
     return _$updateAnexoAsyncAction.run(() => super.updateAnexo(anexo, id));
   }
 
