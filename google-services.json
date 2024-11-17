@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "62208346959",
+    "project_id": "campus-connect-bd2d4",
+    "storage_bucket": "campus-connect-bd2d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62208346959:android:c14fd9c5ad5155bf61133a",
+        "android_client_info": {
+          "package_name": "org.campus.connect.message_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhSlyzH_XFwBK1cKK5D7yIMWQoGQPBe_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

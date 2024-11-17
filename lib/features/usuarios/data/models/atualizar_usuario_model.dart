@@ -1,18 +1,18 @@
 import 'package:campus_connect/features/usuarios/data/models/response_data_user_model.dart';
 
 class AtualizarUsuarioModel {
-  final int? id;
+  final String? id;
   final String? uid;
   final String? name;
   final String? email;
   final String? password;
   final String? phone;
-  final int? idCurso;
+  final String? idCurso;
   final ProfilePhoto? profilePhoto;
   final CoverPhoto? coverPhoto;
   final List<String>? roles;
   final List<String>? tokens;
-  final Course? course;
+  final CourseModel? course;
 
   AtualizarUsuarioModel({
     required this.id,
@@ -46,7 +46,7 @@ class AtualizarUsuarioModel {
           : null,
       roles: json['roles'] != null ? List<String>.from(json['roles']) : [],
       tokens: json['tokens'] != null ? List<String>.from(json['tokens']) : [],
-      course: json['course'] != null ? Course.fromJson(json['course']) : null,
+      course: json['course'] != null ? CourseModel.fromJson(json['course']) : null,
     );
   }
 

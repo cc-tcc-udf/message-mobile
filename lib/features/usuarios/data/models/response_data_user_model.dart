@@ -1,18 +1,17 @@
 class ResponseDataUserModel {
-  final int? id;
-  final String? uid;
+  final String? id;
   final String? name;
   final String? email;
+  final String? group;
   final String? phone;
   final ProfilePhoto? profilePhoto;
   final CoverPhoto? coverPhoto;
   final List<String>? roles;
-  final Course? course;
+  final CourseModel? course;
   final bool? active;
 
   ResponseDataUserModel({
     required this.id,
-    required this.uid,
     required this.name,
     required this.email,
     required this.phone,
@@ -21,14 +20,15 @@ class ResponseDataUserModel {
     required this.roles,
     required this.course,
     required this.active,
+    this.group
   });
 
   factory ResponseDataUserModel.fromJson(Map<String, dynamic> json) {
     return ResponseDataUserModel(
       id: json['id'],
-      uid: json['uid'],
       name: json['name'],
       email: json['email'],
+      group: json['group'],
       phone: json['phone'],
       profilePhoto: json['profilePhoto'] != null
           ? ProfilePhoto.fromJson(json['profilePhoto'])
@@ -37,7 +37,7 @@ class ResponseDataUserModel {
           ? CoverPhoto.fromJson(json['coverPhoto'])
           : null,
       roles: json['roles'] != null ? List<String>.from(json['roles']) : [],
-      course: json['course'] != null ? Course.fromJson(json['course']) : null,
+      course: json['course'] != null ? CourseModel.fromJson(json['course']) : null,
       active: json['active'],
     );
   }
@@ -45,10 +45,10 @@ class ResponseDataUserModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'uid': uid,
       'name': name,
       'email': email,
       'phone': phone,
+      'group': group,
       'profilePhoto': profilePhoto?.toJson(),
       'coverPhoto': coverPhoto?.toJson(),
       'roles': roles,
@@ -59,6 +59,7 @@ class ResponseDataUserModel {
 }
 
 class ProfilePhoto {
+  final String? id;
   final String? name;
   final String? type;
   final String? url;
@@ -66,6 +67,7 @@ class ProfilePhoto {
   final String? uid;
 
   ProfilePhoto({
+    this.id,
     required this.name,
     required this.type,
     required this.url,
@@ -75,6 +77,7 @@ class ProfilePhoto {
 
   factory ProfilePhoto.fromJson(Map<String, dynamic> json) {
     return ProfilePhoto(
+      id: json['id'],
       name: json['name'],
       type: json['type'],
       url: json['url'],
@@ -85,6 +88,7 @@ class ProfilePhoto {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
       'type': type,
       'url': url,
@@ -94,17 +98,17 @@ class ProfilePhoto {
   }
 }
 
-class Course {
-  final int? id;
+class CourseModel {
+  final String? id;
   final String? name;
   final String? description;
   final String? abbreviation;
   final Resp? resp;
-  final int? courseGroupId;
+  final String? courseGroupId;
   final bool? isGroup;
-  final List<Course>? courses;
+  final List<CourseModel>? courses;
 
-  Course({
+  CourseModel({
     required this.id,
     required this.name,
     required this.description,
@@ -115,8 +119,8 @@ class Course {
     this.courses,
   });
 
-  factory Course.fromJson(Map<String, dynamic> json) {
-    return Course(
+  factory CourseModel.fromJson(Map<String, dynamic> json) {
+    return CourseModel(
       id: json['id'],
       name: json['name'],
       description: json['description'],
@@ -126,7 +130,7 @@ class Course {
       isGroup: json['isGroup'],
       courses: json['courses'] != null
           ? (json['courses'] as List)
-          .map((courseJson) => Course.fromJson(courseJson))
+          .map((courseJson) => CourseModel.fromJson(courseJson))
           .toList()
           : null,
     );
@@ -147,7 +151,7 @@ class Course {
 }
 
 class Resp {
-  final int? id;
+  final String? id;
   final String? uid;
   final String? name;
   final String? email;
@@ -197,14 +201,13 @@ class Resp {
 }
 
 class CoverPhoto {
-  final int? id;
+  final String? id;
   final String? name;
   final String? type;
   final String? url;
   final int? size;
   final String? key;
-  final String? uid;
-  final int? idExt;
+  final String? idExt;
 
   CoverPhoto({
     required this.id,
@@ -213,7 +216,6 @@ class CoverPhoto {
     required this.url,
     required this.size,
     required this.key,
-    required this.uid,
     required this.idExt,
   });
 
@@ -225,7 +227,6 @@ class CoverPhoto {
       url: json['url'],
       size: json['size'],
       key: json['key'],
-      uid: json['uid'],
       idExt: json['id_ext'],
     );
   }
@@ -238,7 +239,6 @@ class CoverPhoto {
       'url': url,
       'size': size,
       'key': key,
-      'uid': uid,
       'id_ext': idExt,
     };
   }

@@ -52,7 +52,7 @@ class Routes {
       case Routes.detalheMensagem:
         if (settings.arguments != null && settings.arguments is Map<String, dynamic>) {
           var args = settings.arguments as Map<String, dynamic>;
-          int id = args['id'];
+          String id = args['id'];
           return MaterialPageRoute(
             builder: (_) => DetalheMensagemPage(id: id),
           );

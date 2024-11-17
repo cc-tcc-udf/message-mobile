@@ -1,13 +1,8 @@
-import 'package:campus_connect/core/utils/device.utility.dart';
 import 'package:campus_connect/features/home/presentation/widget/home_page_widget.dart';
-import 'package:campus_connect/features/mensagens/presentation/controllers/mensagem_controller.dart';
-import 'package:campus_connect/features/usuarios/presentation/controllers/usuario_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 import '../../../../core/design/widgets/s_bottom_navigation_bar.dart';
 import '../../../configuracoes/configuracoes_page.dart';
-import '../../../mensagens/data/models/mensagem_model.dart';
 import '../../../mensagens/presentation/pages/mensagem_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,8 +20,8 @@ class _HomePageState extends State<HomePage> {
 
   late List<Widget> _widgetOptions;
   bool _isLoading = true;
-  @override
 
+  @override
   void initState() {
     super.initState();
     _selectedIndex = widget.selectedIndex;
@@ -49,7 +44,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -62,33 +56,31 @@ class _HomePageState extends State<HomePage> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _widgetOptions.isNotEmpty
-          ? _widgetOptions[_selectedIndex]
-          : const Center(child: Text('Nenhum conteúdo disponível')),
+              ? _widgetOptions[_selectedIndex]
+              : const Center(child: Text('Nenhum conteúdo disponível')),
       bottomNavigationBar: _isLoading
           ? null
           : SBottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message, size: 30),
-            label: 'Mensagens',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, size: 30),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings, size: 30),
-            label: 'Configurações',
-          ),
-
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey.shade600,
-        onTap: _onItemTapped,
-        preenchido: _isSpecialColor,
-      ),
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.message, size: 30),
+                  label: 'Mensagens',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home, size: 30),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.settings, size: 30),
+                  label: 'Configurações',
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.grey.shade600,
+              onTap: _onItemTapped,
+              preenchido: _isSpecialColor,
+            ),
     );
   }
 }
-

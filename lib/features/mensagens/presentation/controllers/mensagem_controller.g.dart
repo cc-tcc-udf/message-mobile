@@ -85,7 +85,7 @@ mixin _$MensagemController on MensagemControllerBase, Store {
       AsyncAction('MensagemControllerBase.detalhesMensagem', context: context);
 
   @override
-  Future<DetalheMensagemModel?> detalhesMensagem(int id) {
+  Future<DetalheMensagemModel?> detalhesMensagem(String id) {
     return _$detalhesMensagemAsyncAction.run(() => super.detalhesMensagem(id));
   }
 

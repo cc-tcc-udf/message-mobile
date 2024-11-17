@@ -1,17 +1,16 @@
 import 'dart:io';
+
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:campus_connect/features/usuarios/presentation/controllers/usuario_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../core/design/themes/colors.dart';
 import '../../core/design/widgets/s_app_bar.dart';
 import '../../core/utils/sizes.dart';
-import 'package:image_picker/image_picker.dart';
-import '../../routes.dart';
-import '../usuarios/data/models/atualizar_usuario_model.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -53,7 +52,8 @@ class _PerfilPageState extends State<PerfilPage> {
                 title: const Text('Câmera'),
                 onTap: () async {
                   Navigator.pop(context);
-                  final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+                  final pickedFile =
+                      await _picker.pickImage(source: ImageSource.camera);
                   if (pickedFile != null) {
                     setState(() {
                       _selectedImage = File(pickedFile.path);
@@ -66,7 +66,8 @@ class _PerfilPageState extends State<PerfilPage> {
                 title: const Text('Galeria'),
                 onTap: () async {
                   Navigator.pop(context);
-                  final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+                  final pickedFile =
+                      await _picker.pickImage(source: ImageSource.gallery);
                   if (pickedFile != null) {
                     setState(() {
                       _selectedImage = File(pickedFile.path);
@@ -125,13 +126,15 @@ class _PerfilPageState extends State<PerfilPage> {
                       borderRadius: BorderRadius.circular(80),
                       image: _selectedImage != null
                           ? DecorationImage(
-                        image: FileImage(_selectedImage!),
-                        fit: BoxFit.cover,
-                      )
+                              image: FileImage(_selectedImage!),
+                              fit: BoxFit.cover,
+                            )
                           : null,
                     ),
                     child: _selectedImage == null
-                        ? const Center(child: Icon(Icons.file_upload_outlined,color: Colors.black, size: 40))
+                        ? const Center(
+                            child: Icon(Icons.file_upload_outlined,
+                                color: Colors.black, size: 40))
                         : null,
                   ),
                 ),
@@ -158,7 +161,7 @@ class _PerfilPageState extends State<PerfilPage> {
                           color: Colors.white,
                         ),
                         child: TextFormField(
-                           controller: _nome,
+                          controller: _nome,
                           cursorColor: Colors.black,
                           style: const TextStyle(color: Colors.black),
                         ),
@@ -211,7 +214,6 @@ class _PerfilPageState extends State<PerfilPage> {
                           keyboardType: TextInputType.emailAddress,
                         ),
                       ),
-
                       const SizedBox(
                         height: TSizes.spaceBtwItens,
                       ),
@@ -225,20 +227,26 @@ class _PerfilPageState extends State<PerfilPage> {
                       Observer(
                         builder: (_) {
                           if (usuarioController.isLoading) {
-                            return const Center(child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           }
 
-                          final courseGroups = usuarioController.cursos?.data ?? [];
-                          final Map<String, List<Map<String, String>>> cursosMap = {};
+                          final courseGroups =
+                              usuarioController.cursos?.data ?? [];
+                          final Map<String, List<Map<String, String>>>
+                              cursosMap = {};
 
                           // Mapeando ID e nome de cada curso
                           for (var group in courseGroups) {
-                            cursosMap[group.name ?? ''] = group.courses?.map((course) {
-                              return {
-                                'id': course.id.toString(),  // Supondo que 'id' seja a propriedade que armazena o ID do curso
-                                'name': course.name ?? ''
-                              };
-                            }).toList() ?? [];
+                            cursosMap[group.name ?? ''] =
+                                group.courses?.map((course) {
+                                      return {
+                                        'id': course.id.toString(),
+                                        // Supondo que 'id' seja a propriedade que armazena o ID do curso
+                                        'name': course.name ?? ''
+                                      };
+                                    }).toList() ??
+                                    [];
                           }
 
                           return Container(
@@ -260,27 +268,34 @@ class _PerfilPageState extends State<PerfilPage> {
                                 },
                                 items: cursosMap.entries
                                     .expand((entry) => [
-                                  DropdownMenuItem<String>(
-                                    enabled: false,
-                                    child: Text(
-                                      entry.key,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                  ...entry.value.map(
-                                        (curso) => DropdownMenuItem<String>(
-                                      value: curso['id'],  // ID do curso como valor
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 16.0),
-                                        child: Text(curso['name']!, style: const TextStyle(color: Colors.black,),),
-                                      ),
-                                    ),
-                                  ),
-                                ])
+                                          DropdownMenuItem<String>(
+                                            enabled: false,
+                                            child: Text(
+                                              entry.key,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                          ...entry.value.map(
+                                            (curso) => DropdownMenuItem<String>(
+                                              value: curso['id'],
+                                              // ID do curso como valor
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 16.0),
+                                                child: Text(
+                                                  curso['name']!,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ])
                                     .toList(),
                               ),
                             ),
@@ -320,7 +335,6 @@ class _PerfilPageState extends State<PerfilPage> {
                       ),
                     ]),
               ),
-
             ],
           ),
         ),

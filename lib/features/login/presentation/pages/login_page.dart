@@ -2,13 +2,13 @@ import 'package:campus_connect/core/design/themes/colors.dart';
 import 'package:campus_connect/core/utils/image_strings.dart';
 import 'package:campus_connect/core/utils/sizes.dart';
 import 'package:campus_connect/core/utils/spacing_styles.dart';
-import 'package:campus_connect/features/service/notification_service.dart';
 import 'package:campus_connect/features/usuarios/presentation/controllers/usuario_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../core/design/alerts/modal_alert.dart';
 import '../../../../routes.dart';
+import '../../../service/notification_service.dart';
 import '../controllers/login_controller.dart';
 
 class LoginPage extends StatefulWidget {
@@ -47,8 +47,8 @@ class _LoginPageState extends State<LoginPage> {
       senha: senhaController.text,
     );
 
-    if(controller.loginEntity != null){
-      await userController.getDataUser(email: controller.loginEntity!.email!);
+    if (controller.loginEntity != null) {
+      await userController.getDataUser();
     }
 
     setState(() {
@@ -61,17 +61,16 @@ class _LoginPageState extends State<LoginPage> {
         message: 'CPF e/ou senha inválidos',
       );
     } else {
-      if(userController.usuario?.course?.id == null){
-        LocalNotificationService().uploadFcmToken();
+      if (userController.usuario?.course?.id == null) {
         Navigator.of(context).pushNamedAndRemoveUntil(
           Routes.escolherCursos,
-              (Route<dynamic> route) => false,
+          (Route<dynamic> route) => false,
         );
-      }else{
-        LocalNotificationService().uploadFcmToken();
+      } else {
+        LocalNotificationService().registerFirebaseFromLogin();
         Navigator.of(context).pushNamedAndRemoveUntil(
           Routes.initial,
-              (Route<dynamic> route) => false,
+          (Route<dynamic> route) => false,
         );
       }
     }
@@ -126,7 +125,8 @@ class _LoginPageState extends State<LoginPage> {
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.grey.shade300), // Define a borda
+                            borderSide: BorderSide(
+                                color: Colors.grey.shade300), // Define a borda
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -138,7 +138,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-
                       const SizedBox(
                         height: TSizes.spaceBtwItens,
                       ),
@@ -160,7 +159,8 @@ class _LoginPageState extends State<LoginPage> {
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.grey.shade300), // Define a borda
+                            borderSide: BorderSide(
+                                color: Colors.grey.shade300), // Define a borda
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -195,22 +195,25 @@ class _LoginPageState extends State<LoginPage> {
                           onTap: isLoading ? null : _login,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: isLoading ? Colors.grey[100] : TColors.buttonBackground,
+                              color: isLoading
+                                  ? Colors.grey[100]
+                                  : TColors.buttonBackground,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             alignment: Alignment.center,
                             child: isLoading
                                 ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(TColors.buttonBackground),
-                              ),
-                            )
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          TColors.buttonBackground),
+                                    ),
+                                  )
                                 : const Text(
-                              'Acessar',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                                    'Acessar',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                           ),
                         ),
                       ),
@@ -259,4 +262,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-

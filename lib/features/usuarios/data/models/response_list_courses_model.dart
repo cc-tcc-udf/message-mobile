@@ -1,3 +1,5 @@
+
+
 class ResponseListCoursesModel {
   final List<CourseGroup>? data;
   final bool? success;
@@ -13,8 +15,9 @@ class ResponseListCoursesModel {
     return ResponseListCoursesModel(
       data: json['data'] != null
           ? List<CourseGroup>.from(
-        (json['data'] as List<dynamic>).map((e) => CourseGroup.fromJson(e as Map<String, dynamic>)),
-      )
+              (json['data'] as List<dynamic>)
+                  .map((e) => CourseGroup.fromJson(e as Map<String, dynamic>)),
+            )
           : null,
       success: json['success'],
       message: json['message'],
@@ -31,13 +34,15 @@ class ResponseListCoursesModel {
 }
 
 class CourseGroup {
-  final int? id;
+  final String? id;
   final String? name;
+  final String? abbreviation;
   final List<Course>? courses;
 
   CourseGroup({
     required this.id,
     required this.name,
+    this.abbreviation,
     this.courses,
   });
 
@@ -45,10 +50,12 @@ class CourseGroup {
     return CourseGroup(
       id: json['id'],
       name: json['name'],
+      abbreviation: json['abbreviation'],
       courses: json['courses'] != null
           ? List<Course>.from(
-        (json['courses'] as List<dynamic>).map((e) => Course.fromJson(e as Map<String, dynamic>)),
-      )
+              (json['courses'] as List<dynamic>)
+                  .map((e) => Course.fromJson(e as Map<String, dynamic>)),
+            )
           : null,
     );
   }
@@ -57,24 +64,30 @@ class CourseGroup {
     return {
       'id': id,
       'name': name,
+      'abbreviation': abbreviation,
       'courses': courses?.map((e) => e.toJson()).toList(),
     };
   }
 }
 
 class Course {
-  final int? id;
+  final String? id;
   final String? name;
+  final String? abbreviation;
+  final String? courseGroupId;
 
-  Course({
-    required this.id,
-    required this.name,
-  });
+  Course(
+      {required this.id,
+      required this.name,
+      this.abbreviation,
+      this.courseGroupId});
 
   factory Course.fromJson(Map<String, dynamic> json) {
     return Course(
       id: json['id'],
       name: json['name'],
+      abbreviation: json['abbreviation'],
+      courseGroupId: json['courseGroupId'],
     );
   }
 
@@ -82,6 +95,8 @@ class Course {
     return {
       'id': id,
       'name': name,
+      'abbreviation': abbreviation,
+      'courseGroupId': courseGroupId,
     };
   }
 }

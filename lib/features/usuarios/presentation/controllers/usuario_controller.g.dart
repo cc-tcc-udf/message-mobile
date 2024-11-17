@@ -65,12 +65,20 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
     return _$getListCoursesAsyncAction.run(() => super.getListCourses());
   }
 
+  late final _$getUserAsyncAction =
+      AsyncAction('_UsuarioControllerBase.getUser', context: context);
+
+  @override
+  Future<ResponseDataUserModel?> getUser() {
+    return _$getUserAsyncAction.run(() => super.getUser());
+  }
+
   late final _$getDataUserAsyncAction =
       AsyncAction('_UsuarioControllerBase.getDataUser', context: context);
 
   @override
-  Future<void> getDataUser({required String email}) {
-    return _$getDataUserAsyncAction.run(() => super.getDataUser(email: email));
+  Future<void> getDataUser() {
+    return _$getDataUserAsyncAction.run(() => super.getDataUser());
   }
 
   late final _$atualizarAsyncAction =

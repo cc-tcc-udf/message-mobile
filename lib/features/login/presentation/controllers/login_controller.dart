@@ -5,10 +5,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../core/localstorage/security_shared_preference.dart';
 import '../../data/models/login_model.dart';
-import '../../domain/entities/login_entity.dart';
 import '../../domain/usecases/login_usecase.dart';
-
-
 part 'login_controller.g.dart';
 
 class LoginController = LoginControllerBase with _$LoginController;
@@ -58,9 +55,7 @@ abstract class LoginControllerBase with Store {
     isLoading = true;
     error = '';
     try {
-      loginEntity = await loginUsecase(
-          email: email, senha: senha);
-
+      loginEntity = await loginUsecase(email: email, senha: senha);
     } catch (e) {
       error = e.toString();
       loginEntity = null;
@@ -74,7 +69,6 @@ abstract class LoginControllerBase with Store {
     isLoading = true;
     try {
       cadastro = await loginUsecase.cadastro(usuario);
-
     } catch (e) {
       error = e.toString();
     } finally {
@@ -82,40 +76,40 @@ abstract class LoginControllerBase with Store {
     }
   }
 
-  // @observable
-  // ClienteModel? cliente;
+// @observable
+// ClienteModel? cliente;
 
-  // @action
-  // Future<void> getDadosCliente({required int idCliente}) async {
-  //   isLoading = true;
-  //   error = '';
-  //   try {
-  //     cliente = await obterDadosClienteUsecase(idCliente: idCliente);
-  //   } catch (e) {
-  //     error = e.toString();
-  //     clienteLoginEntity = null;
-  //   } finally {
-  //     isLoading = false;
-  //   }
-  // }
+// @action
+// Future<void> getDadosCliente({required int idCliente}) async {
+//   isLoading = true;
+//   error = '';
+//   try {
+//     cliente = await obterDadosClienteUsecase(idCliente: idCliente);
+//   } catch (e) {
+//     error = e.toString();
+//     clienteLoginEntity = null;
+//   } finally {
+//     isLoading = false;
+//   }
+// }
 
-  // Future<void> deslogar() async {
-  //   cliente = null;
-  //   clienteLoginEntity = null;
-  //   await secureStorage.removeAll();
-  //   await removerDadosCacheUsecase(
-  //       key: CadastroClienteConfig.cacheDadosPessoais);
-  //   await removerDadosCacheUsecase(
-  //       key: CadastroClienteConfig.cacheDocumentosVinculo);
-  //   await removerDadosCacheUsecase(key: CadastroClienteConfig.cacheEndereco);
-  //   await removerDadosCacheUsecase(key: CadastroClienteConfig.cacheDocumentos);
-  //   await removerDadosCacheUsecase(
-  //       key: CadastroClienteConfig.cacheComprovantesResidencia);
-  // }
-  //
-  // Future<void> abrirCadastroSite() async {
-  //   if (!await launchUrl(Uri.parse('${HttpConfig.portal}/cadastro'))) {
-  //     throw Exception('Erro');
-  //   }
-  // }
+// Future<void> deslogar() async {
+//   cliente = null;
+//   clienteLoginEntity = null;
+//   await secureStorage.removeAll();
+//   await removerDadosCacheUsecase(
+//       key: CadastroClienteConfig.cacheDadosPessoais);
+//   await removerDadosCacheUsecase(
+//       key: CadastroClienteConfig.cacheDocumentosVinculo);
+//   await removerDadosCacheUsecase(key: CadastroClienteConfig.cacheEndereco);
+//   await removerDadosCacheUsecase(key: CadastroClienteConfig.cacheDocumentos);
+//   await removerDadosCacheUsecase(
+//       key: CadastroClienteConfig.cacheComprovantesResidencia);
+// }
+//
+// Future<void> abrirCadastroSite() async {
+//   if (!await launchUrl(Uri.parse('${HttpConfig.portal}/cadastro'))) {
+//     throw Exception('Erro');
+//   }
+// }
 }

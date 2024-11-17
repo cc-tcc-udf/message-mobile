@@ -27,7 +27,7 @@ class MensagemModel {
 }
 
 class MessageData {
-  final int id;
+  final String id;
   final String title;
   final String summary;
   final String status;
@@ -49,7 +49,7 @@ class MessageData {
 
   factory MessageData.fromJson(Map<String, dynamic> json) {
     return MessageData(
-      id: json['id'] as int,
+      id: json['id'],
       title: json['title'] as String,
       summary: json['summary'] as String,
       status: json['status'] as String,
@@ -75,7 +75,7 @@ class MessageData {
 }
 
 class LinkData {
-  final int id;
+  final String id;
   final String title;
   final String link;
 
@@ -87,7 +87,7 @@ class LinkData {
 
   factory LinkData.fromJson(Map<String, dynamic> json) {
     return LinkData(
-      id: json['id'] as int,
+      id: json['id'],
       title: json['title'] as String,
       link: json['link'] as String,
     );

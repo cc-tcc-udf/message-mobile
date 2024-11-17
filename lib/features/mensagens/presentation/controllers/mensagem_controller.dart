@@ -1,14 +1,9 @@
-import 'package:campus_connect/features/login/data/models/cadastro_usuario_model.dart';
-import 'package:campus_connect/features/login/data/models/response_cadastro_usuario_model.dart';
 import 'package:campus_connect/features/mensagens/data/models/detalhe_mensagem_model.dart';
 import 'package:campus_connect/features/mensagens/data/models/mensagem_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/localstorage/security_shared_preference.dart';
-
 import '../../domain/usecases/mensagem_usecase.dart';
-
 
 part 'mensagem_controller.g.dart';
 
@@ -40,28 +35,27 @@ abstract class MensagemControllerBase with Store {
     error = '';
     try {
       mensagem = await usecase.listarMensagens();
-
     } catch (e) {
       error = e.toString();
       mensagem = null;
     } finally {
       isLoading = false;
     }
+    return null;
   }
 
   @action
-  Future<DetalheMensagemModel?> detalhesMensagem(int id) async {
+  Future<DetalheMensagemModel?> detalhesMensagem(String id) async {
     isLoading = true;
     error = '';
     try {
       detalheMensagem = await usecase.detalheMensagem(id);
-
     } catch (e) {
       error = e.toString();
       mensagem = null;
     } finally {
       isLoading = false;
     }
+    return null;
   }
-
 }

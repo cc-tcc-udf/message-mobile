@@ -7,10 +7,10 @@ import '../../../../core/localstorage/security_shared_preference.dart';
 import '../models/detalhe_mensagem_model.dart';
 import '../models/mensagem_model.dart';
 
-
 abstract class MensagemDatasource {
   Future<MensagemModel?> listarMensagens();
-  Future<DetalheMensagemModel?> detalheMensagem(int id);
+
+  Future<DetalheMensagemModel?> detalheMensagem(String id);
 }
 
 class MensagemDatasourceImpl implements MensagemDatasource {
@@ -18,14 +18,13 @@ class MensagemDatasourceImpl implements MensagemDatasource {
 
   MensagemDatasourceImpl({required this.client});
 
-
   @override
   Future<MensagemModel?> listarMensagens() async {
     try {
       final SecurityLocalStorage storage = SecuritySharedPreference();
       var result = await client.get(
-          baseOptions: HttpConfig.apiCampus,
-          endpoint: EndPointsConsts.listaMensagens,
+        baseOptions: HttpConfig.apiCampus,
+        endpoint: EndPointsConsts.listaMensagens,
       );
       print(result.data);
 
@@ -41,7 +40,7 @@ class MensagemDatasourceImpl implements MensagemDatasource {
   }
 
   @override
-  Future<DetalheMensagemModel?> detalheMensagem(int id) async {
+  Future<DetalheMensagemModel?> detalheMensagem(String id) async {
     try {
       final SecurityLocalStorage storage = SecuritySharedPreference();
       var result = await client.get(

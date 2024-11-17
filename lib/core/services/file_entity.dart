@@ -1,12 +1,11 @@
 class FileEntity {
-  final int? id;
+  final String? id;
   final String? name;
   final String? type;
   final String? url;
   final int? size;
   final String? key;
-  final String? uid;
-  final int? idExt;
+  final String? idExt;
 
   FileEntity({
     required this.id,
@@ -14,8 +13,7 @@ class FileEntity {
     required this.type,
     required this.url,
     required this.size,
-    required this.key,
-    required this.uid,
+    required this.key, d,
     required this.idExt,
   });
 
@@ -27,7 +25,6 @@ class FileEntity {
       url: json['url'],
       size: json['size'],
       key: json['key'],
-      uid: json['uid'],
       idExt: json['id_ext'],
     );
   }
@@ -40,7 +37,6 @@ class FileEntity {
       'url': url,
       'size': size,
       'key': key,
-      'uid': uid,
       'id_ext': idExt,
     };
   }
