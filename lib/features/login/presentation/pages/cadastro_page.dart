@@ -215,12 +215,12 @@ class _CadastroPageState extends State<CadastroPage> {
                             style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all(TColors.buttonBackground),
                             ),
-                            child: isLoading
+                            child: isLoading && !senhaNaoConfere
                                 ? const SizedBox(
                               width: 20,
                               height: 20,
                               child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(TColors.buttonBackground),
+                                valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
                               ),
                             ): const Text(
                               'Cadastrar',

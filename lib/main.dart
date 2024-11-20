@@ -11,6 +11,8 @@ import 'firebase_options.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'core/injection/app_injection.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppInjection.init();
@@ -19,6 +21,11 @@ void main() async {
   );
   await LocalNotificationService().requestPermission();
   await LocalNotificationService().init();
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    const rota = Routes.detalheMensagem;
+      final id = message.data['id_msg'];
+      navigatorKey.currentState?.pushNamed(rota, arguments: {'id': id});
+  });
   await requestPermissions();
 
   String initialTheme = await _getInitialTheme();
@@ -78,6 +85,7 @@ class _MyAppState extends State<MyApp> {
         return GetMaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
+          navigatorKey: navigatorKey,
           themeMode: currentTheme,
           theme: TAppTheme.lightTheme,
           darkTheme: TAppTheme.darkTheme,

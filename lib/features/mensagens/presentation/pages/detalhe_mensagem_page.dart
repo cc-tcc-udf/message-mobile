@@ -5,8 +5,11 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import '../../../../core/design/widgets/loading_widget.dart';
+import '../../../../core/utils/device.utility.dart';
 
 class DetalheMensagemPage extends StatefulWidget {
   DetalheMensagemPage({super.key, required this.id});
@@ -23,7 +26,26 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
   @override
   void initState() {
     super.initState();
+    _initializeLocale();
     _controller.detalhesMensagem(widget.id);
+  }
+
+  Future<void> _initializeLocale() async {
+    await initializeDateFormatting('pt_BR', null);
+  }
+
+  String _getFormattedText(String text) {
+    if (text.isNotEmpty) {
+      String truncatedText = text.length > 20
+          ? '${text.substring(0, 16)}...${text.substring(text.length - 10)}'
+          : text;
+
+      String formattedText = truncatedText[0].toUpperCase() +
+          truncatedText.substring(1).toLowerCase();
+
+      return formattedText;
+    }
+    return text;
   }
 
   void _showBottomSheet(String link) {
@@ -101,6 +123,13 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
     );
   }
 
+  String _formatDate(String date) {
+    final DateTime parsedDate = DateTime.parse(date);
+    final DateFormat formatter = DateFormat('EEEE, d MMMM y', 'pt_BR');
+    return formatter.format(parsedDate);
+  }
+
+
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
@@ -145,15 +174,21 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
           } else if (_controller.detalheMensagem != null) {
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding:
+                    const EdgeInsets.only(left: 16.0, right: 16, bottom: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Align(
-                      alignment: Alignment.topRight,
-                      child: Text('Quarta-Feira, 17/04/2024',
-                          style: TextStyle(fontWeight: FontWeight.w300)),
-                    ),
+                    if (_controller.detalheMensagem?.data?.sendDate != null) ...[
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          _formatDate(
+                              _controller.detalheMensagem!.data!.sendDate!),
+                          style: const TextStyle(fontWeight: FontWeight.w300),
+                        ),
+                      )
+                    ],
                     Html(data: _controller.detalheMensagem!.data!.message!),
                     if (_controller
                         .detalheMensagem!.data!.links!.isNotEmpty) ...[
@@ -170,25 +205,43 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                               _controller.detalheMensagem!.data!.links![index];
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                if (links.link!.startsWith('http://') ||
-                                    links.link!.startsWith('https://')) {
-                                  _showBottomSheet(links.link!);
-                                } else {
-                                  print('URL inválido: ${links.link}');
-                                }
-                              },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    links.title!,
-                                    style: const TextStyle(fontSize: 14),
+                            child: SizedBox(
+                              height: 50,
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (links.link!.startsWith('http://') ||
+                                      links.link!.startsWith('https://')) {
+                                    _showBottomSheet(links.link!);
+                                  } else {
+                                    print('URL inválido: ${links.link}');
+                                  }
+                                },
+                                child: Card(
+                                  elevation: 3,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                  const SizedBox(width: 10),
-                                  const Icon(Icons.open_in_new,
-                                      size: 20, color: Colors.blue),
-                                ],
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          TDeviceUtils.truncateWithEllipsis(
+                                              38, links.title!),
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        const Icon(Icons.open_in_new,
+                                            size: 20, color: Colors.blue),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           );
@@ -203,42 +256,108 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                             style: TextStyle(fontWeight: FontWeight.w700)),
                       ),
                       ListView.builder(
-                        itemCount: _controller
-                                .detalheMensagem?.data!.attachments!.length ??
-                            0,
+                        itemCount: (_controller
+                                    .detalheMensagem?.data!.attachments!
+                                    .where((attachment) =>
+                                        attachment.type!.startsWith('image/'))
+                                    .length ??
+                                0) +
+                            (_controller.detalheMensagem?.data!.attachments!
+                                    .where((attachment) =>
+                                        !attachment.type!.startsWith('image/'))
+                                    .length ??
+                                0),
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          final attachment = _controller
-                              .detalheMensagem!.data!.attachments![index];
+                          var nonImageAttachments = _controller
+                              .detalheMensagem!.data!.attachments!
+                              .where((attachment) =>
+                                  !attachment.type!.startsWith('image/'))
+                              .toList();
+
+                          var imageAttachments = _controller
+                              .detalheMensagem!.data!.attachments!
+                              .where((attachment) =>
+                                  attachment.type!.startsWith('image/'))
+                              .toList();
+
+                          var allAttachments = [
+                            ...nonImageAttachments,
+                            ...imageAttachments
+                          ];
+
+                          final attachment = allAttachments[index];
+                          bool isImage =
+                              attachment.type!.startsWith('image/') ?? false;
+
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: GestureDetector(
                               onTap: () {
-                                if (attachment.link!.startsWith('http://') ||
-                                    attachment.link!.startsWith('https://')) {
-                                  _showBottomSheet(attachment.link!);
-                                } else {
-                                  if (kDebugMode) {
-                                    print('URL inválido: ${attachment.link}');
+                                if (!isImage) {
+                                  if (attachment.url!.startsWith('http://') ||
+                                      attachment.url!.startsWith('https://')) {
+                                    _showBottomSheet(attachment.url!);
+                                  } else {
+                                    if (kDebugMode) {
+                                      print('URL inválido: ${attachment.url}');
+                                    }
                                   }
                                 }
                               },
-                              child: Row(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    attachment.title!,
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  const Icon(Icons.open_in_new,
-                                      size: 20, color: Colors.blue),
+                                  if (isImage)
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                        attachment.url!,
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                      ),
+                                    )
+                                  else
+                                    SizedBox(
+                                      height: 50,
+                                      child: Card(
+                                        elevation: 3,
+                                        color: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    _getFormattedText(
+                                                        attachment.name!),
+                                                    style: const TextStyle(
+                                                        fontSize: 14),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(width: 10),
+                                              const Icon(Icons.open_in_new,
+                                                  size: 20, color: Colors.blue),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),
                           );
                         },
-                      ),
+                      )
                     ],
                   ],
                 ),

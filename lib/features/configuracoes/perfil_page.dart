@@ -181,7 +181,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     height: 120,
                     decoration: BoxDecoration(
                       color: Colors.grey,
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(60),
                       image: _selectedImage != null
                           ? DecorationImage(
                               image: FileImage(_selectedImage!),

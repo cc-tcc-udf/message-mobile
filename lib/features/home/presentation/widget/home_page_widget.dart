@@ -116,6 +116,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           final mensagem = _controller.mensagem!.data[index];
                           return GestureDetector(
                             onTap: () {
+                              print(mensagem.id);
                               Navigator.pushNamed(
                                 context,
                                 Routes.detalheMensagem,
@@ -127,49 +128,42 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             child: Container(
                               margin: const EdgeInsets.only(bottom: 16),
                               width: MediaQuery.of(context).size.width,
-                              height: 120,
                               decoration: BoxDecoration(
                                 border: Border.all(width: 1, color: Colors.grey),
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                               ),
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          mensagem.title,
-                                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.black),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        Text(
-                                          TDeviceUtils.truncateWithEllipsis(200, mensagem.summary),
-                                          style: const TextStyle(fontSize: 12, color: Colors.black),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 8,
-                                    right: 8,
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width * 0.10,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(width: 1, color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(10),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      mensagem.title,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black,
                                       ),
-                                      child: const Icon(Icons.remove_red_eye_outlined, color: Colors.black,),
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      TDeviceUtils.truncateWithEllipsis(200, mensagem.summary),
+                                      style: const TextStyle(fontSize: 12, color: Colors.black),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    const Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Icon(Icons.arrow_forward_rounded, color: Colors.black),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           );
                         },
                       ),
+
                   ],
                 );
               }

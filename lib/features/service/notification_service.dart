@@ -125,7 +125,7 @@ class LocalNotificationService {
       message.notification!.title,
       message.notification!.body,
       notificationDetails,
-      payload: 'Not present',
+      payload: message.data['id_msg'],
     );
   }
 }
