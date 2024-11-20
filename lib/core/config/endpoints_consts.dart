@@ -9,9 +9,9 @@ class EndPointsConsts {
   //Cursos
   static const String listaCursos = '/private/course/mobile/groups';
   //Mensagens
-  static const String listaMensagens = '/public/msg/list';
-  static String detalheMensagem({required String id}) => '/public/msg/$id';
+  static String listaMensagens({required String id}) => '/private/msg/mobile/list/$id';
+  static String detalheMensagem({required String id}) => '/private/msg/$id';
   //Files
   static const String envioFoto = '/public/file/create';
-  static String updateFoto({required String id}) => '/api/private/file/$id/update';
+  static String updateFoto({required String id}) => '/private/file/$id/update';
 }

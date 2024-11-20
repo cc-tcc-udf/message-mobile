@@ -8,7 +8,7 @@ import '../models/detalhe_mensagem_model.dart';
 import '../models/mensagem_model.dart';
 
 abstract class MensagemDatasource {
-  Future<MensagemModel?> listarMensagens();
+  Future<MensagemModel?> listarMensagens(String id);
 
   Future<DetalheMensagemModel?> detalheMensagem(String id);
 }
@@ -19,12 +19,14 @@ class MensagemDatasourceImpl implements MensagemDatasource {
   MensagemDatasourceImpl({required this.client});
 
   @override
-  Future<MensagemModel?> listarMensagens() async {
+  Future<MensagemModel?> listarMensagens(String id) async {
     try {
       final SecurityLocalStorage storage = SecuritySharedPreference();
+      var token = await storage.read("token");
       var result = await client.get(
         baseOptions: HttpConfig.apiCampus,
-        endpoint: EndPointsConsts.listaMensagens,
+        headers: [{"Accept": '*/*', "Authorization": 'Bearer $token'}],
+        endpoint: EndPointsConsts.listaMensagens(id: id),
       );
       print(result.data);
 
@@ -43,8 +45,10 @@ class MensagemDatasourceImpl implements MensagemDatasource {
   Future<DetalheMensagemModel?> detalheMensagem(String id) async {
     try {
       final SecurityLocalStorage storage = SecuritySharedPreference();
+      var token = await storage.read("token");
       var result = await client.get(
         baseOptions: HttpConfig.apiCampus,
+        headers: [{"Accept": '*/*', "Authorization": 'Bearer $token'}],
         endpoint: EndPointsConsts.detalheMensagem(id: id),
       );
 

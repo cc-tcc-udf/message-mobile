@@ -30,7 +30,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   }
 
   Future<void> _loadMensagem() async {
-    await _controller.listarMensagens();
+    await _controller.listarMensagens(_usuarioController.usuario!.course!.id!);
     setState(() {
       _mensagem = _controller.mensagem?.data;
       index = _controller.mensagem!.data.length;
@@ -113,7 +113,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          final mensagem = _controller.mensagem!.data[index];
+                          final mensagem = _controller.mensagem!.data.reversed.toList()[index]; // Invertendo a lista
                           return GestureDetector(
                             onTap: () {
                               print(mensagem.id);
@@ -162,8 +162,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           );
                         },
-                      ),
-
+                      )
                   ],
                 );
               }

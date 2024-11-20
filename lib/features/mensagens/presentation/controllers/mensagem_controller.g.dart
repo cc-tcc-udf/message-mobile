@@ -77,8 +77,8 @@ mixin _$MensagemController on MensagemControllerBase, Store {
       AsyncAction('MensagemControllerBase.listarMensagens', context: context);
 
   @override
-  Future<MensagemModel?> listarMensagens() {
-    return _$listarMensagensAsyncAction.run(() => super.listarMensagens());
+  Future<MensagemModel?> listarMensagens(String id) {
+    return _$listarMensagensAsyncAction.run(() => super.listarMensagens(id));
   }
 
   late final _$detalhesMensagemAsyncAction =

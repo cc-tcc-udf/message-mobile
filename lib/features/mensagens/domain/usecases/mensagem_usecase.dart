@@ -4,7 +4,7 @@ import '../../data/repositories/mensagem_repository.dart';
 
 
 abstract class MensagemUsecase {
-  Future<MensagemModel?> listarMensagens();
+  Future<MensagemModel?> listarMensagens(String id);
   Future<DetalheMensagemModel?> detalheMensagem(String id);
 }
 
@@ -14,9 +14,9 @@ class MensagemUsecaseImpl implements MensagemUsecase {
   MensagemUsecaseImpl({required this.repository});
 
   @override
-  Future<MensagemModel?> listarMensagens() async {
+  Future<MensagemModel?> listarMensagens(String id) async {
     try {
-      return await repository.listarMensagens();
+      return await repository.listarMensagens(id);
     } catch (e) {
       rethrow;
     }
