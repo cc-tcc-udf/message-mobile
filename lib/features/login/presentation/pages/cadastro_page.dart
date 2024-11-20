@@ -30,277 +30,275 @@ class _CadastroPageState extends State<CadastroPage> {
     bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SingleChildScrollView( // Envolvendo o conteúdo com SingleChildScrollView
         child: Padding(
           padding: TSpacingStyle.paddingWithAppBarHeight,
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Image(
-                    image: AssetImage(isDarkTheme
-                        ? TImages.darkAppLogo
-                        : TImages.lightAppLogo),
-                  ),
+          child: Column( // Removido o SizedBox com altura fixa
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Image(
+                  image: AssetImage(isDarkTheme
+                      ? TImages.darkAppLogo
+                      : TImages.lightAppLogo),
                 ),
-                const SizedBox(
-                  height: TSizes.defaultSpace,
-                ),
-                Form(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              const SizedBox(
+                height: TSizes.defaultSpace,
+              ),
+              Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
                       children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            const Divider(height: 2),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Container(
-                                color: isDarkTheme ? TColors.darkBackground : Colors.white,
-                                child: const Text('Cadastre-se com email e senha'),
+                        const Divider(height: 2),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Container(
+                            color: isDarkTheme ? TColors.darkBackground : Colors.white,
+                            child: const Text('Cadastre-se com email e senha'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: TSizes.sm,
+                    ),
+                    const Text(
+                      'Nome completo',
+                      style: TextStyle(fontSize: TSizes.fontSizeSm),
+                    ),
+                    const SizedBox(
+                      height: TSizes.sm,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.white,
+                      ),
+                      child: TextFormField(
+                        controller: controller.nome,
+                        cursorColor: Colors.black,
+                        decoration: const InputDecoration(
+                            hintText: 'Digite seu nome',
+                            hintStyle: TextStyle(color: Colors.grey)
+                        ),
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: TSizes.spaceBtwItens,
+                    ),
+                    const Text(
+                      'Telefone',
+                      style: TextStyle(fontSize: TSizes.fontSizeSm),
+                    ),
+                    const SizedBox(
+                      height: TSizes.sm,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.white,
+                      ),
+                      child: TextFormField(
+                        controller: controller.telefone,
+                        cursorColor: Colors.black,
+                        style: const TextStyle(color: Colors.black),
+                        decoration: const InputDecoration(
+                            hintText: '(00)00000-0000',
+                            hintStyle: TextStyle(color: Colors.grey)
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          TelefoneInputFormatter(),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: TSizes.spaceBtwItens,
+                    ),
+                    const Text(
+                      'Email universitário',
+                      style: TextStyle(fontSize: TSizes.fontSizeSm),
+                    ),
+                    const SizedBox(
+                      height: TSizes.sm,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.white,
+                      ),
+                      child: TextFormField(
+                        controller: controller.email,
+                        cursorColor: Colors.black,
+                        decoration: const InputDecoration(
+                            hintText: 'Digite seu email',
+                            hintStyle: TextStyle(color: Colors.grey)
+                        ),
+                        style: const TextStyle(color: Colors.black),
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: TSizes.spaceBtwItens,
+                    ),
+                    const Text(
+                      'Senha',
+                      style: TextStyle(fontSize: TSizes.fontSizeSm),
+                    ),
+                    const SizedBox(
+                      height: TSizes.sm,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.white,
+                      ),
+                      child: TextFormField(
+                        controller: controller.senha,
+                        cursorColor: Colors.black,
+                        style: const TextStyle(color: Colors.black),
+                        obscureText: !isPasswordVisible,
+                        decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                                color: Colors.grey,
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: TSizes.sm,
-                        ),
-                        const Text(
-                          'Nome completo',
-                          style: TextStyle(fontSize: TSizes.fontSizeSm),
-                        ),
-                        const SizedBox(
-                          height: TSizes.sm,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-                            color: Colors.white,
-                          ),
-                          child: TextFormField(
-                            controller: controller.nome,
-                            cursorColor: Colors.black,
-                            decoration: const InputDecoration(
-                                hintText: 'Digite seu nome',
-                                hintStyle: TextStyle(color: Colors.grey)
-                            ),
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: TSizes.spaceBtwItens,
-                        ),
-                        const Text(
-                          'Telefone',
-                          style: TextStyle(fontSize: TSizes.fontSizeSm),
-                        ),
-                        const SizedBox(
-                          height: TSizes.sm,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-                            color: Colors.white,
-                          ),
-                          child: TextFormField(
-                            controller: controller.telefone,
-                            cursorColor: Colors.black,
-                            style: const TextStyle(color: Colors.black),
-                            decoration: const InputDecoration(
-                                hintText: '(00)00000-0000',
-                                hintStyle: TextStyle(color: Colors.grey)
-                            ),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              TelefoneInputFormatter(),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: TSizes.spaceBtwItens,
-                        ),
-                        const Text(
-                          'Email universitário',
-                          style: TextStyle(fontSize: TSizes.fontSizeSm),
-                        ),
-                        const SizedBox(
-                          height: TSizes.sm,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-                            color: Colors.white,
-                          ),
-                          child: TextFormField(
-                            controller: controller.email,
-                            cursorColor: Colors.black,
-                            decoration: const InputDecoration(
-                              hintText: 'Digite seu email',
-                              hintStyle: TextStyle(color: Colors.grey)
-                            ),
-                            style: const TextStyle(color: Colors.black),
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: TSizes.spaceBtwItens,
-                        ),
-                        const Text(
-                          'Senha',
-                          style: TextStyle(fontSize: TSizes.fontSizeSm),
-                        ),
-                        const SizedBox(
-                          height: TSizes.sm,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-                            color: Colors.white,
-                          ),
-                          child: TextFormField(
-                            controller: controller.senha,
-                            cursorColor: Colors.black,
-                            style: const TextStyle(color: Colors.black),
-                            obscureText: !isPasswordVisible,
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                                  color: Colors.grey,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    isPasswordVisible = !isPasswordVisible;
-                                  });
-                                },
-                              ),
-                              border: InputBorder.none,
-                                hintText: 'Digite sua senha',
-                                hintStyle: const TextStyle(color: Colors.grey)
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: TSizes.spaceBtwItens,
-                        ),
-                        const Text(
-                          'Confirmar senha',
-                          style: TextStyle(fontSize: TSizes.fontSizeSm),
-                        ),
-                        const SizedBox(
-                          height: TSizes.sm,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-                            color: Colors.white,
-                          ),
-                          child: TextFormField(
-                            controller: controller.confirmar,
-                            cursorColor: Colors.black,
-                            style: const TextStyle(color: Colors.black),
-                            obscureText: !isPasswordVisibleConfirm,
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  isPasswordVisibleConfirm ? Icons.visibility : Icons.visibility_off,
-                                  color: Colors.grey,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    isPasswordVisibleConfirm = !isPasswordVisibleConfirm;
-                                  });
-                                },
-                              ),
-                              border: InputBorder.none,
-                                hintText: 'Confirme sua senha',
-                                hintStyle: TextStyle(color: Colors.grey)
-                            ),
-                          ),
-                        ),
-                        if (senhaNaoConfere)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              'As senhas não conferem',
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          ),
-                        const SizedBox(
-                          height: TSizes.spaceBtwItens,
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 55,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              setState(() {
-                                isLoading = true;
-                                senhaNaoConfere = controller.senha.text != controller.confirmar.text;
-                              });
-
-                              if (!senhaNaoConfere) {
-                                var usuario = CadastroUsuarioModel(
-                                  name: controller.nome.text,
-                                  phone: controller.telefone.text,
-                                  email: controller.email.text,
-                                  password: controller.senha.text,
-                                  active: true
-                                );
-                                await controller.cadastrar(usuario);
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                  Routes.login,
-                                      (Route<dynamic> route) => false,
-                                );
-                              }
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: isLoading && !senhaNaoConfere
-                                  ? WidgetStateProperty.all(Colors.grey[100]): WidgetStateProperty.all(TColors.buttonBackground),
-                            ),
-                            child: isLoading && !senhaNaoConfere
-                                ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(TColors.buttonBackground),
-                              ),
-                            ): const Text(
-                              'Cadastrar',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('Já possui cadastro?',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                )),
-                            TextButton(
                               onPressed: () {
-                                Navigator.pop(context);
+                                setState(() {
+                                  isPasswordVisible = !isPasswordVisible;
+                                });
                               },
-                              child: const Text(
-                                'Faça o login',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.blue
-                                ),
-                              ),
                             ),
-                          ],
+                            border: InputBorder.none,
+                            hintText: 'Digite sua senha',
+                            hintStyle: const TextStyle(color: Colors.grey)
                         ),
-                      ]),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: TSizes.spaceBtwItens,
+                    ),
+                    const Text(
+                      'Confirmar senha',
+                      style: TextStyle(fontSize: TSizes.fontSizeSm),
+                    ),
+                    const SizedBox(
+                      height: TSizes.sm,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.white,
+                      ),
+                      child: TextFormField(
+                        controller: controller.confirmar,
+                        cursorColor: Colors.black,
+                        style: const TextStyle(color: Colors.black),
+                        obscureText: !isPasswordVisibleConfirm,
+                        decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                isPasswordVisibleConfirm ? Icons.visibility : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  isPasswordVisibleConfirm = !isPasswordVisibleConfirm;
+                                });
+                              },
+                            ),
+                            border: InputBorder.none,
+                            hintText: 'Confirme sua senha',
+                            hintStyle: TextStyle(color: Colors.grey)
+                        ),
+                      ),
+                    ),
+                    if (senhaNaoConfere)
+                      const Padding(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          'As senhas não conferem',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    const SizedBox(
+                      height: TSizes.spaceBtwItens,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 55,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          setState(() {
+                            isLoading = true;
+                            senhaNaoConfere = controller.senha.text != controller.confirmar.text;
+                          });
+
+                          if (!senhaNaoConfere) {
+                            var usuario = CadastroUsuarioModel(
+                                name: controller.nome.text,
+                                phone: controller.telefone.text,
+                                email: controller.email.text,
+                                password: controller.senha.text,
+                                active: true
+                            );
+                            await controller.cadastrar(usuario);
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              Routes.login,
+                                  (Route<dynamic> route) => false,
+                            );
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: isLoading && !senhaNaoConfere
+                              ? WidgetStateProperty.all(Colors.grey[100]): WidgetStateProperty.all(TColors.buttonBackground),
+                        ),
+                        child: isLoading && !senhaNaoConfere
+                            ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(TColors.buttonBackground),
+                          ),
+                        ): const Text(
+                          'Cadastrar',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Já possui cadastro?',
+                            style: TextStyle(
+                              fontSize: 12,
+                            )),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            'Faça o login',
+                            style: TextStyle(
+                                fontSize: 12,
+                                decoration: TextDecoration.underline,
+                                color: Colors.blue
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

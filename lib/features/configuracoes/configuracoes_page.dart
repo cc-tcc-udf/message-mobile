@@ -16,7 +16,7 @@ class ConfiguracoesPage extends StatefulWidget {
 
 class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
   UsuarioController usuarioController = GetIt.I<UsuarioController>();
-  bool _isLoading = true; // Controlador de carregamento
+  bool _isLoading = true;
 
   @override
   void initState() {
