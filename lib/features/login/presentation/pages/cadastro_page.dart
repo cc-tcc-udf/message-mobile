@@ -22,6 +22,8 @@ class _CadastroPageState extends State<CadastroPage> {
   final LoginController controller = GetIt.I.get<LoginController>();
   bool senhaNaoConfere = false;
   bool isLoading = false;
+  bool isPasswordVisible = false;
+  bool isPasswordVisibleConfirm = false;
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +83,10 @@ class _CadastroPageState extends State<CadastroPage> {
                           child: TextFormField(
                             controller: controller.nome,
                             cursorColor: Colors.black,
+                            decoration: const InputDecoration(
+                                hintText: 'Digite seu nome',
+                                hintStyle: TextStyle(color: Colors.grey)
+                            ),
                             style: const TextStyle(color: Colors.black),
                           ),
                         ),
@@ -103,6 +109,10 @@ class _CadastroPageState extends State<CadastroPage> {
                             controller: controller.telefone,
                             cursorColor: Colors.black,
                             style: const TextStyle(color: Colors.black),
+                            decoration: const InputDecoration(
+                                hintText: '(00)00000-0000',
+                                hintStyle: TextStyle(color: Colors.grey)
+                            ),
                             keyboardType: TextInputType.number,
                             inputFormatters: [
                               FilteringTextInputFormatter.digitsOnly,
@@ -128,6 +138,10 @@ class _CadastroPageState extends State<CadastroPage> {
                           child: TextFormField(
                             controller: controller.email,
                             cursorColor: Colors.black,
+                            decoration: const InputDecoration(
+                              hintText: 'Digite seu email',
+                              hintStyle: TextStyle(color: Colors.grey)
+                            ),
                             style: const TextStyle(color: Colors.black),
                             keyboardType: TextInputType.emailAddress,
                           ),
@@ -151,7 +165,23 @@ class _CadastroPageState extends State<CadastroPage> {
                             controller: controller.senha,
                             cursorColor: Colors.black,
                             style: const TextStyle(color: Colors.black),
-                            obscureText: true,
+                            obscureText: !isPasswordVisible,
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    isPasswordVisible = !isPasswordVisible;
+                                  });
+                                },
+                              ),
+                              border: InputBorder.none,
+                                hintText: 'Digite sua senha',
+                                hintStyle: const TextStyle(color: Colors.grey)
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -173,7 +203,23 @@ class _CadastroPageState extends State<CadastroPage> {
                             controller: controller.confirmar,
                             cursorColor: Colors.black,
                             style: const TextStyle(color: Colors.black),
-                            obscureText: true,
+                            obscureText: !isPasswordVisibleConfirm,
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  isPasswordVisibleConfirm ? Icons.visibility : Icons.visibility_off,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    isPasswordVisibleConfirm = !isPasswordVisibleConfirm;
+                                  });
+                                },
+                              ),
+                              border: InputBorder.none,
+                                hintText: 'Confirme sua senha',
+                                hintStyle: TextStyle(color: Colors.grey)
+                            ),
                           ),
                         ),
                         if (senhaNaoConfere)
@@ -213,14 +259,15 @@ class _CadastroPageState extends State<CadastroPage> {
                               }
                             },
                             style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(TColors.buttonBackground),
+                              backgroundColor: isLoading && !senhaNaoConfere
+                                  ? WidgetStateProperty.all(Colors.grey[100]): WidgetStateProperty.all(TColors.buttonBackground),
                             ),
                             child: isLoading && !senhaNaoConfere
                                 ? const SizedBox(
                               width: 20,
                               height: 20,
                               child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+                                valueColor: AlwaysStoppedAnimation<Color>(TColors.buttonBackground),
                               ),
                             ): const Text(
                               'Cadastrar',
@@ -243,7 +290,9 @@ class _CadastroPageState extends State<CadastroPage> {
                                 'Faça o login',
                                 style: TextStyle(
                                     fontSize: 12,
-                                    decoration: TextDecoration.underline),
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.blue
+                                ),
                               ),
                             ),
                           ],

@@ -25,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   final FocusNode senhaFocusNode = FocusNode();
   final LoginController controller = GetIt.I.get<LoginController>();
   final UsuarioController userController = GetIt.I<UsuarioController>();
+  bool isPasswordVisible = false;
 
   bool isLoading = false;
 
@@ -153,14 +154,13 @@ class _LoginPageState extends State<LoginPage> {
                         focusNode: senhaFocusNode,
                         cursorColor: Colors.black,
                         style: const TextStyle(color: Colors.black),
-                        obscureText: true,
+                        obscureText: !isPasswordVisible, // Alterna entre mostrar/ocultar a senha
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                                color: Colors.grey.shade300), // Define a borda
+                            borderSide: BorderSide(color: Colors.grey.shade300),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -169,6 +169,17 @@ class _LoginPageState extends State<LoginPage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.grey.shade500),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isPasswordVisible = !isPasswordVisible;
+                              });
+                            },
                           ),
                         ),
                       ),
