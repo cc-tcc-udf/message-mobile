@@ -52,20 +52,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               ? Colors.white
               : Colors.black,
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                Routes.configuracoes,
-              );
-            },
-            icon: const Icon(
-              Icons.settings,
-              size: 30,
-            ),
-          ),
-        ],
       ),
       drawer: const DrawerWidget(),
       body: FutureBuilder<void>(
