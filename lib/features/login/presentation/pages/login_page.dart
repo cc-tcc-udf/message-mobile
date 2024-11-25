@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
     if (controller.loginEntity == null) {
       _showDialog(
         context,
-        message: 'CPF e/ou senha inválidos',
+        message: 'Email e/ou senha inválidos',
       );
     } else {
       if (userController.usuario?.course?.id == null) {

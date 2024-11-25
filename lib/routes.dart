@@ -34,7 +34,7 @@ class Routes {
   Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.initial:
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return MaterialPageRoute(builder: (_) => const HomePageWidget());
       case Routes.login:
         return MaterialPageRoute(
             builder: (_) =>

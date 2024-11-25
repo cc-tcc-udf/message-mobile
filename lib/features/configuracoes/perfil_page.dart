@@ -136,7 +136,7 @@ class _PerfilPageState extends State<PerfilPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomePage(selectedIndex: 2),
+            builder: (context) => const HomePageWidget(),
           ),
         );
 

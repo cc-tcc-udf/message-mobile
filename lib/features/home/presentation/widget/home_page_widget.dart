@@ -113,7 +113,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          final mensagem = _controller.mensagem!.data.reversed.toList()[index]; // Invertendo a lista
+                          final mensagem = _controller.mensagem!.data[index];
                           return GestureDetector(
                             onTap: () {
                               print(mensagem.id);
@@ -162,7 +162,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           );
                         },
-                      )
+                      ),
+
                   ],
                 );
               }

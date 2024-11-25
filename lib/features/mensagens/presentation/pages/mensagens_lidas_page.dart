@@ -10,14 +10,14 @@ import '../../../usuarios/presentation/controllers/usuario_controller.dart';
 import '../../../mensagens/data/models/mensagem_model.dart';
 import '../controllers/mensagem_controller.dart';
 
-class MensagemPage extends StatefulWidget {
-  const MensagemPage({super.key});
+class MensagensLidasPage extends StatefulWidget {
+  const MensagensLidasPage({super.key});
 
   @override
-  State<MensagemPage> createState() => _MensagemPageState();
+  State<MensagensLidasPage> createState() => _MensagensLidasPageState();
 }
 
-class _MensagemPageState extends State<MensagemPage> {
+class _MensagensLidasPageState extends State<MensagensLidasPage> {
   final UsuarioController _usuarioController = GetIt.I.get<UsuarioController>();
   final MensagemController _controller = GetIt.I.get<MensagemController>();
   List<MessageData>? _mensagem = [];
@@ -64,7 +64,7 @@ class _MensagemPageState extends State<MensagemPage> {
             return Text(
               _controller.isLoading
                   ? ''
-                  : 'Mensagens não lidas ($index)',
+                  : 'Mensagens lidas ($index)',
             );
           },
         ),

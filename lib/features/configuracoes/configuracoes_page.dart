@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../core/design/themes/colors.dart';
+import '../../core/design/widgets/app_bar_menu.dart';
 import '../../routes.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
@@ -40,6 +41,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBarMenu(null, context: context, titleText: 'Configurações'),
       body: Stack(
         children: [
           LayoutBuilder(
@@ -49,8 +51,8 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 80.0, horizontal: 16),
+                        padding: const EdgeInsets.only(
+                            bottom: 80.0, left: 16, right: 16),
                         child: _isLoading
                             ? Container()
                             : Column(

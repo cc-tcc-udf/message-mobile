@@ -10,6 +10,7 @@ class LoadingWidget extends StatefulWidget {
 class _LoadingWidgetState extends State<LoadingWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -17,7 +18,11 @@ class _LoadingWidgetState extends State<LoadingWidget>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
-    )..repeat();
+    )..repeat(reverse: true);
+
+    _animation = Tween<double>(begin: 1.0, end: 1.2).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
   }
 
   @override
@@ -35,8 +40,8 @@ class _LoadingWidgetState extends State<LoadingWidget>
         : 'assets/images/loading_light.png';
 
     return Center(
-      child: RotationTransition(
-        turns: Tween<double>(begin: 0.0, end: 1.0).animate(_controller),
+      child: ScaleTransition(
+        scale: _animation,
         child: Image.asset(
           imagePath,
           width: 60,
