@@ -6,7 +6,7 @@ import '../models/mensagem_model.dart';
 
 abstract class MensagemRepository {
   Future<MensagemModel?> listarMensagens(String id, String flag);
-  Future<DetalheMensagemModel?> detalheMensagem(String id);
+  Future<DetalheMensagemModel?> detalheMensagem(String id, String idAluno);
   Future<dynamic> viewFavorite(EnvioViewFavoriteModel envio);
   Future<IndexModel?> indexMensagens(String id);
 }
@@ -26,9 +26,9 @@ class MensagemRepositoryImpl implements MensagemRepository {
   }
 
   @override
-  Future<DetalheMensagemModel?> detalheMensagem(String id) async {
+  Future<DetalheMensagemModel?> detalheMensagem(String id, String idAluno) async {
     try {
-      return await datasource.detalheMensagem(id);
+      return await datasource.detalheMensagem(id, idAluno);
     } catch (e) {
       rethrow;
     }

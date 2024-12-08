@@ -9,7 +9,7 @@ import '../models/login_model.dart';
 import '../models/response_cadastro_usuario_model.dart';
 
 abstract class LoginDatasource {
-  Future<LoginModel?> login(String email, String password);
+  Future<LoginModel?> login(String email, String password, bool isMobile);
 
   Future<ResponseCadastroUsuarioModel?> cadastroUsuario(
       CadastroUsuarioModel usuarios);
@@ -22,7 +22,7 @@ class LoginDatasourceImpl implements LoginDatasource {
   LoginDatasourceImpl({required this.httpClient, required this.localStorage});
 
   @override
-  Future<LoginModel?> login(String email, String password) async {
+  Future<LoginModel?> login(String email, String password, bool isMobile) async {
     try {
       final SecurityLocalStorage storage = SecuritySharedPreference();
       var result = await httpClient.post(
@@ -31,6 +31,7 @@ class LoginDatasourceImpl implements LoginDatasource {
           data: {
             "email": email,
             "password": password,
+            "isMobile": isMobile
           });
 
       if (result.statusCode == 200) {

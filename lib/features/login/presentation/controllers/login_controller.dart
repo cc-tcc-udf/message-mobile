@@ -55,7 +55,7 @@ abstract class LoginControllerBase with Store {
     isLoading = true;
     error = '';
     try {
-      loginEntity = await loginUsecase(email: email, senha: senha);
+      loginEntity = await loginUsecase(email: email, senha: senha, isMobile: true);
     } catch (e) {
       error = e.toString();
       loginEntity = null;

@@ -14,7 +14,7 @@ import '../models/mensagem_model.dart';
 abstract class MensagemDatasource {
   Future<MensagemModel?> listarMensagens(String id, String flag);
   Future<void> viewFavorite(EnvioViewFavoriteModel envio);
-  Future<DetalheMensagemModel?> detalheMensagem(String id);
+  Future<DetalheMensagemModel?> detalheMensagem(String id, String idAluno);
   Future<IndexModel?> indexMensagens(String id);
 }
 
@@ -68,14 +68,14 @@ class MensagemDatasourceImpl implements MensagemDatasource {
   }
 
   @override
-  Future<DetalheMensagemModel?> detalheMensagem(String id) async {
+  Future<DetalheMensagemModel?> detalheMensagem(String id, String idAluno) async {
     try {
       final SecurityLocalStorage storage = SecuritySharedPreference();
       var token = await storage.read("token");
       var result = await client.get(
         baseOptions: HttpConfig.apiCampus,
         headers: [{"Accept": '*/*', "Authorization": 'Bearer $token'}],
-        endpoint: EndPointsConsts.detalheMensagem(id: id),
+        endpoint: EndPointsConsts.detalheMensagem(idMsg: id, idAluno: idAluno),
       );
 
       if (result.statusCode == 200) {

@@ -53,11 +53,11 @@ abstract class MensagemControllerBase with Store {
   }
 
   @action
-  Future<DetalheMensagemModel?> detalhesMensagem(String id) async {
+  Future<DetalheMensagemModel?> detalhesMensagem(String id, String idAluno) async {
     isLoading = true;
     error = '';
     try {
-      detalheMensagem = await usecase.detalheMensagem(id);
+      detalheMensagem = await usecase.detalheMensagem(id, idAluno);
     } catch (e) {
       error = e.toString();
       mensagem = null;

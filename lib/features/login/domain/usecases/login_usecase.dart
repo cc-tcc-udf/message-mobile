@@ -5,7 +5,7 @@ import '../../data/models/login_model.dart';
 import '../../data/repositories/login_repository.dart';
 
 abstract class LoginUsecase {
-  Future<LoginModel?> call({required String email, required String senha});
+  Future<LoginModel?> call({required String email, required String senha, required bool isMobile});
 
   Future<ResponseCadastroUsuarioModel?> cadastro(CadastroUsuarioModel usuario);
 }
@@ -17,9 +17,9 @@ class LoginUsecaseImpl implements LoginUsecase {
 
   @override
   Future<LoginModel?> call(
-      {required String email, required String senha}) async {
+      {required String email, required String senha, required bool isMobile}) async {
     try {
-      return await repository.login(email, senha);
+      return await repository.login(email, senha, isMobile);
     } catch (e) {
       return Future.error(e);
     }

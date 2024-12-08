@@ -11,7 +11,7 @@ class EndPointsConsts {
   //Mensagens
   static String indexMensagens({required String id}) => '/private/msg/mobile/qtds/$id';
   static String listaMensagens({required String id, required String flag}) => '/private/msg/mobile/list/$id?flag=$flag';
-  static String detalheMensagem({required String id}) => '/private/msg/$id';
+  static String detalheMensagem({required String idMsg, required String idAluno }) => '/private/msg/mobile/get/$idMsg?alunoId=$idAluno}';
   static const String viewFavorite = '/private/view/mobile/view_favorite';
   //Files
   static const String envioFoto = '/public/file/create';

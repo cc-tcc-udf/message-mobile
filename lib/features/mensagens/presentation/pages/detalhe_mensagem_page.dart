@@ -29,27 +29,33 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
   @override
   void initState() {
     super.initState();
-    _initializeLocale();
-    _usuarioController.getDataUser();
-    _controller.detalhesMensagem(widget.id).then((_) {
-      if (_controller.detalheMensagem != null) {
-        _controller.favorito = _controller.detalheMensagem!.data!.favorite;
+    _initializePage();
+  }
+
+  Future<void> _initializePage() async {
+    await _initializeLocale();
+    await _usuarioController.getDataUser();
+    print(widget.id);
+
+    await _controller.detalhesMensagem(widget.id, _usuarioController.usuario!.id!);
+
+    if (_controller.detalheMensagem != null) {
+      _controller.favorito = _controller.detalheMensagem!.data?.favorite ?? false;
+
+      if (_controller.detalheMensagem!.data?.read == false) {
+        final envio = EnvioViewFavoriteModel(
+          user: _usuarioController.usuario!.id!,
+          message: widget.id,
+          favorite: false,
+          view: true,
+        );
+        await _controller.viewFavorite(envio);
       }
-    });
-
-    print(_controller.detalheMensagem!.data!.read);
-
-    if(_controller.detalheMensagem!.data!.read == false){
-      final envio = EnvioViewFavoriteModel(
-        user: _usuarioController.usuario!.id!,
-        message: widget.id,
-        favorite: false,
-        view: true,
-      );
-      _controller.viewFavorite(envio);
     }
 
+    setState(() {});
   }
+
 
   Future<void> favoritar() async {
     _controller.favorito = !_controller.favorito;
@@ -60,7 +66,6 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
       favorite: _controller.favorito,
       view: true,
     );
-
     await _controller.viewFavorite(envio);
   }
 

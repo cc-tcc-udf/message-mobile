@@ -113,9 +113,7 @@ class _MensagensFavoritasPageState extends State<MensagensFavoritasPage> {
                           Column(
                             children: [
                               ListView.builder(
-                                itemCount: _showAllMessages
-                                    ? _controller.mensagem?.data.length ?? 0
-                                    : (_controller.mensagem?.data.length ?? 0).clamp(0, 2),
+                                itemCount: _controller.mensagem?.data.length,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
@@ -168,24 +166,6 @@ class _MensagensFavoritasPageState extends State<MensagensFavoritasPage> {
                                   );
                                 },
                               ),
-                              if ((_controller.mensagem?.data.length ?? 0) > 2)
-                                TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _showAllMessages = !_showAllMessages;
-                                    });
-                                  },
-                                  child: Text(
-                                    _showAllMessages ? 'Ver menos' : 'Ver mais',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      color: Theme.of(context).brightness == Brightness.dark
-                                          ? Colors.white
-                                          : TColors.buttonBackground,
-                                    ),
-                                  ),
-                                ),
-
                             ],
                           ),
                       ],

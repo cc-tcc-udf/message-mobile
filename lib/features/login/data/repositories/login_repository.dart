@@ -7,7 +7,7 @@ import 'package:campus_connect/features/login/data/models/response_cadastro_usua
 import '../datasources/login_datasource.dart';
 
 abstract class LoginRepository {
-  Future<LoginModel?> login(String cpf, String senha);
+  Future<LoginModel?> login(String cpf, String senha, bool isMobile);
   Future<ResponseCadastroUsuarioModel?> cadastro(CadastroUsuarioModel usuario);
 }
 
@@ -17,9 +17,9 @@ class LoginRepositoryImpl implements LoginRepository {
       {required this.datasource});
 
   @override
-  Future<LoginModel?> login(String email, String senha) async {
+  Future<LoginModel?> login(String email, String senha, bool isMobile) async {
     try {
-      return await datasource.login(email, senha);
+      return await datasource.login(email, senha, isMobile);
     } catch (e) {
       rethrow;
     }

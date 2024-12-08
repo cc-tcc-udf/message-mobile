@@ -57,6 +57,22 @@ mixin _$MensagemController on MensagemControllerBase, Store {
     });
   }
 
+  late final _$favoritoAtom =
+      Atom(name: 'MensagemControllerBase.favorito', context: context);
+
+  @override
+  bool get favorito {
+    _$favoritoAtom.reportRead();
+    return super.favorito;
+  }
+
+  @override
+  set favorito(bool value) {
+    _$favoritoAtom.reportWrite(value, super.favorito, () {
+      super.favorito = value;
+    });
+  }
+
   late final _$detalheMensagemAtom =
       Atom(name: 'MensagemControllerBase.detalheMensagem', context: context);
 
@@ -102,8 +118,9 @@ mixin _$MensagemController on MensagemControllerBase, Store {
       AsyncAction('MensagemControllerBase.detalhesMensagem', context: context);
 
   @override
-  Future<DetalheMensagemModel?> detalhesMensagem(String id) {
-    return _$detalhesMensagemAsyncAction.run(() => super.detalhesMensagem(id));
+  Future<DetalheMensagemModel?> detalhesMensagem(String id, String idAluno) {
+    return _$detalhesMensagemAsyncAction
+        .run(() => super.detalhesMensagem(id, idAluno));
   }
 
   late final _$indexMensagensAsyncAction =
@@ -128,6 +145,7 @@ mixin _$MensagemController on MensagemControllerBase, Store {
 isLoading: ${isLoading},
 error: ${error},
 mensagem: ${mensagem},
+favorito: ${favorito},
 detalheMensagem: ${detalheMensagem},
 index: ${index}
     ''';

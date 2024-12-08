@@ -7,7 +7,7 @@ import '../../data/repositories/mensagem_repository.dart';
 
 abstract class MensagemUsecase {
   Future<MensagemModel?> listarMensagens(String id, String flag);
-  Future<DetalheMensagemModel?> detalheMensagem(String id);
+  Future<DetalheMensagemModel?> detalheMensagem(String id, String idAluno);
   Future<dynamic> viewFavorite(EnvioViewFavoriteModel envio);
   Future<IndexModel?> indexMensagens(String id);
 }
@@ -27,9 +27,9 @@ class MensagemUsecaseImpl implements MensagemUsecase {
   }
 
   @override
-  Future<DetalheMensagemModel?> detalheMensagem(String id) async {
+  Future<DetalheMensagemModel?> detalheMensagem(String id, String idAluno) async {
     try {
-      return await repository.detalheMensagem(id);
+      return await repository.detalheMensagem(id, idAluno);
     } catch (e) {
       rethrow;
     }
