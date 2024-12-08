@@ -33,7 +33,7 @@ class _MensagensFavoritasPageState extends State<MensagensFavoritasPage> {
   }
 
   Future<void> _loadMensagem() async {
-    await _controller.listarMensagens(_usuarioController.usuario!.course!.id!);
+    await _controller.listarMensagens(_usuarioController.usuario!.id!, 'favorites');
     setState(() {
       _mensagem = _controller.mensagem?.data;
       index = _controller.mensagem!.data.length;

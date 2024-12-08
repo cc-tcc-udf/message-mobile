@@ -73,12 +73,29 @@ mixin _$MensagemController on MensagemControllerBase, Store {
     });
   }
 
+  late final _$indexAtom =
+      Atom(name: 'MensagemControllerBase.index', context: context);
+
+  @override
+  IndexModel? get index {
+    _$indexAtom.reportRead();
+    return super.index;
+  }
+
+  @override
+  set index(IndexModel? value) {
+    _$indexAtom.reportWrite(value, super.index, () {
+      super.index = value;
+    });
+  }
+
   late final _$listarMensagensAsyncAction =
       AsyncAction('MensagemControllerBase.listarMensagens', context: context);
 
   @override
-  Future<MensagemModel?> listarMensagens(String id) {
-    return _$listarMensagensAsyncAction.run(() => super.listarMensagens(id));
+  Future<MensagemModel?> listarMensagens(String id, String flag) {
+    return _$listarMensagensAsyncAction
+        .run(() => super.listarMensagens(id, flag));
   }
 
   late final _$detalhesMensagemAsyncAction =
@@ -89,13 +106,30 @@ mixin _$MensagemController on MensagemControllerBase, Store {
     return _$detalhesMensagemAsyncAction.run(() => super.detalhesMensagem(id));
   }
 
+  late final _$indexMensagensAsyncAction =
+      AsyncAction('MensagemControllerBase.indexMensagens', context: context);
+
+  @override
+  Future<IndexModel?> indexMensagens(String id) {
+    return _$indexMensagensAsyncAction.run(() => super.indexMensagens(id));
+  }
+
+  late final _$viewFavoriteAsyncAction =
+      AsyncAction('MensagemControllerBase.viewFavorite', context: context);
+
+  @override
+  Future<dynamic> viewFavorite(EnvioViewFavoriteModel envio) {
+    return _$viewFavoriteAsyncAction.run(() => super.viewFavorite(envio));
+  }
+
   @override
   String toString() {
     return '''
 isLoading: ${isLoading},
 error: ${error},
 mensagem: ${mensagem},
-detalheMensagem: ${detalheMensagem}
+detalheMensagem: ${detalheMensagem},
+index: ${index}
     ''';
   }
 }

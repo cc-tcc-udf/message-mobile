@@ -13,7 +13,7 @@ class _TermosEPoliticaPageState extends State<TermosEPoliticaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SAppBar(null, context: context, titleText: 'Termos e política de privacidade'),
+      appBar: SAppBar(context: context, titleText: 'Termos e política de privacidade'),
     );
   }
 }

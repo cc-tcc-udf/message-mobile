@@ -41,7 +41,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarMenu(null, context: context, titleText: 'Configurações'),
+      appBar: AppBarMenu(context: context, titleText: 'Configurações'),
       body: Stack(
         children: [
           LayoutBuilder(

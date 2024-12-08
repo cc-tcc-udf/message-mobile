@@ -58,7 +58,7 @@ class _TemaPageState extends State<TemaPage> {
     }
 
     return Scaffold(
-      appBar: SAppBar(null, context: context, titleText: 'Tema'),
+      appBar: SAppBar(context: context, titleText: 'Tema'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),

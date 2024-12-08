@@ -10,8 +10,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../core/design/themes/colors.dart';
 import '../../../../core/design/widgets/drawer_widget.dart';
-import '../../../../routes.dart';
-import '../../../mensagens/data/models/mensagem_model.dart';
+import '../../../mensagens/presentation/pages/todas_mensagens_page.dart';
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({super.key});
@@ -23,23 +22,28 @@ class HomePageWidget extends StatefulWidget {
 class _HomePageWidgetState extends State<HomePageWidget> {
   final UsuarioController _usuarioController = GetIt.I.get<UsuarioController>();
   final MensagemController _controller = GetIt.I.get<MensagemController>();
-  List<MessageData>? _mensagem = [];
   late Future<void> _loadMensagemFuture;
-  late int index;
+  late int indexAll = 0;
+  late int indexNotRead = 0;
+  late int indexRead = 0;
+  late int indexFavorite = 0;
+
 
   @override
   void initState() {
     super.initState();
-    _usuarioController.getDataUser();
+    _usuarioController.getUser();
     _loadMensagem();
     _loadMensagemFuture = _loadMensagem();
   }
 
   Future<void> _loadMensagem() async {
-    await _controller.listarMensagens(_usuarioController.usuario!.course!.id!);
+    await _controller.indexMensagens(_usuarioController.usuario!.id!);
     setState(() {
-      _mensagem = _controller.mensagem?.data;
-      index = _controller.mensagem!.data.length;
+      indexAll = _controller.index!.data!.total!;
+      indexNotRead = _controller.index!.data!.notReads!;
+      indexRead = _controller.index!.data!.reads!;
+      indexFavorite = _controller.index!.data!.favorites!;
     });
   }
 
@@ -131,6 +135,46 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               children: <Widget>[
                                 GestureDetector(
                                   onTap: () {
+                                    Get.to(const TodasMensagensPage());
+                                  },
+                                  child: Container(
+                                    width:
+                                    MediaQuery.of(context).size.width * 0.4,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: TColors.buttonBackground,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              '$indexAll',
+                                              style: const TextStyle(
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.white),
+                                            ),
+                                            const Text(
+                                              'Todas as mensagens',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.white),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
                                     Get.to(const MensagemPage());
                                   },
                                   child: Container(
@@ -149,7 +193,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              '$index',
+                                              '$indexNotRead',
                                               style: const TextStyle(
                                                   fontSize: 30,
                                                   fontWeight: FontWeight.w700,
@@ -189,7 +233,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              '$index',
+                                              '$indexFavorite',
                                               style: const TextStyle(
                                                   fontSize: 30,
                                                   fontWeight: FontWeight.w700,
@@ -228,7 +272,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              '$index',
+                                              '$indexRead',
                                               style: const TextStyle(
                                                   fontSize: 30,
                                                   fontWeight: FontWeight.w700,
@@ -248,6 +292,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     ),
                                   ),
                                 ),
+
                               ],
                             ),
                           )

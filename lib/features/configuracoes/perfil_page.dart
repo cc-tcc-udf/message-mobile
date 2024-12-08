@@ -166,7 +166,7 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SAppBar(null, context: context, titleText: 'Perfil'),
+      appBar: SAppBar(context: context, titleText: 'Perfil'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

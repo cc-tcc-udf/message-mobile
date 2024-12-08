@@ -32,6 +32,8 @@ class MessageData {
   final String? sendDate;
   final String? summary;
   final String? status;
+  final bool favorite;
+  final bool read;
   final String? message;
   final String? responsible;
   final List<AttachmentData>? attachments;
@@ -46,6 +48,8 @@ class MessageData {
     required this.status,
     required this.message,
     required this.responsible,
+    required this.favorite,
+    required this.read,
     required this.attachments,
     required this.links,
     required this.courses,
@@ -59,6 +63,8 @@ class MessageData {
       summary: json['summary'] as String?,
       status: json['status'] as String?,
       message: json['message'] as String?,
+      favorite: json['favorite'] as bool,
+      read: json['read'] as bool,
       responsible: json['responsible'] as String?,
       attachments: (json['attachments'] as List<dynamic>?)
           ?.map((item) => AttachmentData.fromJson(item))
@@ -78,6 +84,8 @@ class MessageData {
       'title': title,
       'sendDate': sendDate,
       'summary': summary,
+      'favorite': favorite,
+      'read': read,
       'status': status,
       'message': message,
       'responsible': responsible,

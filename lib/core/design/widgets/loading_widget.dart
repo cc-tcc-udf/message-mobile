@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatefulWidget {
-  const LoadingWidget({Key? key}) : super(key: key);
+  const LoadingWidget({super.key});
 
   @override
-  _LoadingWidgetState createState() => _LoadingWidgetState();
+  LoadingWidgetState createState() => LoadingWidgetState();
 }
 
-class _LoadingWidgetState extends State<LoadingWidget>
+class LoadingWidgetState extends State<LoadingWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;

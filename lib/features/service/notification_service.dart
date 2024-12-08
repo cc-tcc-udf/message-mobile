@@ -47,8 +47,6 @@ class LocalNotificationService {
         throw Exception("Token de notificação inválido");
       }
 
-      print('getToken :: $token');
-
       // Verifica se o documento já existe e atualiza apenas o token
       var studentDocRef = firebaseFirestore
           .collection('groups')
@@ -68,11 +66,12 @@ class LocalNotificationService {
       // Escuta mudanças no token
       FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
         if (newToken.isNotEmpty && newToken != token) {
-          print('onTokenRefresh :: $newToken');
           await studentDocRef.update({
             'notificationToken': newToken,
           }).catchError((e) {
-            print('Erro ao atualizar token no Firestore: $e');
+            if (kDebugMode) {
+              print('Erro ao atualizar token no Firestore: $e');
+            }
           });
         }
       });

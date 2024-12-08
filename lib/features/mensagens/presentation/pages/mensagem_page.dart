@@ -33,7 +33,7 @@ class _MensagemPageState extends State<MensagemPage> {
   }
 
   Future<void> _loadMensagem() async {
-    await _controller.listarMensagens(_usuarioController.usuario!.course!.id!);
+    await _controller.listarMensagens(_usuarioController.usuario!.id!, 'not_read');
     setState(() {
       _mensagem = _controller.mensagem?.data;
       index = _controller.mensagem!.data.length;

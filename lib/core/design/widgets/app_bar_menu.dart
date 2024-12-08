@@ -4,11 +4,9 @@ import '../../../routes.dart';
 
 class AppBarMenu extends AppBar {
   final String titleText;
-  @override
-  final List<Widget>? actions;
   final BuildContext context;
 
-  AppBarMenu(this.actions, {required this.context, required this.titleText, super.key})
+  AppBarMenu({required this.context, required this.titleText, super.key})
       : super(
     title: Text(
       titleText,
@@ -17,7 +15,6 @@ class AppBarMenu extends AppBar {
         fontSize: 20,
       ),
     ),
-    actions: actions,
     leading: Padding(
       padding: const EdgeInsets.all(8.0),
       child: IconButton(

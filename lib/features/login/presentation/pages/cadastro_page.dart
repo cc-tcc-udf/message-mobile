@@ -15,10 +15,10 @@ class CadastroPage extends StatefulWidget {
   const CadastroPage({super.key});
 
   @override
-  _CadastroPageState createState() => _CadastroPageState();
+  CadastroPageState createState() => CadastroPageState();
 }
 
-class _CadastroPageState extends State<CadastroPage> {
+class CadastroPageState extends State<CadastroPage> {
   final LoginController controller = GetIt.I.get<LoginController>();
   bool senhaNaoConfere = false;
   bool isLoading = false;
@@ -30,10 +30,10 @@ class _CadastroPageState extends State<CadastroPage> {
     bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      body: SingleChildScrollView( // Envolvendo o conteúdo com SingleChildScrollView
+      body: SingleChildScrollView(
         child: Padding(
           padding: TSpacingStyle.paddingWithAppBarHeight,
-          child: Column( // Removido o SizedBox com altura fixa
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
@@ -216,7 +216,7 @@ class _CadastroPageState extends State<CadastroPage> {
                             ),
                             border: InputBorder.none,
                             hintText: 'Confirme sua senha',
-                            hintStyle: TextStyle(color: Colors.grey)
+                            hintStyle: const TextStyle(color: Colors.grey)
                         ),
                       ),
                     ),
@@ -243,22 +243,49 @@ class _CadastroPageState extends State<CadastroPage> {
 
                           if (!senhaNaoConfere) {
                             var usuario = CadastroUsuarioModel(
-                                name: controller.nome.text,
-                                phone: controller.telefone.text,
-                                email: controller.email.text,
-                                password: controller.senha.text,
-                                active: true
+                              name: controller.nome.text,
+                              phone: controller.telefone.text,
+                              email: controller.email.text,
+                              password: controller.senha.text,
+                              active: true,
                             );
-                            await controller.cadastrar(usuario);
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                              Routes.login,
-                                  (Route<dynamic> route) => false,
-                            );
+
+                            try {
+                              await controller.cadastrar(usuario);
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Cadastro realizado com sucesso!'),
+                                  backgroundColor: Colors.black,
+                                ),
+                              );
+
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                Routes.login,
+                                    (Route<dynamic> route) => false,
+                              );
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Ocorreu um erro, tente novamente.'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            } finally {
+                              setState(() {
+                                isLoading = false;
+                              });
+                            }
+                          } else {
+                            setState(() {
+                              isLoading = false;
+                            });
                           }
                         },
                         style: ButtonStyle(
                           backgroundColor: isLoading && !senhaNaoConfere
-                              ? WidgetStateProperty.all(Colors.grey[100]): WidgetStateProperty.all(TColors.buttonBackground),
+                              ? WidgetStateProperty.all(Colors.grey[100])
+                              : WidgetStateProperty.all(TColors.buttonBackground),
                         ),
                         child: isLoading && !senhaNaoConfere
                             ? const SizedBox(
@@ -267,7 +294,8 @@ class _CadastroPageState extends State<CadastroPage> {
                           child: CircularProgressIndicator(
                             valueColor: AlwaysStoppedAnimation<Color>(TColors.buttonBackground),
                           ),
-                        ): const Text(
+                        )
+                            : const Text(
                           'Cadastrar',
                           style: TextStyle(color: Colors.white),
                         ),

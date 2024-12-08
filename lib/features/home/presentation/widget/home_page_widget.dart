@@ -16,8 +16,8 @@ class HomePageWidget extends StatefulWidget {
 }
 
 class _HomePageWidgetState extends State<HomePageWidget> {
-  UsuarioController _usuarioController = GetIt.I.get<UsuarioController>();
-  MensagemController _controller = GetIt.I.get<MensagemController>();
+  final UsuarioController _usuarioController = GetIt.I.get<UsuarioController>();
+  final MensagemController _controller = GetIt.I.get<MensagemController>();
   List<MessageData>? _mensagem = [];
   late Future<void> _loadMensagemFuture;
   late int index;
@@ -30,7 +30,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   }
 
   Future<void> _loadMensagem() async {
-    await _controller.listarMensagens(_usuarioController.usuario!.course!.id!);
+    await _controller.listarMensagens(_usuarioController.usuario!.course!.id!, 'all');
     setState(() {
       _mensagem = _controller.mensagem?.data;
       index = _controller.mensagem!.data.length;
@@ -116,7 +116,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           final mensagem = _controller.mensagem!.data[index];
                           return GestureDetector(
                             onTap: () {
-                              print(mensagem.id);
                               Navigator.pushNamed(
                                 context,
                                 Routes.detalheMensagem,

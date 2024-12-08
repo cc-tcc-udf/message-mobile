@@ -1,4 +1,6 @@
+import 'package:campus_connect/features/mensagens/data/models/envio_view_favorite_model.dart';
 import 'package:campus_connect/features/mensagens/presentation/controllers/mensagem_controller.dart';
+import 'package:campus_connect/features/usuarios/presentation/controllers/usuario_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -12,7 +14,7 @@ import '../../../../core/design/widgets/loading_widget.dart';
 import '../../../../core/utils/device.utility.dart';
 
 class DetalheMensagemPage extends StatefulWidget {
-  DetalheMensagemPage({super.key, required this.id});
+  const DetalheMensagemPage({super.key, required this.id});
 
   final String id;
 
@@ -22,13 +24,48 @@ class DetalheMensagemPage extends StatefulWidget {
 
 class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
   final MensagemController _controller = GetIt.I<MensagemController>();
+  final UsuarioController _usuarioController = GetIt.I<UsuarioController>();
 
   @override
   void initState() {
     super.initState();
     _initializeLocale();
-    _controller.detalhesMensagem(widget.id);
+    _usuarioController.getDataUser();
+    _controller.detalhesMensagem(widget.id).then((_) {
+      if (_controller.detalheMensagem != null) {
+        _controller.favorito = _controller.detalheMensagem!.data!.favorite;
+      }
+    });
+
+    print(_controller.detalheMensagem!.data!.read);
+
+    if(_controller.detalheMensagem!.data!.read == false){
+      final envio = EnvioViewFavoriteModel(
+        user: _usuarioController.usuario!.id!,
+        message: widget.id,
+        favorite: false,
+        view: true,
+      );
+      _controller.viewFavorite(envio);
+    }
+
   }
+
+  Future<void> favoritar() async {
+    _controller.favorito = !_controller.favorito;
+
+    EnvioViewFavoriteModel envio = EnvioViewFavoriteModel(
+      user: _usuarioController.usuario!.id!,
+      message: widget.id,
+      favorite: _controller.favorito,
+      view: true,
+    );
+
+    await _controller.viewFavorite(envio);
+  }
+
+
+
 
   Future<void> _initializeLocale() async {
     await initializeDateFormatting('pt_BR', null);
@@ -179,16 +216,45 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (_controller.detalheMensagem?.data?.sendDate != null) ...[
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Text(
-                          _formatDate(
-                              _controller.detalheMensagem!.data!.sendDate!),
-                          style: const TextStyle(fontWeight: FontWeight.w300),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: favoritar,
+                          child: Material(
+                            elevation: 4,
+                            borderRadius: BorderRadius.circular(10),
+                            child: Container(
+                              width: 110,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    _controller.favorito ? Icons.star : Icons.star_border_rounded,
+                                    color: _controller.favorito ? Colors.yellow : Colors.black,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(_controller.favorito ? 'Favorito' : 'Favoritar'),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                      )
-                    ],
+                        if (_controller.detalheMensagem?.data?.sendDate != null) ...[
+                          Text(
+                            _formatDate(
+                                _controller.detalheMensagem!.data!.sendDate!),
+                            style: const TextStyle(fontWeight: FontWeight.w300),
+                          )
+                        ],
+                      ],
+                    ),
+
                     Html(data: _controller.detalheMensagem!.data!.message!),
                     if (_controller
                         .detalheMensagem!.data!.links!.isNotEmpty) ...[
@@ -213,7 +279,9 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                                       links.link!.startsWith('https://')) {
                                     _showBottomSheet(links.link!);
                                   } else {
-                                    print('URL inválido: ${links.link}');
+                                    if (kDebugMode) {
+                                      print('URL inválido: ${links.link}');
+                                    }
                                   }
                                 },
                                 child: Card(
@@ -289,7 +357,7 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
 
                           final attachment = allAttachments[index];
                           bool isImage =
-                              attachment.type!.startsWith('image/') ?? false;
+                              attachment.type!.startsWith('image/');
 
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),

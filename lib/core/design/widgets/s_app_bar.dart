@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 
 class SAppBar extends AppBar {
   final String titleText;
-  @override
-  final List<Widget>? actions;
   final BuildContext context;
 
-  SAppBar(this.actions, {required this.context, required this.titleText, super.key})
+  SAppBar({required this.context, required this.titleText, super.key})
       : super(
     title: Text(
       titleText,
@@ -15,7 +13,6 @@ class SAppBar extends AppBar {
         fontSize: 20,
       ),
     ),
-    actions: actions,
     leading: Padding(
       padding: const EdgeInsets.all(8.0),
       child: IconButton(

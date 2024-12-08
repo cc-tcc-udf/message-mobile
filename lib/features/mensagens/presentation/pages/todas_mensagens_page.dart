@@ -10,14 +10,14 @@ import '../../../usuarios/presentation/controllers/usuario_controller.dart';
 import '../../../mensagens/data/models/mensagem_model.dart';
 import '../controllers/mensagem_controller.dart';
 
-class MensagensLidasPage extends StatefulWidget {
-  const MensagensLidasPage({super.key});
+class TodasMensagensPage extends StatefulWidget {
+  const TodasMensagensPage({super.key});
 
   @override
-  State<MensagensLidasPage> createState() => _MensagensLidasPageState();
+  State<TodasMensagensPage> createState() => _TodasMensagensPageState();
 }
 
-class _MensagensLidasPageState extends State<MensagensLidasPage> {
+class _TodasMensagensPageState extends State<TodasMensagensPage> {
   final UsuarioController _usuarioController = GetIt.I.get<UsuarioController>();
   final MensagemController _controller = GetIt.I.get<MensagemController>();
   List<MessageData>? _mensagem = [];
@@ -33,7 +33,7 @@ class _MensagensLidasPageState extends State<MensagensLidasPage> {
   }
 
   Future<void> _loadMensagem() async {
-    await _controller.listarMensagens(_usuarioController.usuario!.id!, 'reads');
+    await _controller.listarMensagens(_usuarioController.usuario!.id!, 'all');
     setState(() {
       _mensagem = _controller.mensagem?.data;
       index = _controller.mensagem!.data.length;
@@ -64,7 +64,7 @@ class _MensagensLidasPageState extends State<MensagensLidasPage> {
             return Text(
               _controller.isLoading
                   ? ''
-                  : 'Mensagens lidas ($index)',
+                  : 'Todas as mensagens',
             );
           },
         ),

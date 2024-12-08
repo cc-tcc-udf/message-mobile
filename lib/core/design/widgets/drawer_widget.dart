@@ -24,12 +24,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     return Drawer(
       child: Container(
         color: Theme.of(context).brightness == Brightness.dark
-            ? TColors.darkBackground // Cor de fundo abaixo do header no tema escuro
-            : Colors.white, // Cor de fundo no tema claro
+            ? TColors.darkBackground
+            : Colors.white,
         child: Column(
           children: [
-            Container(
-              width: double.infinity, // Garante que o header ocupe toda a largura
+            SizedBox(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.3,
               child: DrawerHeader(
                 decoration: const BoxDecoration(
                   color: TColors.buttonBackground,
@@ -46,8 +47,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       radius: 30,
                     )
                         : const CircleAvatar(
-                      child: Icon(Icons.person, size: 30),
                       radius: 30,
+                      child: Icon(Icons.person, size: 30),
                     ),
                     const SizedBox(height: 10),
                     Text(

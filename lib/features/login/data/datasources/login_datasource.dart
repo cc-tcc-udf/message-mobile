@@ -56,8 +56,6 @@ class LoginDatasourceImpl implements LoginDatasource {
           endpoint: EndPointsConsts.cadastro,
           data: usuarios.toJson());
 
-      print(result.toString());
-
       if (result.statusCode == 200) {
         final cadastro = ResponseCadastroUsuarioModel.fromJson(result.data);
         await storage.write('token', cadastro.token);
