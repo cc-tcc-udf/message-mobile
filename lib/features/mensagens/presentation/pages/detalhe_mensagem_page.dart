@@ -244,7 +244,7 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                                     color: _controller.favorito ? Colors.yellow : Colors.black,
                                   ),
                                   const SizedBox(width: 5),
-                                  Text(_controller.favorito ? 'Favorito' : 'Favoritar'),
+                                  Text(_controller.favorito ? 'Favorito' : 'Favoritar', style: const TextStyle(color: Colors.black),),
                                 ],
                               ),
                             ),
