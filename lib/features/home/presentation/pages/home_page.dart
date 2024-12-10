@@ -22,19 +22,23 @@ class HomePageWidget extends StatefulWidget {
 class _HomePageWidgetState extends State<HomePageWidget> {
   final UsuarioController _usuarioController = GetIt.I.get<UsuarioController>();
   final MensagemController _controller = GetIt.I.get<MensagemController>();
-  late Future<void> _loadMensagemFuture;
+
+  late Future<void> _loadDataFuture;
   late int indexAll = 0;
   late int indexNotRead = 0;
   late int indexRead = 0;
   late int indexFavorite = 0;
 
-
   @override
   void initState() {
     super.initState();
-    _usuarioController.getUser();
-    _loadMensagem();
-    _loadMensagemFuture = _loadMensagem();
+    _loadDataFuture = _loadData();
+  }
+
+  Future<void> _loadData() async {
+    await _usuarioController.getUser();
+    await _loadMensagem();
+    setState(() {});
   }
 
   Future<void> _loadMensagem() async {
@@ -59,11 +63,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ),
       drawer: const DrawerWidget(),
       body: FutureBuilder<void>(
-        future: _loadMensagemFuture,
+        future: _loadDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: LoadingWidget(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Erro: ${snapshot.error}'),
             );
           } else {
             return Stack(
@@ -72,232 +80,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Olá!!',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(50),
-                              image: _usuarioController
-                                          .usuario?.profilePhoto?.url !=
-                                      null
-                                  ? DecorationImage(
-                                      image: NetworkImage(
-                                        _usuarioController
-                                            .usuario!.profilePhoto!.url!,
-                                      ),
-                                      fit: BoxFit.cover,
-                                    )
-                                  : null,
-                            ),
-                            child:
-                                _usuarioController.usuario?.profilePhoto?.url ==
-                                        null
-                                    ? const Icon(
-                                        Icons.person,
-                                        color: Colors.white,
-                                        size: 30,
-                                      )
-                                    : null,
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            _usuarioController.usuario!.name!,
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            _usuarioController.usuario!.course!.name!,
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                          const SizedBox(height: 30),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            height: MediaQuery.of(context).size.height * 0.45,
-                            child: GridView.count(
-                              primary: false,
-                              physics: const NeverScrollableScrollPhysics(),
-                              crossAxisSpacing: 5,
-                              mainAxisSpacing: 5,
-                              crossAxisCount: 2,
-                              children: <Widget>[
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.to(const TodasMensagensPage());
-                                  },
-                                  child: Container(
-                                    width:
-                                    MediaQuery.of(context).size.width * 0.4,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: TColors.buttonBackground,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              '$indexAll',
-                                              style: const TextStyle(
-                                                  fontSize: 30,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.white),
-                                            ),
-                                            const Text(
-                                              'Todas as mensagens',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.to(const MensagemPage());
-                                  },
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: TColors.buttonBackground,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              '$indexNotRead',
-                                              style: const TextStyle(
-                                                  fontSize: 30,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.white),
-                                            ),
-                                            const Text(
-                                              'Mensagens não lidas',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.to(const MensagensFavoritasPage());
-                                  },
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: TColors.buttonBackground,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              '$indexFavorite',
-                                              style: const TextStyle(
-                                                  fontSize: 30,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.white),
-                                            ),
-                                            const Text(
-                                              'Favoritas',
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.to(const MensagensLidasPage());
-                                  },
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: TColors.buttonBackground,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              '$indexRead',
-                                              style: const TextStyle(
-                                                  fontSize: 30,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.white),
-                                            ),
-                                            const Text(
-                                              'Mensagens lidas',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                      child: _buildContent(),
                     ),
                   ),
                 ),
@@ -305,6 +88,121 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             );
           }
         },
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text(
+          'Olá!!',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        const SizedBox(height: 20),
+        Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(50),
+            image: _usuarioController.usuario?.profilePhoto?.url != null
+                ? DecorationImage(
+              image: NetworkImage(
+                _usuarioController.usuario!.profilePhoto!.url!,
+              ),
+              fit: BoxFit.cover,
+            )
+                : null,
+          ),
+          child: _usuarioController.usuario?.profilePhoto?.url == null
+              ? const Icon(
+            Icons.person,
+            color: Colors.white,
+            size: 30,
+          )
+              : null,
+        ),
+        const SizedBox(height: 20),
+        Text(
+          _usuarioController.usuario!.name!,
+          style: const TextStyle(fontSize: 20),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          _usuarioController.usuario!.course!.name!,
+          style: const TextStyle(fontSize: 15),
+        ),
+        const SizedBox(height: 30),
+        _buildGrid(),
+      ],
+    );
+  }
+
+  Widget _buildGrid() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.7,
+      height: MediaQuery.of(context).size.height * 0.45,
+      child: GridView.count(
+        primary: false,
+        physics: const NeverScrollableScrollPhysics(),
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 5,
+        crossAxisCount: 2,
+        children: <Widget>[
+          _buildGridItem('Todas as mensagens', indexAll, const TodasMensagensPage()),
+          _buildGridItem('Mensagens não lidas', indexNotRead, const MensagemPage()),
+          _buildGridItem('Favoritas', indexFavorite, const MensagensFavoritasPage()),
+          _buildGridItem('Mensagens lidas', indexRead, const MensagensLidasPage()),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGridItem(String label, int count, Widget page) {
+    return GestureDetector(
+      onTap: () {
+        Get.to(page);
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.4,
+        height: 50,
+        decoration: BoxDecoration(
+          color: TColors.buttonBackground,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '$count',
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
