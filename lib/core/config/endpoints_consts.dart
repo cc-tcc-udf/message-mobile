@@ -22,7 +22,7 @@ class EndPointsConsts {
 
   static String detalheMensagem(
           {required String idMsg, required String idAluno}) =>
-      '/private/msg/mobile/get/$idMsg?alunoId=$idAluno';
+      '/private/msg/mobile/get/$idMsg/$idAluno';
   static const String viewFavorite = '/private/view/mobile/view_favorite';
 
   //Files
