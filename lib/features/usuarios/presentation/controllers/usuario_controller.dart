@@ -10,12 +10,12 @@ import '../../data/models/response_data_user_model.dart';
 
 part 'usuario_controller.g.dart';
 
-class UsuarioController = _UsuarioControllerBase with _$UsuarioController;
+class UsuarioController = UsuarioControllerBase with _$UsuarioController;
 
-abstract class _UsuarioControllerBase with Store {
+abstract class UsuarioControllerBase with Store {
   final UsuarioUsecase usecase;
 
-  _UsuarioControllerBase({
+  UsuarioControllerBase({
     required this.usecase,
   });
 

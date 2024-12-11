@@ -6,6 +6,8 @@ import 'package:get_it/get_it.dart';
 
 import '../../core/design/themes/colors.dart';
 import '../../core/design/widgets/app_bar_menu.dart';
+import '../../core/localstorage/security_local_storage.dart';
+import '../../core/localstorage/security_shared_preference.dart';
 import '../../routes.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
@@ -288,7 +290,9 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                     child: Column(
                       children: [
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async{
+                            final SecurityLocalStorage storage = SecuritySharedPreference();
+                            await storage.removeAll();
                             Navigator.pushNamedAndRemoveUntil(
                               context,
                               Routes.login,

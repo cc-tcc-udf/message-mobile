@@ -7,9 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'core/localstorage/security_local_storage.dart';
+import 'core/localstorage/security_shared_preference.dart';
+import 'features/home/presentation/pages/home_page.dart';
 import 'firebase_options.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'core/injection/app_injection.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -23,8 +27,8 @@ void main() async {
   await LocalNotificationService().init();
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     const rota = Routes.detalheMensagem;
-      final id = message.data['id_msg'];
-      navigatorKey.currentState?.pushNamed(rota, arguments: {'id': id});
+    final id = message.data['id_msg'];
+    navigatorKey.currentState?.pushNamed(rota, arguments: {'id': id});
   });
   await requestPermissions();
 
@@ -37,7 +41,10 @@ void main() async {
     themeNotifier.value = ThemeMode.system;
   }
 
-  runApp(const MyApp());
+  // Verificação do token e redirecionamento
+  Widget initialScreen = await _getInitialScreen();
+
+  runApp(MyApp(initialScreen: initialScreen));
 }
 
 Future<String> _getInitialTheme() async {
@@ -56,15 +63,26 @@ Future<void> requestPermissions() async {
   }
 }
 
+Future<Widget> _getInitialScreen() async {
+  final SecurityLocalStorage storage = SecuritySharedPreference();
+  var token = await storage.read("token");
+
+  if (token != null && !JwtDecoder.isExpired(token)) {
+    return const HomePageWidget();
+  } else {
+    return const OnBoardingScreen();
+  }
+}
+
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final Widget initialScreen;
+  const MyApp({super.key, required this.initialScreen});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -90,7 +108,7 @@ class _MyAppState extends State<MyApp> {
           theme: TAppTheme.lightTheme,
           darkTheme: TAppTheme.darkTheme,
           onGenerateRoute: Routes().onGenerateRoute,
-          home: const OnBoardingScreen(),
+          home: widget.initialScreen,
         );
       },
     );

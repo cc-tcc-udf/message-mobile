@@ -8,9 +8,9 @@ part of 'usuario_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$UsuarioController on _UsuarioControllerBase, Store {
+mixin _$UsuarioController on UsuarioControllerBase, Store {
   late final _$isLoadingAtom =
-      Atom(name: '_UsuarioControllerBase.isLoading', context: context);
+      Atom(name: 'UsuarioControllerBase.isLoading', context: context);
 
   @override
   bool get isLoading {
@@ -26,7 +26,7 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
   }
 
   late final _$cursosAtom =
-      Atom(name: '_UsuarioControllerBase.cursos', context: context);
+      Atom(name: 'UsuarioControllerBase.cursos', context: context);
 
   @override
   ResponseListCoursesModel? get cursos {
@@ -42,7 +42,7 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
   }
 
   late final _$usuarioAtom =
-      Atom(name: '_UsuarioControllerBase.usuario', context: context);
+      Atom(name: 'UsuarioControllerBase.usuario', context: context);
 
   @override
   ResponseDataUserModel? get usuario {
@@ -58,7 +58,7 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
   }
 
   late final _$arquivoAtom =
-      Atom(name: '_UsuarioControllerBase.arquivo', context: context);
+      Atom(name: 'UsuarioControllerBase.arquivo', context: context);
 
   @override
   FileEntity? get arquivo {
@@ -74,7 +74,7 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
   }
 
   late final _$getListCoursesAsyncAction =
-      AsyncAction('_UsuarioControllerBase.getListCourses', context: context);
+      AsyncAction('UsuarioControllerBase.getListCourses', context: context);
 
   @override
   Future<void> getListCourses() {
@@ -82,7 +82,7 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
   }
 
   late final _$getUserAsyncAction =
-      AsyncAction('_UsuarioControllerBase.getUser', context: context);
+      AsyncAction('UsuarioControllerBase.getUser', context: context);
 
   @override
   Future<ResponseDataUserModel?> getUser() {
@@ -90,7 +90,7 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
   }
 
   late final _$getDataUserAsyncAction =
-      AsyncAction('_UsuarioControllerBase.getDataUser', context: context);
+      AsyncAction('UsuarioControllerBase.getDataUser', context: context);
 
   @override
   Future<void> getDataUser() {
@@ -98,7 +98,7 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
   }
 
   late final _$atualizarAsyncAction =
-      AsyncAction('_UsuarioControllerBase.atualizar', context: context);
+      AsyncAction('UsuarioControllerBase.atualizar', context: context);
 
   @override
   Future<void> atualizar(AtualizarUsuarioModel usuarios) {
@@ -106,7 +106,7 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
   }
 
   late final _$envioAnexoAsyncAction =
-      AsyncAction('_UsuarioControllerBase.envioAnexo', context: context);
+      AsyncAction('UsuarioControllerBase.envioAnexo', context: context);
 
   @override
   Future<FileEntity?> envioAnexo(AnexoModel anexo) {
@@ -114,7 +114,7 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
   }
 
   late final _$updateAnexoAsyncAction =
-      AsyncAction('_UsuarioControllerBase.updateAnexo', context: context);
+      AsyncAction('UsuarioControllerBase.updateAnexo', context: context);
 
   @override
   Future<FileEntity?> updateAnexo(AnexoModel anexo, String id) {

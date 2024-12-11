@@ -7,6 +7,8 @@ import '../../../features/mensagens/presentation/pages/mensagens_favoritas_page.
 import '../../../features/mensagens/presentation/pages/mensagens_lidas_page.dart';
 import '../../../features/usuarios/presentation/controllers/usuario_controller.dart';
 import '../../../routes.dart';
+import '../../localstorage/security_local_storage.dart';
+import '../../localstorage/security_shared_preference.dart';
 import '../themes/colors.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -105,8 +107,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Sair'),
-              onTap: () {
-                // Lógica para logout
+              onTap: () async {
+                final SecurityLocalStorage storage = SecuritySharedPreference();
+                await storage.removeAll();
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   Routes.login,

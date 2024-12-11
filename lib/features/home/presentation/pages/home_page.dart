@@ -70,27 +70,26 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               child: LoadingWidget(),
             );
           } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Erro: ${snapshot.error}'),
+            return const Center(
+              child: Text('Ocorreu um erro. Tente novamente mais tarde.'),
             );
           } else {
-            return Stack(
-              children: [
-                Center(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: _buildContent(),
-                    ),
-                  ),
+            return RefreshIndicator(
+              onRefresh: _loadData,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Center(child: _buildContent()),
                 ),
-              ],
+              ),
             );
           }
         },
       ),
     );
   }
+
 
   Widget _buildContent() {
     return Column(

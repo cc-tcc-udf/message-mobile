@@ -1,8 +1,8 @@
-import 'package:campus_connect/core/design/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../core/design/themes/colors.dart';
 import '../../../../core/design/widgets/loading_widget.dart';
 import '../../../../core/utils/device.utility.dart';
 import '../../../../routes.dart';
@@ -23,7 +23,6 @@ class _TodasMensagensPageState extends State<TodasMensagensPage> {
   List<MessageData>? _mensagem = [];
   late Future<void> _loadMensagemFuture;
   late int index;
-  bool _showAllMessages = false;
 
   @override
   void initState() {
@@ -132,9 +131,8 @@ class _TodasMensagensPageState extends State<TodasMensagensPage> {
                                       margin: const EdgeInsets.only(bottom: 16),
                                       width: MediaQuery.of(context).size.width,
                                       decoration: BoxDecoration(
-                                        border: Border.all(width: 1, color: Colors.grey),
                                         borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white,
+                                        color: TColors.buttonBackground,
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -146,18 +144,18 @@ class _TodasMensagensPageState extends State<TodasMensagensPage> {
                                               style: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w700,
-                                                color: Colors.black,
+                                                color: Colors.white,
                                               ),
                                             ),
                                             const SizedBox(height: 8),
                                             Text(
                                               TDeviceUtils.truncateWithEllipsis(200, mensagem.summary),
-                                              style: const TextStyle(fontSize: 12, color: Colors.black),
+                                              style: const TextStyle(fontSize: 12, color: Colors.white),
                                             ),
                                             const SizedBox(height: 8),
                                             const Align(
                                               alignment: Alignment.bottomRight,
-                                              child: Icon(Icons.arrow_forward_rounded, color: Colors.black),
+                                              child: Icon(Icons.arrow_forward_rounded, color: Colors.white),
                                             ),
                                           ],
                                         ),

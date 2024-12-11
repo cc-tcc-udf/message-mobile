@@ -35,8 +35,6 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
   Future<void> _initializePage() async {
     await _initializeLocale();
     await _usuarioController.getDataUser();
-    print(widget.id);
-
     await _controller.detalhesMensagem(widget.id, _usuarioController.usuario!.id!);
 
     if (_controller.detalheMensagem != null) {
@@ -68,9 +66,6 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
     );
     await _controller.viewFavorite(envio);
   }
-
-
-
 
   Future<void> _initializeLocale() async {
     await initializeDateFormatting('pt_BR', null);
@@ -233,7 +228,6 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                               width: 110,
                               height: 30,
                               decoration: BoxDecoration(
-                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Row(
@@ -241,10 +235,10 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                                 children: [
                                   Icon(
                                     _controller.favorito ? Icons.star : Icons.star_border_rounded,
-                                    color: _controller.favorito ? Colors.yellow : Colors.black,
+                                    color: _controller.favorito ? Colors.yellow : Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
                                   ),
                                   const SizedBox(width: 5),
-                                  Text(_controller.favorito ? 'Favorito' : 'Favoritar', style: const TextStyle(color: Colors.black),),
+                                  Text(_controller.favorito ? 'Favorito' : 'Favoritar',),
                                 ],
                               ),
                             ),
@@ -284,9 +278,11 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                                       links.link!.startsWith('https://')) {
                                     _showBottomSheet(links.link!);
                                   } else {
-                                    if (kDebugMode) {
-                                      print('URL inválido: ${links.link}');
-                                    }
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('URL inválida'),
+                                      ),
+                                    );
                                   }
                                 },
                                 child: Card(
@@ -294,7 +290,6 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  color: Colors.white,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Row(
@@ -306,7 +301,7 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
                                               38, links.title!),
                                           style: const TextStyle(
                                               fontSize: 14,
-                                              color: Colors.black),
+                                          ),
                                         ),
                                         const SizedBox(width: 10),
                                         const Icon(Icons.open_in_new,
