@@ -25,6 +25,8 @@ class DetalheMensagemPage extends StatefulWidget {
 class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
   final MensagemController _controller = GetIt.I<MensagemController>();
   final UsuarioController _usuarioController = GetIt.I<UsuarioController>();
+  bool _isInitialized = false;
+
 
   @override
   void initState() {
@@ -51,8 +53,11 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
       }
     }
 
-    setState(() {});
+    setState(() {
+      _isInitialized = true;
+    });
   }
+
 
 
   Future<void> favoritar() async {
@@ -194,7 +199,7 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
         title: Observer(
           builder: (context) {
             return Text(
-              _controller.isLoading
+              _controller.isLoading && !_isInitialized
                   ? ''
                   : _controller.detalheMensagem?.data?.title ??
                       'Erro ao carregar',
@@ -202,7 +207,12 @@ class _DetalheMensagemPageState extends State<DetalheMensagemPage> {
           },
         ),
       ),
-      body: Observer(
+      body:!_isInitialized
+          ? const Center(
+        child: LoadingWidget(),
+      )
+          :
+      Observer(
         builder: (context) {
           if (_controller.isLoading) {
             return const Center(
