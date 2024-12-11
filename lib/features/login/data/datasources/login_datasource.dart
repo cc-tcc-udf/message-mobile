@@ -31,7 +31,7 @@ class LoginDatasourceImpl implements LoginDatasource {
           data: {
             "email": email,
             "password": password,
-            "isMobile": isMobile
+            "isMobile": true
           });
 
       if (result.statusCode == 200) {
